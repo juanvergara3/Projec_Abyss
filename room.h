@@ -5,6 +5,7 @@
 #include <fstream>
 #include <QGraphicsScene>
 #include "wall.h"
+#include <vector>
 
 class Room : public QObject {
     Q_OBJECT
@@ -13,6 +14,8 @@ public: // Variables
 
 private: // Variables
     QList <Wall *> walls;
+
+    //QList< std::vector<int>[2] > spawnpoints;
 
 public: // Methods
     explicit Room(QObject *parent = nullptr, std::string file_name_ = "");

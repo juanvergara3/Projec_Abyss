@@ -3,7 +3,8 @@
 Room::Room(QObject *parent, std::string file_name_) : QObject(parent) {
     load_walls(file_name_);
 
-    walls.push_back(new Wall(this, 200, 680, 150, 40));
+    walls.push_back(new Wall(this, 200, 620, 150, 40));
+    walls.push_back(new Wall(this, 200,660, 40, 60));
 }
 Room::~Room() {
 

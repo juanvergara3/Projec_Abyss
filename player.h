@@ -17,11 +17,13 @@ private: // Variables
     float damage;
     float shot_speed;
     float fire_rate;
+    float movement_speed;
+    float jump_Speed;
 
     float x;
     float y;
-    float Vx; // movement speed
-    float Vy; // jump speed
+    float Vx;
+    float Vy;
 
     float Ax, Ay;
     float mass;
@@ -33,8 +35,6 @@ private: // Variables
     float V; //vector de velocidad
     float dt; //delta de tiempo
 
-    std::string dir;
-
 public: // Methods
     explicit Player(QObject *parent = nullptr);
 
@@ -43,6 +43,8 @@ public: // Methods
 
     void update(int y_max);
     void set_vel(float px, float py, float vx, float vy);
+    void set_velX(float px, float vx);
+    void set_velY(float py, float vy);
 
     float getVx() const;
     float getVy() const;
@@ -51,8 +53,8 @@ public: // Methods
     float getRadio() const;
     float getE() const;
 
-    std::string getDir() const;
-    void setDir(const std::string &value);
+    float getMovement_speed() const;
+    float getJump_Speed() const;
 
 private: // Methods
 

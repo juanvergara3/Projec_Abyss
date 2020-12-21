@@ -1,21 +1,13 @@
 #include "player.h"
 
-std::string Player::getDir() const
-{
-    return dir;
-}
-
-void Player::setDir(const std::string &value)
-{
-    dir = value;
-}
-
 Player::Player(QObject *parent) : QObject(parent) {
 
     health = 0;
     damage = 0;
     shot_speed = 0;
     fire_rate = 0;
+    movement_speed = 15;
+    jump_Speed = 40;
 
     x = 0;
     y = 0;
@@ -66,6 +58,14 @@ void Player::set_vel(float px, float py, float vx, float vy) {
     Vx = vx;
     Vy = vy;
 }
+void Player::set_velX(float px, float vx) {
+    x = px;
+    Vx = vx;
+}
+void Player::set_velY(float py, float vy) {
+    y = py;
+    Vy = vy;
+}
 
 float Player::getVx() const{
     return Vx;
@@ -85,3 +85,11 @@ float Player::getRadio() const {
 float Player::getE() const {
     return e;
 }
+
+float Player::getMovement_speed() const{
+    return movement_speed;
+}
+float Player::getJump_Speed() const{
+    return jump_Speed;
+}
+
