@@ -2,6 +2,9 @@
 #define ROOM_H
 
 #include <QObject>
+#include <fstream>
+#include <QGraphicsScene>
+#include "wall.h"
 
 class Room : public QObject {
     Q_OBJECT
@@ -9,12 +12,16 @@ class Room : public QObject {
 public: // Variables
 
 private: // Variables
-    //QList <>
+    QList <Wall *> walls;
 
 public: // Methods
-    explicit Room(QObject *parent = nullptr);
+    explicit Room(QObject *parent = nullptr, std::string file_name_ = "");
+    ~Room();
+
+    void load_walls(QGraphicsScene* scene);
 
 private: // Methods
+    void load_walls(std::string file_name);
 
 };
 

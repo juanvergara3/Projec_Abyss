@@ -33,6 +33,8 @@ private: // Variables
     float V; //vector de velocidad
     float dt; //delta de tiempo
 
+    std::string dir;
+
 public: // Methods
     explicit Player(QObject *parent = nullptr);
 
@@ -46,6 +48,11 @@ public: // Methods
     float getVy() const;
     float getX() const;
     float getY() const;
+    float getRadio() const;
+    float getE() const;
+
+    std::string getDir() const;
+    void setDir(const std::string &value);
 
 private: // Methods
 

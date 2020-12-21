@@ -22,6 +22,10 @@ public: //methods
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *options, QWidget *widget);
 
+    int getPosx() const;
+    int getPosy() const;
+    int getWidth() const;
+    int getHeight() const;
 };
 
 #endif // WALL_H

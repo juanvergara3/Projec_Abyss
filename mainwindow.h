@@ -28,6 +28,8 @@ private: // Variables
 
     Room *r1;
 
+    int h_limit, v_limit;
+
 public: // Methods
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -35,6 +37,7 @@ public: // Methods
     void keyPressEvent(QKeyEvent *event);
 
 private: // Methods
+    void check_collitions(Player *p);
 
 public slots:
     void update_bodies();
