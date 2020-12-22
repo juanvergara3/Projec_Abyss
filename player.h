@@ -3,11 +3,14 @@
 
 #include <QObject>
 #include <QGraphicsPixmapItem>
+#include <QGraphicsScene>
 #include <QPainter>
 #include <math.h>
 #include <cmath>
+#include "entity.h"
+#include "proyectile.h"
 
-class Player : public QObject, public QGraphicsItem {
+class Player : public Entity {
     Q_OBJECT
 
 public: // Variables
@@ -20,41 +23,22 @@ private: // Variables
     float movement_speed;
     float jump_Speed;
 
-    float x;
-    float y;
-    float Vx;
-    float Vy;
+    bool jumping;
 
-    float Ax, Ay;
-    float mass;
-    float radio;
-    float angle;
-    float g; //gravedad
-    float K; //resistencia del aire
-    float e; //coeficiente de restitucion
-    float V; //vector de velocidad
-    float dt; //delta de tiempo
+    std::list<Proyectile *> proyectiles;
 
 public: // Methods
-    explicit Player(QObject *parent = nullptr);
+    explicit Player(QObject *parent = nullptr, float x_ = 0, float y_ = 0, float vx_ = 0, float vy_ = 0, float mass_ = 0, int radio_ = 0, float g_ = 0, float K_ = 0, float e_ = 0, float V_ = 0);
 
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
-
-    void update(int y_max);
-    void set_vel(float px, float py, float vx, float vy);
-    void set_velX(float px, float vx);
-    void set_velY(float py, float vy);
-
-    float getVx() const;
-    float getVy() const;
-    float getX() const;
-    float getY() const;
-    float getRadio() const;
-    float getE() const;
+    void shoot(QGraphicsScene *scene);
 
     float getMovement_speed() const;
     float getJump_Speed() const;
+
+    void update(int y_max);
+
+    bool getJumping() const;
+    void setJumping(bool value);
 
 private: // Methods
 

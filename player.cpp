@@ -1,89 +1,21 @@
 #include "player.h"
 
-Player::Player(QObject *parent) : QObject(parent) {
-
-    health = 0;
-    damage = 0;
-    shot_speed = 0;
-    fire_rate = 0;
+Player::Player(QObject *parent, float x_, float y_, float vx_, float vy_, float mass_, int radio_, float g_, float K_, float e_, float V_) :
+    Entity(parent, x_, y_, vx_, vy_, mass_, radio_, g_, K_, e_, V_)
+{
+    health = 100;
+    damage = 20;
+    shot_speed = 50;
+    fire_rate = 2;
     movement_speed = 15;
     jump_Speed = 40;
-
-    x = 0;
-    y = 0;
-    Vx = 0;
-    Vy = 0;
-
-    Ax = 0;
-    Ay = 0;
-    mass = 20;
-    radio = 8;
-    g = 4;  // ******gravity******
-    //K = 1e-3;
-    K = 1e-5;
-    e = 0.1;
-    V = 0;
-    dt = 0.1;
-
 }
 
-QRectF Player::boundingRect() const {
-        return QRectF(-8, -8, 16, 16);
-}
-void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-    painter->setBrush(Qt::black);
-    painter->drawRect(boundingRect());
-}
+void Player::shoot(QGraphicsScene *scene) {
+    Proyectile *p = new Proyectile(this, damage, this->getX(), this->getY(), shot_speed, 0, 1, 4, 1, 1e-5, 0.1, 0);
 
-void Player::update(int y_max) {
-
-    V = sqrt( pow(Vx ,2) + pow(Vy ,2) );
-
-    angle = atan2(Vy, Vx); //arc_tan
-
-    Ax = -1*((K*pow(V, 2) * pow(radio, 2))/mass) * cos(angle);
-    Ay = (-1*((K*pow(V, 2) * pow(radio, 2))/mass) * sin(angle)) - g;
-
-    x = x + Vx*dt + Ax*pow(dt, 2)/2;
-    y = y + Vy*dt + Ay*pow(dt, 2)/2;
-
-    Vx = Vx + Ax*dt;
-    Vy = Vy + Ay*dt;
-
-    setPos(x, y_max - y); 
-}
-void Player::set_vel(float px, float py, float vx, float vy) {
-    x = px;
-    y = py;
-    Vx = vx;
-    Vy = vy;
-}
-void Player::set_velX(float px, float vx) {
-    x = px;
-    Vx = vx;
-}
-void Player::set_velY(float py, float vy) {
-    y = py;
-    Vy = vy;
-}
-
-float Player::getVx() const{
-    return Vx;
-}
-float Player::getVy() const{
-    return Vy;
-}
-float Player::getX() const{
-    return x;
-}
-float Player::getY() const{
-    return y;
-}
-float Player::getRadio() const {
-    return radio;
-}
-float Player::getE() const {
-    return e;
+    scene->addItem(p);
+    proyectiles.push_back(p);
 }
 
 float Player::getMovement_speed() const{
@@ -91,5 +23,21 @@ float Player::getMovement_speed() const{
 }
 float Player::getJump_Speed() const{
     return jump_Speed;
+}
+
+void Player::update(int y_max)
+{
+    this->Entity::update(y_max);
+
+    for (auto const& k : proyectiles) {
+        k->Entity::update(y_max);
+    }
+}
+
+bool Player::getJumping() const {
+    return jumping;
+}
+void Player::setJumping(bool value) {
+    jumping = value;
 }
 
