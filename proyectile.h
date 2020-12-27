@@ -1,7 +1,7 @@
 #ifndef PROYECTILE_H
 #define PROYECTILE_H
 #include "entity.h"
-
+#include "wall.h"
 
 class Proyectile: public Entity {
     Q_OBJECT

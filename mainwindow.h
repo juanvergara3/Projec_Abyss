@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QGraphicsScene>
 #include <QKeyEvent>
+#include<forward_list>
 #include "room.h"
 #include "player.h"
 
@@ -30,14 +31,19 @@ private: // Variables
 
     int h_limit, v_limit;
 
+    //std::forward_list<Proyectile*> proyectiles;
+    std::list<Proyectile*> proyectiles;
+
 public: // Methods
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
     void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
 
 private: // Methods
     void check_collitions(Player *p);
+    bool check_collitions(Proyectile *p);
 
 public slots:
     void update_bodies();
