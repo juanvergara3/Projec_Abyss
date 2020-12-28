@@ -17,17 +17,24 @@ public: // Variables
 private: // Variables
     //QList <Wall *> walls;
     std::list <Wall *> walls;
-
+    std::list <Enemy *> enemies;
     //QList< std::vector<int>[2] > spawnpoints;
 
+    QGraphicsScene *scene;
+
+    const int v_limit, h_limit;
+
 public: // Methods
-    explicit Room(QObject *parent = nullptr, std::string file_name_ = "");
+    explicit Room(QObject *parent = nullptr, QGraphicsScene* scene = nullptr, std::string file_name_ = "");
     ~Room();
 
-    void load_walls(QGraphicsScene* scene);
+    void load_room();
+
+    void update();
 
 private: // Methods
-    void load_walls(std::string file_name);
+    void load_room(std::string file_name);
+    void check_collitions();
 
 };
 

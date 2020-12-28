@@ -1,12 +1,7 @@
 #include "player.h"
 
-short Player::getDirection() const
-{
-    return direction;
-}
-
 Player::Player(QObject *parent, QGraphicsScene *s, float x_, float y_, float vx_, float vy_, float mass_, int radio_, float g_, float K_, float e_, float V_) :
-    Entity(parent, x_, y_, vx_, vy_, mass_, radio_, g_, K_, e_, V_)
+    Entity(parent, x_, y_, vx_, vy_, mass_, radio_, g_, K_, e_, V_) , v_limit(720), scene(s), h_limit(1280)
 {
     health = 100;
     damage = 20;
@@ -18,10 +13,10 @@ Player::Player(QObject *parent, QGraphicsScene *s, float x_, float y_, float vx_
 
     name = "P1"; //constructor
 
-    init_stats(s);
+    init_stats();
 }
 
-Proyectile *Player::shoot(QGraphicsScene *scene) {
+Proyectile *Player::shoot() {
     Proyectile *p = new Proyectile(this, damage, this->getX(), this->getY(), sight*shot_speed, 0, 1, 4, 1, 1e-5, 0.1, 0);
 
     scene->addItem(p);
@@ -59,7 +54,7 @@ void Player::update_stat(std::string s) {
         jump_speed_label->setText(temp.c_str());
     }
 }
-void Player::init_stats(QGraphicsScene *s) {
+void Player::init_stats() {
 
     health_bar = new QProgressBar;
     health_bar->setRange(0, health);
@@ -84,20 +79,20 @@ void Player::init_stats(QGraphicsScene *s) {
     for (auto k = labels.begin(); k != labels.end(); k++) {
 
         (*k)->setFont(QFont("System"));
-        (*k)->setGeometry(20, y, (*k)->text().length()*8, 15);
-        y += 15;
+        (*k)->setGeometry(20, y, (*k)->text().length()*8, 20);
+        y += 20;
     }
 
-    s->addWidget(health_bar);
-    s->addWidget(name_label);
-    s->addWidget(damage_label);
-    s->addWidget(shot_speed_label);
-    s->addWidget(movement_speed_label);
-    s->addWidget(jump_speed_label);
+    scene->addWidget(health_bar);
+    scene->addWidget(name_label);
+    scene->addWidget(damage_label);
+    scene->addWidget(shot_speed_label);
+    scene->addWidget(movement_speed_label);
+    scene->addWidget(jump_speed_label);
 }
 
-void Player::update(int y_max) {
-    this->Entity::update(y_max);
+void Player::update() {
+    this->Entity::update();
 
     int direction = this->direction;
 
@@ -127,6 +122,9 @@ void Player::addDirection(int d)
 //        else
 //            setTransform(QTransform());
 //    }
+}
+short Player::getDirection() const {
+    return direction;
 }
 
 bool Player::getJumping() const {

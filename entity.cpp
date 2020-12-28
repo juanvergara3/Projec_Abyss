@@ -1,6 +1,6 @@
 #include "entity.h"
 
-Entity::Entity(QObject *parent, float x_, float y_, float vx_, float vy_, float mass_, int radio_, float g_, float K_, float e_, float V_) : QObject(parent) {
+Entity::Entity(QObject *parent, float x_, float y_, float vx_, float vy_, float mass_, int radio_, float g_, float K_, float e_, float V_) : QObject(parent), v_limit(720), h_limit(1280) {
 
     x = x_;
     y = y_;
@@ -31,7 +31,7 @@ void Entity::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
     painter->drawRect(boundingRect());
 }
 
-void Entity::update(int y_max) {
+void Entity::update() {
 
     V = sqrt( pow(Vx ,2) + pow(Vy ,2) );
 
@@ -46,7 +46,7 @@ void Entity::update(int y_max) {
     Vx = Vx + Ax*dt;
     Vy = Vy + Ay*dt;
 
-    setPos(x, y_max - y);
+    setPos(x, v_limit - y);
 }
 void Entity::set_vel(float px, float py, float vx, float vy) {
     x = px;

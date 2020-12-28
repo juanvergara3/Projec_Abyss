@@ -14,9 +14,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     p1 = new Player(this, scene, 0, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
 
-    r1 = new Room;
+    r1 = new Room(this, scene);
 
-    r1->load_walls(scene);
+    r1->load_room();
 
     scene->addItem(p1);
 
@@ -57,7 +57,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
         p1->set_velY(p1->getY(), -p1->getJump_Speed());
     }
     if(event->key() == Qt::Key_Space){
-        Proyectile * p = p1->shoot(scene);
+        Proyectile * p = p1->shoot();
         //proyectiles.push_back(p);
         Qproyectiles.push_back(p);
 
@@ -160,18 +160,20 @@ bool MainWindow::check_collitions(Proyectile *p) {
 
 void MainWindow::update_bodies(){
 
-    p1->Player::update(v_limit);
+    p1->Player::update();
     check_collitions(p1);
 
     QList<Proyectile*> aux; //just testing stuff, not very efficient ://
     for(int k = 0; k < Qproyectiles.size(); k++){
-        Qproyectiles.at(k)->update(v_limit);
+        Qproyectiles.at(k)->update();
         if(!check_collitions(Qproyectiles.at(k)))
             aux.push_back(Qproyectiles.at(k));
         else
             scene->removeItem(Qproyectiles.at(k));
     }
     Qproyectiles = aux;
+
+    r1->update();
 
     //    for (auto k = proyectiles.begin(); k != proyectiles.end(); ) { //checks for proyectiles collitions
 
@@ -187,8 +189,6 @@ void MainWindow::update_bodies(){
     //        else
     //            ++k;
     //    }
-
-
 }
 
 

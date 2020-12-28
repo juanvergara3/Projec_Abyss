@@ -28,6 +28,8 @@ private: //variables
     float V; //vector de velocidad
     float dt; //delta de tiempo
 
+    const int v_limit, h_limit;
+
 public: //methods
     explicit Entity(QObject *parent = nullptr, float x_ = 0, float y_ = 0, float vx_ = 0, float vy_ = 0, float mass_ = 0, int radio_ = 0, float g_ = 0, float K_ = 0, float e_ = 0, float V_ = 0);
     ~Entity();
@@ -35,7 +37,7 @@ public: //methods
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
 
-    void update(int y_max);
+    void update();
     void set_vel(float px, float py, float vx, float vy);
     void set_velX(float px, float vx);
     void set_velY(float py, float vy);
