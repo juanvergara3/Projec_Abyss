@@ -31,8 +31,8 @@ private: // Variables
 
     int h_limit, v_limit;
 
-    //std::forward_list<Proyectile*> proyectiles;
-    std::list<Proyectile*> proyectiles;
+    //std::list<Proyectile*> proyectiles;
+    QList<Proyectile*> Qproyectiles;
 
 public: // Methods
     MainWindow(QWidget *parent = nullptr);

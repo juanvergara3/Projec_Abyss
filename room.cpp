@@ -11,9 +11,15 @@ Room::~Room() {
 }
 
 void Room::load_walls(QGraphicsScene *scene) {
-    for(int k = 0; k<walls.size(); k++){
-        scene->addItem(walls.at(k));
-        walls.at(k)->setPos(walls.at(k)->getPosx(), walls.at(k)->getPosy());
+//    for(int k = 0; k<walls.size(); k++){
+//        scene->addItem(walls.at(k));
+//        walls.at(k)->setPos(walls.at(k)->getPosx(), walls.at(k)->getPosy());
+//    }
+
+    for(auto k = walls.begin(); k!=walls.end(); k++){
+        scene->addItem(*k);
+        (*k)->setPos((*k)->getPosx(), (*k)->getPosy());
+
     }
 }
 
@@ -44,7 +50,6 @@ void Room::load_walls(std::string file_name) {
 
                  counter = 0;
              }
-
              counter++;
          }
      }

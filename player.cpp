@@ -5,17 +5,20 @@ short Player::getDirection() const
     return direction;
 }
 
-Player::Player(QObject *parent, float x_, float y_, float vx_, float vy_, float mass_, int radio_, float g_, float K_, float e_, float V_) :
+Player::Player(QObject *parent, QGraphicsScene *s, float x_, float y_, float vx_, float vy_, float mass_, int radio_, float g_, float K_, float e_, float V_) :
     Entity(parent, x_, y_, vx_, vy_, mass_, radio_, g_, K_, e_, V_)
 {
     health = 100;
     damage = 20;
     shot_speed = 30;
-    fire_rate = 2;
-    movement_speed = 5;
+    movement_speed = 1;
     jump_Speed = 40;
     sight = 1;
     direction = 0;
+
+    name = "P1"; //constructor
+
+    init_stats(s);
 }
 
 Proyectile *Player::shoot(QGraphicsScene *scene) {
@@ -25,6 +28,72 @@ Proyectile *Player::shoot(QGraphicsScene *scene) {
     //p->setPos(p->getX(), 720 - p->getY());
 
     return p;
+}
+
+void Player::update_stat(std::string s) {
+
+    std::string temp;
+
+    if(s == "name"){
+
+        name_label->setText(name.c_str());
+    }
+    else if (s == "damage"){
+
+        temp = "Damage: " + std::to_string(int(damage));
+        damage_label->setText(temp.c_str());
+    }
+    else if (s == "shot_speed"){
+
+        temp = "Shot Speed: " + std::to_string(int(shot_speed));
+        shot_speed_label->setText(temp.c_str());
+    }
+    else if (s == "movement_speed"){
+
+        temp = "Movement Speed: " + std::to_string(int(movement_speed));
+        movement_speed_label->setText(temp.c_str());
+    }
+    else if (s == "jump_speed"){
+
+        temp = "Jump Speed: " + std::to_string(int(jump_Speed));
+        jump_speed_label->setText(temp.c_str());
+    }
+}
+void Player::init_stats(QGraphicsScene *s) {
+
+    health_bar = new QProgressBar;
+    health_bar->setRange(0, health);
+    health_bar->setOrientation(Qt::Vertical);
+    health_bar->setGeometry(0, 0,20, health);
+    health_bar->setValue(health);
+    health_bar->setTextVisible(false);
+
+    labels.push_back(name_label = new QLabel());
+    labels.push_back(damage_label = new QLabel());
+    labels.push_back(shot_speed_label = new QLabel());
+    labels.push_back(movement_speed_label = new QLabel());
+    labels.push_back(jump_speed_label = new QLabel());
+
+    update_stat("name");
+    update_stat("damage");
+    update_stat("shot_speed");
+    update_stat("movement_speed");
+    update_stat("jump_speed");
+
+    int y = 0;
+    for (auto k = labels.begin(); k != labels.end(); k++) {
+
+        (*k)->setFont(QFont("System"));
+        (*k)->setGeometry(20, y, (*k)->text().length()*8, 15);
+        y += 15;
+    }
+
+    s->addWidget(health_bar);
+    s->addWidget(name_label);
+    s->addWidget(damage_label);
+    s->addWidget(shot_speed_label);
+    s->addWidget(movement_speed_label);
+    s->addWidget(jump_speed_label);
 }
 
 void Player::update(int y_max) {

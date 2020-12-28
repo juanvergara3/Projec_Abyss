@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    enemy.cpp \
     entity.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -25,6 +26,7 @@ SOURCES += \
     wall.cpp
 
 HEADERS += \
+    enemy.h \
     entity.h \
     mainwindow.h \
     player.h \

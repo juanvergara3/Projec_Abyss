@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->graphicsView->resize(scene->width(), scene->height());
     this->resize(ui->graphicsView->width()+100, ui->graphicsView->height()+100);
 
-    p1 = new Player(this, 0, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
+    p1 = new Player(this, scene, 0, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
 
     r1 = new Room;
 
@@ -57,7 +57,10 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
         p1->set_velY(p1->getY(), -p1->getJump_Speed());
     }
     if(event->key() == Qt::Key_Space){
-        proyectiles.push_back(p1->shoot(scene));
+        Proyectile * p = p1->shoot(scene);
+        //proyectiles.push_back(p);
+        Qproyectiles.push_back(p);
+
     }
 }
 
@@ -99,18 +102,18 @@ void MainWindow::check_collitions(Player *p) {
     /*------WALLS------*/
     for(int k = 0; k < p->collidingItems().size(); k++){
 
-        if(typeid (*(p->collidingItems()[k]))== typeid (Wall)){
+        if(typeid( *(p->collidingItems()[k]) )== typeid(Wall)){
 
             if(p->getX() < p->collidingItems().at(k)->x()) { //colicion en x por la izquierda
 
                 //p->set_velX(p->collidingItems().at(k)->x() - p->getRadio(), -1*p->getE()*p->getVx());
-                p->set_velX(p->collidingItems().at(k)->x() - p->getRadio() + (p->getDirection() * p->getMovement_speed()), p->getVx());
+                p->set_velX(p->collidingItems().at(k)->x() - p->getRadio() + (p->getDirection() * p->getMovement_speed()), p->getVx()); //fails ******
 
             }
             if(p->getX() > p->collidingItems().at(k)->x() + p->collidingItems().at(k)->boundingRect().width()) { //colicion en x por la derecha
 
                 //p->set_velX(p->collidingItems().at(k)->x() + p->collidingItems().at(k)->boundingRect().width() + p->getRadio(), -1*p->getE()*p->getVx());
-                p->set_velX(p->collidingItems().at(k)->x() + p->collidingItems().at(k)->boundingRect().width() + p->getRadio() + (p->getDirection() * p->getMovement_speed()), p->getVx());
+                p->set_velX(p->collidingItems().at(k)->x() + p->collidingItems().at(k)->boundingRect().width() + p->getRadio() + (p->getDirection() * p->getMovement_speed()), p->getVx()); //fails ******
             }
             if(p->getY() > v_limit - p->collidingItems().at(k)->y()) { //colicion en y por arriba (callendo)
 
@@ -146,12 +149,11 @@ bool MainWindow::check_collitions(Proyectile *p) {
     /*------WALLS------*/
     for(int k = 0; k < p->collidingItems().size(); k++){
 
-        if(typeid (*(p->collidingItems()[k]))== typeid (Wall)){
+        if(typeid ( *(p->collidingItems()[k]) ) == typeid(Wall)){
 
             return true;
+
         }
-
-
     }
     return false;
 }
@@ -161,20 +163,32 @@ void MainWindow::update_bodies(){
     p1->Player::update(v_limit);
     check_collitions(p1);
 
-    for (auto k = proyectiles.begin(); k != proyectiles.end(); ) { //checks for proyectiles collitions
-
-        (*k)->update(v_limit);
-
-        if (check_collitions(*k)){
-            scene->removeItem(*k);
-            k = proyectiles.erase(k);
-
-            //delete (*k);
-        }
-
+    QList<Proyectile*> aux; //just testing stuff, not very efficient ://
+    for(int k = 0; k < Qproyectiles.size(); k++){
+        Qproyectiles.at(k)->update(v_limit);
+        if(!check_collitions(Qproyectiles.at(k)))
+            aux.push_back(Qproyectiles.at(k));
         else
-            ++k;
+            scene->removeItem(Qproyectiles.at(k));
     }
+    Qproyectiles = aux;
+
+    //    for (auto k = proyectiles.begin(); k != proyectiles.end(); ) { //checks for proyectiles collitions
+
+    //        (*k)->update(v_limit);
+
+    //        if (check_collitions(*k)){
+    //            scene->removeItem(*k);
+    //            k = proyectiles.erase(k);
+
+    //            //delete (*k);
+    //        }
+
+    //        else
+    //            ++k;
+    //    }
+
+
 }
 
 

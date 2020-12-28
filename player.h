@@ -7,6 +7,9 @@
 #include <QPainter>
 #include <math.h>
 #include <cmath>
+#include <QProgressBar>
+#include <QLabel>
+#include <list>
 #include "entity.h"
 #include "proyectile.h"
 
@@ -19,19 +22,32 @@ private: // Variables
     float health;
     float damage;
     float shot_speed;
-    float fire_rate;
     float movement_speed;
     float jump_Speed;
+
+    QLabel *name_label;
+    QProgressBar * health_bar;
+    QLabel *damage_label;
+    QLabel *shot_speed_label;
+    QLabel *movement_speed_label;
+    QLabel *jump_speed_label;
+
+    std::list<QLabel *> labels;
 
     short sight;
     short direction;
 
     bool jumping;
 
+    std::string name;
+
 public: // Methods
-    explicit Player(QObject *parent = nullptr, float x_ = 0, float y_ = 0, float vx_ = 0, float vy_ = 0, float mass_ = 0, int radio_ = 0, float g_ = 0, float K_ = 0, float e_ = 0, float V_ = 0);
+    explicit Player(QObject *parent = nullptr, QGraphicsScene *s = nullptr, float x_ = 0, float y_ = 0, float vx_ = 0, float vy_ = 0, float mass_ = 0, int radio_ = 0, float g_ = 0, float K_ = 0, float e_ = 0, float V_ = 0);
 
     Proyectile* shoot(QGraphicsScene *scene);
+
+    void update_stat(std::string s);
+    void init_stats(QGraphicsScene *s);
 
     void update(int y_max);
 
