@@ -25,16 +25,16 @@ private: // Variables
     const int v_limit, h_limit;
 
 public: // Methods
-    explicit Room(QObject *parent = nullptr, QGraphicsScene* scene = nullptr, std::string file_name_ = "");
+    explicit Room(QObject *parent = nullptr, QGraphicsScene* scene = nullptr , std::list<Proyectile *> *p = nullptr, std::string file_name_ = "");
     ~Room();
 
     void load_room();
 
-    void update();
+    std::list<Enemy *> getEnemies() const;
 
 private: // Methods
     void load_room(std::string file_name);
-    void check_collitions();
+    //void check_collitions();
 
 };
 

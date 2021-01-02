@@ -1,12 +1,18 @@
 #include "room.h"
 
-Room::Room(QObject *parent, QGraphicsScene *scene, std::string file_name_) : QObject(parent), scene(scene), v_limit(720), h_limit(1280) {
+std::list<Enemy *> Room::getEnemies() const
+{
+    return enemies;
+}
+
+Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, std::string file_name_) : QObject(parent), scene(scene), v_limit(720), h_limit(1280) {
     //load_room(file_name_);
 
     walls.push_back(new Wall(this, 200, 620, 150, 40));
     walls.push_back(new Wall(this, 200,660, 40, 60));
+    walls.push_back(new Wall(this, 700, 720-80, 40, 80));
 
-    enemies.push_back(new Enemy(this, 1, 700, 10, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+    enemies.push_back(new Enemy(this, this->scene, "x", p, 1, 700, 300, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
 }
 Room::~Room() {
 
@@ -62,82 +68,41 @@ void Room::load_room(std::string file_name) {
      file.close();
 }
 
-void Room::check_collitions() {
+//void Room::check_collitions() {
 
-    for(auto k = enemies.begin(); k!=enemies.end(); k++){
+//    for(auto k = enemies.begin(); k!=enemies.end(); k++){
 
-        /*------EDGES------*/
-        if((*k)->getX() < (*k)->getRadio()) { //colicion en x por la izquierda
-            (*k)->set_velX((*k)->getRadio(), -1*(*k)->getE()*(*k)->getVx());
-        }
-        if((*k)->getX() > h_limit - (*k)->getRadio()) { //colicion en x por la derecha
-            (*k)->set_velX(h_limit - (*k)->getRadio(), -1*(*k)->getE()*(*k)->getVx());
-        }
-        if((*k)->getY() < (*k)->getRadio()) { //colicion en y por arriba (callendo)
-            (*k)->set_velY((*k)->getRadio(), -1*(*k)->getE()*(*k)->getVy());
-            //(*k)->setJumping(false);
-        }
+//        /*------EDGES------*/
+//        if((*k)->getX() < (*k)->getRadio()) { //colicion en x por la izquierda
+//            (*k)->set_velX((*k)->getRadio(), -1*(*k)->getE()*(*k)->getVx());
+//        }
+//        if((*k)->getX() > h_limit - (*k)->getRadio()) { //colicion en x por la derecha
+//            (*k)->set_velX(h_limit - (*k)->getRadio(), -1*(*k)->getE()*(*k)->getVx());
+//        }
+//        if((*k)->getY() < (*k)->getRadio()) { //colicion en y por arriba (callendo)
+//            (*k)->set_velY((*k)->getRadio(), -1*(*k)->getE()*(*k)->getVy());
+//            //(*k)->setJumping(false);
+//        }
 
-        if((*k)->getY() > v_limit - (*k)->getRadio()) { //colicion en y por abajo (saltando)
-            (*k)->set_velY(v_limit - (*k)->getRadio(), -1*(*k)->getE()*(*k)->getVy());
-        }
+//        if((*k)->getY() > v_limit - (*k)->getRadio()) { //colicion en y por abajo (saltando)
+//            (*k)->set_velY(v_limit - (*k)->getRadio(), -1*(*k)->getE()*(*k)->getVy());
+//        }
 
 
-        for(int i = 0; i < (*k)->collidingItems().size(); i++){
-              /*------WALLS------*/
-//            if(typeid( *((*k)->collidingItems()[i]) )== typeid(Wall)){
+//        for(int i = 0; i < (*k)->collidingItems().size(); i++){
 
-//                if((*k)->getX() < (*k)->collidingItems().at(i)->x()) { //colicion en x por la izquierda
 
-//                    //p->set_velX(p->collidingItems().at(k)->x() - p->getRadio(), -1*p->getE()*p->getVx());
-//                    //(*k)->set_velX((*k)->collidingItems().at(i)->x() - (*k)->getRadio() + ((*k)->getDirection() * (*k)->getMovement_speed()), (*k)->getVx()); //fails ******
+//            if(typeid( *((*k)->collidingItems()[i]) ) == typeid(Proyectile)){
+//                (*k)->take_damage(20);
 
-//                }
-//                if((*k)->getX() > (*k)->collidingItems().at(i)->x() + (*k)->collidingItems().at(i)->boundingRect().width()) { //colicion en x por la derecha
+//                //delete proyectile ****** get proyectile damage
 
-//                    //p->set_velX(p->collidingItems().at(k)->x() + p->collidingItems().at(k)->boundingRect().width() + p->getRadio(), -1*p->getE()*p->getVx());
-//                    //(*k)->set_velX((*k)->collidingItems().at(i)->x() + (*k)->collidingItems().at(i)->boundingRect().width() + (*k)->getRadio() + ((*k)->getDirection() * (*k)->getMovement_speed()), (*k)->getVx()); //fails ******
-//                }
-//                if((*k)->getY() > v_limit - (*k)->collidingItems().at(i)->y()) { //colicion en y por arriba (callendo)
-
-//                    (*k)->set_velY(v_limit - (*k)->collidingItems().at(i)->y() + (*k)->getRadio(), -1*(*k)->getE()*(*k)->getVy());
-//                    //(*k)->setJumping(false);
-
-//                }
-//                if((*k)->getY() < v_limit - ((*k)->collidingItems().at(i)->y() + (*k)->collidingItems().at(i)->boundingRect().height())) { //colicion en y por abajo (saltando)
-
-//                    (*k)->set_velY(v_limit - ((*k)->collidingItems().at(i)->y() + (*k)->collidingItems().at(i)->boundingRect().height() + (*k)->getRadio()), -1*(*k)->getE()*(*k)->getVy());
-
-//                }
+//                //((*k)->collidingItems()[i])->
 //            }
 
-            if(typeid( *((*k)->collidingItems()[i]) ) == typeid(Proyectile)){
-                (*k)->take_damage(20);
 
-                //delete proyectile ****** get proyectile damage
-
-                //((*k)->collidingItems()[i])->
-            }
+//        } //colliding items for
 
 
-        } //colliding items for
-
-
-    } //enemies for
-}
-
-void Room::update() {
-
-    for(auto k = enemies.begin(); k!=enemies.end(); ){
-        (*k)->update();
-
-        if((*k)->getHealth() <= 0){
-            scene->removeItem(*k);
-            k = enemies.erase(k);
-        }
-        else
-            ++k;
-    }
-
-    check_collitions();
-}
+//    } //enemies for
+//}

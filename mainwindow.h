@@ -31,8 +31,9 @@ private: // Variables
 
     int h_limit, v_limit;
 
-    //std::list<Proyectile*> proyectiles;
-    QList<Proyectile*> Qproyectiles;
+    std::list<Proyectile*> proyectiles;
+    //QList<Proyectile*> Qproyectiles;
+    std::list<Enemy*> enemies;
 
 public: // Methods
     MainWindow(QWidget *parent = nullptr);
@@ -44,6 +45,7 @@ public: // Methods
 private: // Methods
     void check_collitions(Player *p);
     bool check_collitions(Proyectile *p);
+    void check_collitions(Enemy *e);
 
 public slots:
     void update_bodies();

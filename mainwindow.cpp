@@ -14,9 +14,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     p1 = new Player(this, scene, 0, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
 
-    r1 = new Room(this, scene);
+    r1 = new Room(this, scene, &proyectiles, "");
 
     r1->load_room();
+
+    enemies = r1->getEnemies();
 
     scene->addItem(p1);
 
@@ -58,8 +60,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
     }
     if(event->key() == Qt::Key_Space){
         Proyectile * p = p1->shoot();
-        //proyectiles.push_back(p);
-        Qproyectiles.push_back(p);
+        proyectiles.push_back(p);
+        //Qproyectiles.push_back(p);
 
     }
 }
@@ -67,7 +69,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 void MainWindow::keyReleaseEvent(QKeyEvent *event) {
 
     if (event->isAutoRepeat()) //this allows multiple keypresses :D
-        return; // also removes double jump; No it doesn't :/
+        return;
 
     switch (event->key()) {
     case Qt::Key_D:
@@ -146,16 +148,85 @@ bool MainWindow::check_collitions(Proyectile *p) {
         return true;
     }
 
-    /*------WALLS------*/
     for(int k = 0; k < p->collidingItems().size(); k++){
 
+         /*------WALLS------*/
         if(typeid ( *(p->collidingItems()[k]) ) == typeid(Wall)){
 
             return true;
 
         }
+         /*------ENEMIES------*/
+        else if(typeid ( *(p->collidingItems()[k]) ) == typeid(Enemy)){
+
+            if(p->getType() != "enemy"){
+                dynamic_cast<Enemy *>((p->collidingItems()[k]))->take_damage(p->getDamage());
+                return true;
+            }
+        }
+        else if(typeid ( *(p->collidingItems()[k]) ) == typeid(Player)){
+
+            if(p->getType() != "player"){
+                dynamic_cast<Player *>((p->collidingItems()[k]))->take_damage(p->getDamage());
+                return true;
+            }
+        }
+
     }
     return false;
+}
+
+void MainWindow::check_collitions(Enemy *e) {
+
+    /*------EDGES------*/
+    if(e->getX() < e->getRadio()) { //colicion en x por la izquierda
+        e->set_velX(e->getRadio(), -1*e->getE()*e->getVx());
+    }
+    if(e->getX() > h_limit - e->getRadio()) { //colicion en x por la derecha
+        e->set_velX(h_limit - e->getRadio(), -1*e->getE()*e->getVx());
+    }
+    if(e->getY() < e->getRadio()) { //colicion en y por arriba (callendo)
+        e->set_velY(e->getRadio(), -1*e->getE()*e->getVy());
+        //(*k)->setJumping(false);
+    }
+
+    if(e->getY() > v_limit - e->getRadio()) { //colicion en y por abajo (saltando)
+        e->set_velY(v_limit - e->getRadio(), -1*e->getE()*e->getVy());
+    }
+
+    for(int k = 0; k < e->collidingItems().size(); k++){
+
+        /*------WALLS------*/
+        if(typeid( *(e->collidingItems()[k]) )== typeid(Wall)){
+
+            if(e->getX() < e->collidingItems().at(k)->x()) { //colicion en x por la izquierda
+
+                //p->set_velX(p->collidingItems().at(k)->x() - p->getRadio(), -1*p->getE()*p->getVx());
+                //e->set_velX(e->collidingItems().at(k)->x() - e->getRadio() + (e->getDirection() * e->getMovement_speed()), e->getVx()); //fails ******
+
+            }
+            if(e->getX() > e->collidingItems().at(k)->x() + e->collidingItems().at(k)->boundingRect().width()) { //colicion en x por la derecha
+
+                //p->set_velX(p->collidingItems().at(k)->x() + p->collidingItems().at(k)->boundingRect().width() + p->getRadio(), -1*p->getE()*p->getVx());
+                //e->set_velX(e->collidingItems().at(k)->x() + e->collidingItems().at(k)->boundingRect().width() + e->getRadio() + (e->getDirection() * e->getMovement_speed()), e->getVx()); //fails ******
+            }
+            if(e->getY() > v_limit - e->collidingItems().at(k)->y()) { //colicion en y por arriba (callendo)
+
+                e->set_velY(v_limit - e->collidingItems().at(k)->y() + e->getRadio(), -1*e->getE()*e->getVy());
+                //e->setJumping(false);
+
+            }
+            if(e->getY() < v_limit - (e->collidingItems().at(k)->y() + e->collidingItems().at(k)->boundingRect().height())) { //colicion en y por abajo (saltando)
+
+                e->set_velY(v_limit - (e->collidingItems().at(k)->y() + e->collidingItems().at(k)->boundingRect().height() + e->getRadio()), -1*e->getE()*e->getVy());
+
+            }
+        }
+        else if(typeid ( *(e->collidingItems()[k]) ) == typeid(Player)){
+
+            //dynamic_cast<Player *>((e->collidingItems()[k]))->take_damage(e->getDamage()); //too brutal
+        }
+    }
 }
 
 void MainWindow::update_bodies(){
@@ -163,32 +234,33 @@ void MainWindow::update_bodies(){
     p1->Player::update();
     check_collitions(p1);
 
-    QList<Proyectile*> aux; //just testing stuff, not very efficient ://
-    for(int k = 0; k < Qproyectiles.size(); k++){
-        Qproyectiles.at(k)->update();
-        if(!check_collitions(Qproyectiles.at(k)))
-            aux.push_back(Qproyectiles.at(k));
+    for (auto k = proyectiles.begin(); k != proyectiles.end(); ) { //checks for proyectiles' collitions
+
+        (*k)->update();
+
+        if (check_collitions(*k)){
+            scene->removeItem(*k);
+            delete (*k);
+            k = proyectiles.erase(k);
+        }
+
         else
-            scene->removeItem(Qproyectiles.at(k));
+            k++;
     }
-    Qproyectiles = aux;
 
-    r1->update();
+    for (auto k = enemies.begin(); k != enemies.end(); ) { //checks for enemies' health
 
-    //    for (auto k = proyectiles.begin(); k != proyectiles.end(); ) { //checks for proyectiles collitions
+        (*k)->update();
+        check_collitions(*k);
 
-    //        (*k)->update(v_limit);
-
-    //        if (check_collitions(*k)){
-    //            scene->removeItem(*k);
-    //            k = proyectiles.erase(k);
-
-    //            //delete (*k);
-    //        }
-
-    //        else
-    //            ++k;
-    //    }
+        if ((*k)->getHealth() <= 0){
+            scene->removeItem(*k);
+            delete(*k);
+            k = enemies.erase(k);
+        }
+        else
+            k++;
+    }
 }
 
 

@@ -17,7 +17,7 @@ Player::Player(QObject *parent, QGraphicsScene *s, float x_, float y_, float vx_
 }
 
 Proyectile *Player::shoot() {
-    Proyectile *p = new Proyectile(this, damage, this->getX(), this->getY(), sight*shot_speed, 0, 1, 4, 1, 1e-5, 0.1, 0);
+    Proyectile *p = new Proyectile(this, "player",damage, this->getX(), this->getY(), sight*shot_speed, 0, 1, 4, 1, 1e-5, 0.1, 0);
 
     scene->addItem(p);
     //p->setPos(p->getX(), 720 - p->getY());
@@ -32,6 +32,11 @@ void Player::update_stat(std::string s) {
     if(s == "name"){
 
         name_label->setText(name.c_str());
+    }
+    else if(s == "health"){
+
+        health_bar->setValue(health);
+        health_bar->update();
     }
     else if (s == "damage"){
 
@@ -89,6 +94,12 @@ void Player::init_stats() {
     scene->addWidget(shot_speed_label);
     scene->addWidget(movement_speed_label);
     scene->addWidget(jump_speed_label);
+}
+
+void Player::take_damage(int damage)
+{
+    health -= damage;
+    update_stat("health");
 }
 
 void Player::update() {

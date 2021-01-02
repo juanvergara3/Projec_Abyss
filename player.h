@@ -19,8 +19,8 @@ class Player : public Entity {
 public: // Variables
 
 private: // Variables
-    float health;
-    float damage;
+    int health;
+    int damage;
     float shot_speed;
     float movement_speed;
     float jump_Speed;
@@ -52,6 +52,8 @@ public: // Methods
 
     void update_stat(std::string s);
     void init_stats();
+
+    void take_damage(int damage);
 
     void update();
 
