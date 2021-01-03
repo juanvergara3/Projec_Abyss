@@ -98,7 +98,12 @@ void Player::init_stats() {
 
 void Player::take_damage(int damage)
 {
-    health -= damage;
+    if( (health - damage) < 0)
+        health = 0;
+
+    else
+        health -= damage;
+
     update_stat("health");
 }
 

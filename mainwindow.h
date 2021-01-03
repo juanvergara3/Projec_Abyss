@@ -28,11 +28,11 @@ private: // Variables
     Player *p1;
 
     Room *r1;
+    Room *r2;
 
     int h_limit, v_limit;
 
     std::list<Proyectile*> proyectiles;
-    //QList<Proyectile*> Qproyectiles;
     std::list<Enemy*> enemies;
 
 public: // Methods

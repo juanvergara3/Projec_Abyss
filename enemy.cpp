@@ -7,7 +7,6 @@ Enemy::Enemy(QObject *parent, QGraphicsScene *s, std::string type, std::list<Pro
     movement_timer = new QTimer;
 
     connect(movement_timer, SIGNAL(timeout()), this, SLOT(jump()));
-    movement_timer->start(2000);
 
     scene = s;
     proyectiles = p;
@@ -69,22 +68,22 @@ Enemy::Enemy(QObject *parent, QGraphicsScene *s, std::string type, std::list<Pro
     if(type == "single"){
 
         connect(shooting_timer, SIGNAL(timeout()), this, SLOT(shoot_single()));
-        shooting_timer->start(fire_rate);
+
     }
     else if(type == "double"){
 
         connect(shooting_timer, SIGNAL(timeout()), this, SLOT(shoot_double()));
-        shooting_timer->start(fire_rate);
+
     }
     else if(type == "cross"){
 
         connect(shooting_timer, SIGNAL(timeout()), this, SLOT(shoot_cross()));
-        shooting_timer->start(fire_rate);
+
     }
     else if(type == "x"){
 
         connect(shooting_timer, SIGNAL(timeout()), this, SLOT(shoot_x()));
-        shooting_timer->start(fire_rate);
+
     }
     else if(type == "orbit"){
 
@@ -108,6 +107,15 @@ int Enemy::getHealth() const {
 
 void Enemy::take_damage(int damage) {
     health -= damage;
+}
+
+void Enemy::init() {
+    shooting_timer->start(fire_rate);
+    movement_timer->start(2000);
+}
+void Enemy::stop() {
+    shooting_timer->stop();
+    movement_timer->stop();
 }
 
 void Enemy::shoot_single() {

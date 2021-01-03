@@ -41,6 +41,9 @@ public: // Methods
 
     void sort_proyectiles();
 
+    void init();
+    void stop();
+
 private: // Methods
 
 public slots:

@@ -14,11 +14,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     p1 = new Player(this, scene, 0, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
 
-    r1 = new Room(this, scene, &proyectiles, "");
+    r1 = new Room(this, scene, &proyectiles, "1");
+    r2 = new Room(this, scene, &proyectiles, "2");
 
-    r1->load_room();
+    //r1->door->setLink(r2);
+    //r2->door->setLink(r1);
 
-    enemies = r1->getEnemies();
+    r1->doors.back()->setLink(r2);
+    r2->doors.back()->setLink(r1);
+
+    r2->load_room();
+
+    enemies = r2->getEnemies();
 
     scene->addItem(p1);
 
@@ -30,6 +37,7 @@ MainWindow::~MainWindow() {
 
     delete timer;
     delete r1;
+    delete r2;
     delete p1;
     delete scene;
     delete ui;
@@ -61,11 +69,36 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
     if(event->key() == Qt::Key_Space){
         Proyectile * p = p1->shoot();
         proyectiles.push_back(p);
-        //Qproyectiles.push_back(p);
+    }
+    if(event->key() == Qt::Key_E){
 
+        for(int k = 0; k < p1->collidingItems().size(); k++){
+
+            if(typeid( *(p1->collidingItems()[k]) )== typeid(Door)){
+
+                Door *d = dynamic_cast<Door*>(p1->collidingItems()[k]);
+
+                d->getSelf()->deload_room();
+                d->getLink()->load_room();
+
+                enemies = d->getLink()->getEnemies();
+
+                //dynamic_cast<Door*>(p1->collidingItems()[k])->getSelf()->deload_room();
+                //dynamic_cast<Door*>(p1->collidingItems()[k])->getLink()->load_room();
+
+                //enemies = dynamic_cast<Door*>(p1->collidingItems()[k])->getLink()->getEnemies();
+
+                scene->removeItem(p1);
+                scene->addItem(p1);
+
+                scene->removeItem(d);
+
+                //scene->removeItem(p1->collidingItems()[k]);
+
+            }
+        }
     }
 }
-
 void MainWindow::keyReleaseEvent(QKeyEvent *event) {
 
     if (event->isAutoRepeat()) //this allows multiple keypresses :D
@@ -131,7 +164,6 @@ void MainWindow::check_collitions(Player *p) {
         }
     }
 }
-
 bool MainWindow::check_collitions(Proyectile *p) {
     /*------EDGES------*/
     if(p->getX() < p->getRadio()) {
@@ -175,7 +207,6 @@ bool MainWindow::check_collitions(Proyectile *p) {
     }
     return false;
 }
-
 void MainWindow::check_collitions(Enemy *e) {
 
     /*------EDGES------*/
