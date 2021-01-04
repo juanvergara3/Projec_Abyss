@@ -27,7 +27,6 @@ Enemy::Enemy(QObject *parent, QGraphicsScene *s, std::string type, std::list<Pro
         jump_Speed = 20; //***
         shot_speed = 10;
         fire_rate = 2000;
-
     }
     else if(dificulty == 3){
         health = 80;
@@ -36,7 +35,6 @@ Enemy::Enemy(QObject *parent, QGraphicsScene *s, std::string type, std::list<Pro
         jump_Speed = 20; //***
         shot_speed = 15;
         fire_rate = 1500;
-
     }
     else if(dificulty == 4){
         health = 100;
@@ -45,7 +43,6 @@ Enemy::Enemy(QObject *parent, QGraphicsScene *s, std::string type, std::list<Pro
         jump_Speed = 20; //***
         shot_speed = 20;
         fire_rate = 1000;
-
     }
     else if(dificulty == 5){
         health = 120;
@@ -54,7 +51,6 @@ Enemy::Enemy(QObject *parent, QGraphicsScene *s, std::string type, std::list<Pro
         jump_Speed = 20; //***
         shot_speed = 25;
         fire_rate = 500;
-
     }
     else{
         health = 0;
@@ -92,7 +88,6 @@ Enemy::Enemy(QObject *parent, QGraphicsScene *s, std::string type, std::list<Pro
 
     }
 }
-
 Enemy::~Enemy() {
     delete shooting_timer;
     delete movement_timer;
@@ -122,7 +117,7 @@ void Enemy::shoot_single() {
     Proyectile *p = new Proyectile(this, "enemy", damage, this->getX(), this->getY(), sight*shot_speed, 0, 1, 4, 1, 1e-5, 0.1, 0);
 
     proyectiles->push_back(p);
-
+    p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
 }
 void Enemy::shoot_double() {
@@ -130,10 +125,12 @@ void Enemy::shoot_double() {
 
     p = new Proyectile(this, "enemy", damage, this->getX(), this->getY(), sight*shot_speed, 0, 1, 4, 1, 1e-5, 0.1, 0);
     proyectiles->push_back(p);
+    p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
 
     p = new Proyectile(this, "enemy", damage, this->getX(), this->getY(), -sight*shot_speed, 0, 1, 4, 1, 1e-5, 0.1, 0);
     proyectiles->push_back(p);
+    p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
 }
 void Enemy::shoot_cross() {
@@ -141,18 +138,22 @@ void Enemy::shoot_cross() {
 
     p = new Proyectile(this, "enemy", damage, this->getX(), this->getY(), sight*shot_speed, 0, 1, 4, 1, 1e-5, 0.1, 0);
     proyectiles->push_back(p);
+    p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
 
     p = new Proyectile(this, "enemy", damage, this->getX(), this->getY(), -sight*shot_speed, 0, 1, 4, 1, 1e-5, 0.1, 0);
     proyectiles->push_back(p);
+    p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
 
     p = new Proyectile(this, "enemy", damage, this->getX(), this->getY(), 0, sight*shot_speed, 1, 4, 1, 1e-5, 0.1, 0);
     proyectiles->push_back(p);
+    p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
 
     p = new Proyectile(this, "enemy", damage, this->getX(), this->getY(), 0, -sight*shot_speed, 1, 4, 1, 1e-5, 0.1, 0);
     proyectiles->push_back(p);
+    p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
 }
 void Enemy::shoot_x() {
@@ -160,18 +161,22 @@ void Enemy::shoot_x() {
 
     p = new Proyectile(this, "enemy", damage, this->getX(), this->getY(), sight*(shot_speed), sight*(shot_speed), 1, 4, 1, 1e-5, 0.1, 0);
     proyectiles->push_back(p);
+    p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
 
     p = new Proyectile(this, "enemy", damage, this->getX(), this->getY(), -sight*(shot_speed), -sight*(shot_speed), 1, 4, 1, 1e-5, 0.1, 0);
     proyectiles->push_back(p);
+    p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
 
     p = new Proyectile(this, "enemy", damage, this->getX(), this->getY(), -sight*shot_speed, sight*shot_speed, 1, 4, 1, 1e-5, 0.1, 0);
     proyectiles->push_back(p);
+    p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
 
     p = new Proyectile(this, "enemy", damage, this->getX(), this->getY(), sight*shot_speed, -sight*shot_speed, 1, 4, 1, 1e-5, 0.1, 0);
     proyectiles->push_back(p);
+    p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
 }
 void Enemy::shoot_orbit() {

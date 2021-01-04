@@ -14,7 +14,6 @@ class Door;
 
 class Room : public QObject {
     Q_OBJECT
-
 public: // Variables
     Door *door;
     std::list <Door *> doors;
@@ -27,6 +26,8 @@ private: // Variables
 
     QGraphicsScene *scene;
 
+    bool cleared;
+
     const int v_limit, h_limit;
 
 public: // Methods
@@ -37,6 +38,10 @@ public: // Methods
     void deload_room();
 
     std::list<Enemy *> getEnemies() const;
+
+    void clear_room();
+
+    bool isClear() const;
 
 private: // Methods
     void load_room(std::string file_name);

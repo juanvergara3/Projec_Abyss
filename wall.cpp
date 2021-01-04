@@ -1,6 +1,6 @@
 #include "wall.h"
 
-Wall::Wall(QObject *parent, int x, int y, int w, int h) {
+Wall::Wall(QObject *parent, int x, int y, int w, int h) : QObject(parent) {
     posx = x;
     posy = y;
     width = w;

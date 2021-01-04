@@ -1,9 +1,10 @@
 #include "player.h"
 
 Player::Player(QObject *parent, QGraphicsScene *s, float x_, float y_, float vx_, float vy_, float mass_, int radio_, float g_, float K_, float e_, float V_) :
-    Entity(parent, x_, y_, vx_, vy_, mass_, radio_, g_, K_, e_, V_) , v_limit(720), scene(s), h_limit(1280)
+    Entity(parent, x_, y_, vx_, vy_, mass_, radio_, g_, K_, e_, V_)
 {
     health = 100;
+    max_health = 100;
     damage = 20;
     shot_speed = 30;
     movement_speed = 1;
@@ -13,14 +14,25 @@ Player::Player(QObject *parent, QGraphicsScene *s, float x_, float y_, float vx_
 
     name = "P1"; //constructor
 
+    scene = s;
+
     init_stats();
+}
+Player::~Player() {
+    delete health_bar;
+    delete name_label;
+    delete max_health_label;
+    delete damage_label;
+    delete shot_speed_label;
+    delete movement_speed_label;
+    delete jump_speed_label;
 }
 
 Proyectile *Player::shoot() {
     Proyectile *p = new Proyectile(this, "player",damage, this->getX(), this->getY(), sight*shot_speed, 0, 1, 4, 1, 1e-5, 0.1, 0);
 
+    p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
-    //p->setPos(p->getX(), 720 - p->getY());
 
     return p;
 }
@@ -32,6 +44,11 @@ void Player::update_stat(std::string s) {
     if(s == "name"){
 
         name_label->setText(name.c_str());
+    }
+    else if(s == "max_health"){
+
+        temp = "Max Health: " + std::to_string(int(max_health));
+        max_health_label->setText(temp.c_str());
     }
     else if(s == "health"){
 
@@ -67,14 +84,17 @@ void Player::init_stats() {
     health_bar->setGeometry(0, 0,20, health);
     health_bar->setValue(health);
     health_bar->setTextVisible(false);
+    health_bar->setGeometry(0,0, 20, 120);
 
     labels.push_back(name_label = new QLabel());
+    labels.push_back(max_health_label = new QLabel());
     labels.push_back(damage_label = new QLabel());
     labels.push_back(shot_speed_label = new QLabel());
     labels.push_back(movement_speed_label = new QLabel());
     labels.push_back(jump_speed_label = new QLabel());
 
     update_stat("name");
+    update_stat("max_health");
     update_stat("damage");
     update_stat("shot_speed");
     update_stat("movement_speed");
@@ -90,6 +110,7 @@ void Player::init_stats() {
 
     scene->addWidget(health_bar);
     scene->addWidget(name_label);
+    scene->addWidget(max_health_label);
     scene->addWidget(damage_label);
     scene->addWidget(shot_speed_label);
     scene->addWidget(movement_speed_label);

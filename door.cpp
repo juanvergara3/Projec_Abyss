@@ -1,7 +1,7 @@
 #include "door.h"
 #include "room.h"
 
-Door::Door(QObject *parent, Room *self, Room *link, int x, int y, int w, int h) {
+Door::Door(QObject *parent, Room *self, Room *link, int x, int y, int w, int h) : QObject(parent) {
     posx = x;
     posy = y;
     width = w;

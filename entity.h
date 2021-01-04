@@ -9,7 +9,6 @@
 
 class Entity : public QObject, public QGraphicsItem {
     Q_OBJECT
-
 public: //variables
 
 private: //variables
@@ -50,6 +49,10 @@ public: //methods
     float getE() const;
 
     void setK(float value);
+
+    int getV_limit() const;
+    int getH_limit() const;
+
 private: //methods
 
 };

@@ -17,15 +17,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     r1 = new Room(this, scene, &proyectiles, "1");
     r2 = new Room(this, scene, &proyectiles, "2");
 
-    //r1->door->setLink(r2);
-    //r2->door->setLink(r1);
-
     r1->doors.back()->setLink(r2);
     r2->doors.back()->setLink(r1);
 
-    r2->load_room();
-
-    enemies = r2->getEnemies();
+    current_room = r2;
+    current_room->load_room();
+    enemies = current_room->getEnemies();
 
     scene->addItem(p1);
 
@@ -35,6 +32,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 }
 MainWindow::~MainWindow() {
 
+    current_room = nullptr;
+
+    delete current_room;
     delete timer;
     delete r1;
     delete r2;
@@ -78,23 +78,21 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 
                 Door *d = dynamic_cast<Door*>(p1->collidingItems()[k]);
 
-                d->getSelf()->deload_room();
-                d->getLink()->load_room();
+                //d->getSelf()->deload_room();
+                //d->getLink()->load_room();
+
+                current_room->deload_room();
+                current_room = d->getLink();
+                current_room->load_room();
 
                 enemies = d->getLink()->getEnemies();
 
-                //dynamic_cast<Door*>(p1->collidingItems()[k])->getSelf()->deload_room();
-                //dynamic_cast<Door*>(p1->collidingItems()[k])->getLink()->load_room();
-
-                //enemies = dynamic_cast<Door*>(p1->collidingItems()[k])->getLink()->getEnemies();
+                //current_room = d->getLink();
 
                 scene->removeItem(p1);
                 scene->addItem(p1);
 
                 scene->removeItem(d);
-
-                //scene->removeItem(p1->collidingItems()[k]);
-
             }
         }
     }
@@ -286,11 +284,15 @@ void MainWindow::update_bodies(){
 
         if ((*k)->getHealth() <= 0){
             scene->removeItem(*k);
-            delete(*k);
+            //delete(*k);
+            (*k)->stop();
             k = enemies.erase(k);
         }
         else
             k++;
+    }
+    if(enemies.empty() && !current_room->isClear()) {
+        current_room->clear_room();
     }
 }
 

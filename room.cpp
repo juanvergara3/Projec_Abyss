@@ -1,12 +1,9 @@
 #include "room.h"
 
-std::list<Enemy *> Room::getEnemies() const
-{
-    return enemies;
-}
-
 Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, std::string file_name_) : QObject(parent), scene(scene), v_limit(720), h_limit(1280) {
     //load_room(file_name_);
+
+    cleared = false;
 
     if(file_name_ == "1"){
 
@@ -103,4 +100,22 @@ void Room::load_room(std::string file_name) {
          }
      }
      file.close();
+}
+
+std::list<Enemy *> Room::getEnemies() const {
+    return enemies;
+}
+
+void Room::clear_room() {
+    for (auto k = enemies.begin(); k != enemies.end(); k++) { //checks for enemies' health
+
+        //delete(*k);
+
+    }
+    cleared = true;
+   enemies.clear();
+}
+
+bool Room::isClear() const {
+    return cleared;
 }

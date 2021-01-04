@@ -19,6 +19,7 @@ SOURCES += \
     door.cpp \
     enemy.cpp \
     entity.cpp \
+    item.cpp \
     main.cpp \
     mainwindow.cpp \
     player.cpp \
@@ -30,6 +31,7 @@ HEADERS += \
     door.h \
     enemy.h \
     entity.h \
+    item.h \
     mainwindow.h \
     player.h \
     proyectile.h \

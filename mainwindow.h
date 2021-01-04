@@ -27,6 +27,8 @@ private: // Variables
 
     Player *p1;
 
+    Room *current_room;
+
     Room *r1;
     Room *r2;
 

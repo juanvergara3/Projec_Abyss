@@ -18,7 +18,6 @@ Entity::Entity(QObject *parent, float x_, float y_, float vx_, float vy_, float 
     V = V_;
     dt = 0.1;
 }
-
 Entity::~Entity() {
 
 }
@@ -84,4 +83,11 @@ float Entity::getE() const {
 
 void Entity::setK(float value) {
     K = value;
+}
+
+int Entity::getV_limit() const {
+    return v_limit;
+}
+int Entity::getH_limit() const {
+    return h_limit;
 }

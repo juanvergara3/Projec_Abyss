@@ -8,7 +8,6 @@
 
 class Enemy : public Entity {
     Q_OBJECT
-
 public: // Variables
 
 private: // Variables
