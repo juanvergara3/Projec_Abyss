@@ -3,6 +3,10 @@
 Item::Item(QObject *parent, std::string stat, int value) : QObject(parent) {
     this->stat = stat;
     this->value = value;
+
+    width = 16;
+    height = 16;
+
 }
 Item::~Item(){
 

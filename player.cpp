@@ -76,6 +76,38 @@ void Player::update_stat(std::string s) {
         jump_speed_label->setText(temp.c_str());
     }
 }
+void Player::update_stat(std::string s, int value) {
+
+    if(s == "max_health"){
+
+        max_health += value;
+    }
+    else if(s == "health"){
+
+        health += value;
+
+        if(health > max_health)
+            health = max_health;
+    }
+    else if (s == "damage"){
+
+        damage += value;
+    }
+    else if (s == "shot_speed"){
+
+        shot_speed += value;
+    }
+    else if (s == "movement_speed"){
+
+        movement_speed += value;
+    }
+    else if (s == "jump_speed"){
+
+        jump_Speed += value;
+    }
+
+    update_stat(s);
+}
 void Player::init_stats() {
 
     health_bar = new QProgressBar;
@@ -119,11 +151,10 @@ void Player::init_stats() {
 
 void Player::take_damage(int damage)
 {
-    if( (health - damage) < 0)
-        health = 0;
+    health -= damage;
 
-    else
-        health -= damage;
+    if( health < 0)
+        health = 0;
 
     update_stat("health");
 }

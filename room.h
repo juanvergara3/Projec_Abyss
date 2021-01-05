@@ -4,25 +4,27 @@
 #include <QObject>
 #include <fstream>
 #include <QGraphicsScene>
-#include <vector>
 #include <list>
 #include "wall.h"
 #include "enemy.h"
 #include "door.h"
+#include "item.h"
 
 class Door;
 
 class Room : public QObject {
     Q_OBJECT
 public: // Variables
-    Door *door;
     std::list <Door *> doors;
 
 private: // Variables
     std::list <Wall *> walls;
     std::list <Enemy *> enemies;
+    Item *item;
     //std::list <Door *> doors;
     //QList< std::vector<int>[2] > spawnpoints;
+
+    int itemX, itemY;
 
     QGraphicsScene *scene;
 
@@ -42,6 +44,14 @@ public: // Methods
     void clear_room();
 
     bool isClear() const;
+
+    int getItemX() const;
+    int getItemY() const;
+
+    void remove_item();
+
+    void spawn_heart();
+    void spawn_item(Item *i);
 
 private: // Methods
     void load_room(std::string file_name);

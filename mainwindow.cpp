@@ -29,6 +29,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update_bodies()));
     timer->start(3);
+
+    //srand(unsigned(time(0)));
+    srand(time(NULL));
+
+    load_items(""); // ***NOTHING IS BEING LOADED YET***
+
+    std::vector<Item*> temp (item_bank.begin(), item_bank.end());
+    std::random_shuffle(temp.begin(), temp.end());
+    std::copy(temp.begin(), temp.end(), item_bank.begin());
 }
 MainWindow::~MainWindow() {
 
@@ -74,7 +83,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 
         for(int k = 0; k < p1->collidingItems().size(); k++){
 
-            if(typeid( *(p1->collidingItems()[k]) )== typeid(Door)){
+            if(typeid( *(p1->collidingItems()[k]) ) == typeid(Door)){
 
                 Door *d = dynamic_cast<Door*>(p1->collidingItems()[k]);
 
@@ -93,6 +102,15 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
                 scene->addItem(p1);
 
                 scene->removeItem(d);
+            }
+            if(typeid( *(p1->collidingItems()[k]) ) == typeid(Item)){
+
+                Item *i = dynamic_cast<Item*>(p1->collidingItems()[k]);
+
+                p1->update_stat(i->getStat(), i->getValue());
+
+                current_room->remove_item();
+
             }
         }
     }
@@ -258,6 +276,17 @@ void MainWindow::check_collitions(Enemy *e) {
     }
 }
 
+Item * MainWindow::get_random_item() {
+
+    Item * i = item_bank.back();
+    item_bank.pop_back();
+    return i;
+}
+
+void MainWindow::load_items(std::string file_name) {
+    //loads items from the item bank file
+}
+
 void MainWindow::update_bodies(){
 
     p1->Player::update();
@@ -293,6 +322,24 @@ void MainWindow::update_bodies(){
     }
     if(enemies.empty() && !current_room->isClear()) {
         current_room->clear_room();
+
+        int r = rand() % 101;
+
+        if(r <= 66 && r >= 0){
+
+            scene->removeItem(p1);
+
+            if(r <= 22 && r >= 0){
+
+                current_room->spawn_item(get_random_item());
+            }
+            else if (r > 22){
+
+                current_room->spawn_heart();
+            }
+
+            scene->addItem(p1);
+        }
     }
 }
 

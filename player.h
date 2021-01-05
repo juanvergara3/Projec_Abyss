@@ -51,6 +51,7 @@ public: // Methods
     Proyectile* shoot();
 
     void update_stat(std::string s);
+    void update_stat(std::string s, int value);
     void init_stats();
 
     void take_damage(int damage);

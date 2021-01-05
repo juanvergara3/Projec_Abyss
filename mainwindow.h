@@ -5,9 +5,12 @@
 #include <QTimer>
 #include <QGraphicsScene>
 #include <QKeyEvent>
-#include<forward_list>
+#include <stdio.h>
+#include <stdlib.h>
+#include<time.h>
 #include "room.h"
 #include "player.h"
+#include "item.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -36,6 +39,7 @@ private: // Variables
 
     std::list<Proyectile*> proyectiles;
     std::list<Enemy*> enemies;
+    std::list<Item*> item_bank;
 
 public: // Methods
     MainWindow(QWidget *parent = nullptr);
@@ -48,6 +52,10 @@ private: // Methods
     void check_collitions(Player *p);
     bool check_collitions(Proyectile *p);
     void check_collitions(Enemy *e);
+
+    Item *get_random_item();
+
+    void load_items(std::string file_name);
 
 public slots:
     void update_bodies();

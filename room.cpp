@@ -5,6 +5,10 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
     cleared = false;
 
+    itemX =  250;
+    itemY = 720-16;
+    item = nullptr;
+
     if(file_name_ == "1"){
 
         walls.push_back(new Wall(this, 200, 620, 150, 40));
@@ -29,6 +33,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 }
 Room::~Room() {
     //should it delete the content of the lists?
+    delete item;
 }
 
 void Room::load_room() {
@@ -48,6 +53,13 @@ void Room::load_room() {
         scene->addItem(*k);
         (*k)->setPos((*k)->getPosx(), (*k)->getPosy());
     }
+
+    if(item != nullptr){
+        scene->addItem(item);
+        item->setPos(itemX, itemY);
+    }
+
+
     //scene->addItem(door);
     //door->setPos(door->getPosx(), door->getPosy());
 }
@@ -67,6 +79,10 @@ void Room::deload_room() {
         //delete(*k);
         //k = doors.erase(k);
     }
+
+    if(item != nullptr)
+        scene->removeItem(item);
+
 }
 
 void Room::load_room(std::string file_name) {
@@ -107,15 +123,38 @@ std::list<Enemy *> Room::getEnemies() const {
 }
 
 void Room::clear_room() {
-    for (auto k = enemies.begin(); k != enemies.end(); k++) { //checks for enemies' health
+//    for (auto k = enemies.begin(); k != enemies.end(); k++) { //checks for enemies' health
 
-        //delete(*k);
+//        //delete(*k);
 
-    }
+//    }
     cleared = true;
-   enemies.clear();
+    enemies.clear();
 }
 
 bool Room::isClear() const {
     return cleared;
+}
+
+int Room::getItemX() const {
+    return itemX;
+}
+int Room::getItemY() const {
+    return itemY;
+}
+
+void Room::remove_item() {
+    scene->removeItem(item);
+    item = nullptr;
+}
+
+void Room::spawn_heart() {
+    item = new Item(this, "health", 25);
+    item->setPos(itemX, itemY);
+    scene->addItem(item);
+}
+void Room::spawn_item(Item *i) {
+    item = i;
+    item->setPos(itemX, itemY);
+    scene->addItem(item);
 }
