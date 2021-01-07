@@ -179,7 +179,10 @@ void Room::spawn_heart() {
     scene->addItem(item);
 }
 void Room::spawn_item(Item *i) {
-    item = i;
-    item->setPos(itemX, itemY);
-    scene->addItem(item);
+
+    if(i != nullptr) {
+        item = i;
+        item->setPos(itemX, itemY);
+        scene->addItem(item);
+    }
 }

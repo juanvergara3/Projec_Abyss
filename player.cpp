@@ -1,6 +1,6 @@
 #include "player.h"
 
-Player::Player(QObject *parent, QGraphicsScene *s, float x_, float y_, float vx_, float vy_, float mass_, int radio_, float g_, float K_, float e_, float V_) :
+Player::Player(QObject *parent, QGraphicsScene *s, std::string name, int statPos, float x_, float y_, float vx_, float vy_, float mass_, int radio_, float g_, float K_, float e_, float V_) :
     Entity(parent, x_, y_, vx_, vy_, mass_, radio_, g_, K_, e_, V_)
 {
     health = 100;
@@ -12,11 +12,11 @@ Player::Player(QObject *parent, QGraphicsScene *s, float x_, float y_, float vx_
     sight = 1;
     direction = 0;
 
-    name = "P1"; //constructor
+    this->name = name;
 
     scene = s;
 
-    init_stats();
+    init_stats(statPos);
 }
 Player::~Player() {
     delete health_bar;
@@ -108,14 +108,14 @@ void Player::update_stat(std::string s, int value) {
 
     update_stat(s);
 }
-void Player::init_stats() {
+void Player::init_stats(int x_reference) {
 
     health_bar = new QProgressBar;
     health_bar->setRange(0, max_health);
     health_bar->setOrientation(Qt::Vertical);
     health_bar->setValue(max_health);
     health_bar->setTextVisible(false);
-    health_bar->setGeometry(0,0, 20, 120);
+    health_bar->setGeometry(x_reference, -120, 20, 120);
 
     labels.push_back(name_label = new QLabel());
     labels.push_back(max_health_label = new QLabel());
@@ -131,11 +131,11 @@ void Player::init_stats() {
     update_stat("movement_speed");
     update_stat("jump_speed");
 
-    int y = 0;
+    int y = -120;
     for (auto k = labels.begin(); k != labels.end(); k++) {
 
         (*k)->setFont(QFont("System"));
-        (*k)->setGeometry(20, y, (*k)->text().length()*8, 20);
+        (*k)->setGeometry(20 + x_reference, y, (*k)->text().length()*8, 20);
         (*k)->setStyleSheet("QLabel { background-color : white; color : black; }");
         y += 20;
     }

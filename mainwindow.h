@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QGraphicsScene>
 #include <QKeyEvent>
+#include <QMouseEvent>
 #include <stdio.h>
 #include <stdlib.h>
 #include<time.h>
@@ -28,8 +29,6 @@ private: // Variables
 
     QTimer *timer;
 
-    Player *p1;
-
     Boss *boss;
 
     Room *current_room;
@@ -44,12 +43,16 @@ private: // Variables
     std::list<Enemy*> enemies;
     std::list<Item*> item_bank;
 
+    Player *p1, *p2;
+
 public: // Methods
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
+
+    void mousePressEvent(QMouseEvent *event);
 
 private: // Methods
     void check_collitions(Player *p);

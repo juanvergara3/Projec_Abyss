@@ -10,9 +10,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->centralwidget->adjustSize();
     scene->addRect(scene->sceneRect());
     ui->graphicsView->resize(scene->width(), scene->height());
+    ui->graphicsView->setFocus();
     this->resize(ui->graphicsView->width()+100, ui->graphicsView->height()+100);
 
-    p1 = new Player(this, scene, 0, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
+    p1 = new Player(this, scene, "P1", 0, 0, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
+    p2 = new Player(this, scene, "P2", 200, 1000, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
+    p2 = nullptr;
 
     r1 = new Room(this, scene, &proyectiles, "1");
     r2 = new Room(this, scene, &proyectiles, "2");
@@ -36,6 +39,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     }
 
     scene->addItem(p1);
+    if(p2 != nullptr)
+        scene->addItem(p2);
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update_bodies()));
@@ -60,6 +65,7 @@ MainWindow::~MainWindow() {
     delete r1;
     delete r2;
     delete p1;
+    delete p2;
     delete scene;
     delete ui;
 }
@@ -116,6 +122,10 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 
                 scene->removeItem(p1);
                 scene->addItem(p1);
+                if(p2 != nullptr){
+                    scene->removeItem(p2);
+                    scene->addItem(p2);
+                }
 
                 scene->removeItem(d);
             }
@@ -127,6 +137,68 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 
                 current_room->remove_item();
 
+            }
+        }
+    }
+
+    if(p2 != nullptr){
+        if(event->key() == Qt::Key_L){
+            //p2->set_velX(p1->getX(), p2->getMovement_speed());
+            p2->addDirection(1);
+            p2->setSight(1);
+        }
+        if(event->key() == Qt::Key_J){
+            //p2->set_velX(p1->getX(), -p2->getMovement_speed());
+            p2->addDirection(-1);
+            p2->setSight(-1);
+        }
+        if(event->key() == Qt::Key_I){
+            if(!p2->getJumping())
+                p2->set_velY(p2->getY(), p2->getJump_Speed());
+            p2->setJumping(true);
+        }
+        if(event->key() == Qt::Key_K){
+            p2->set_velY(p2->getY(), -p2->getJump_Speed());
+        }
+        if(event->key() == Qt::Key_O){
+
+            for(int k = 0; k < p2->collidingItems().size(); k++){
+
+                if(typeid( *(p2->collidingItems()[k]) ) == typeid(Door)){
+
+                    Door *d = dynamic_cast<Door*>(p2->collidingItems()[k]);
+
+                    current_room->deload_room();
+                    current_room = d->getLink();
+                    current_room->load_room();
+
+                    current_room_type = current_room->getType();
+
+                    if(current_room_type == "boss") {
+                        boss = current_room->getBoss();
+                        enemies.clear();
+                    }
+                    else if(current_room_type == "normal") {
+                        enemies = current_room->getEnemies();
+                        boss = nullptr;
+                    }
+
+                    scene->removeItem(p1);
+                    scene->addItem(p1);
+                    scene->removeItem(p2);
+                    scene->addItem(p2);
+
+                    scene->removeItem(d);
+                }
+                if(typeid( *(p2->collidingItems()[k]) ) == typeid(Item)){
+
+                    Item *i = dynamic_cast<Item*>(p2->collidingItems()[k]);
+
+                    p2->update_stat(i->getStat(), i->getValue());
+
+                    current_room->remove_item();
+
+                }
             }
         }
     }
@@ -143,8 +215,29 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
     case Qt::Key_A:
         p1->addDirection(1);
         break;
+
+    case Qt::Key_L:
+        if(p2!= nullptr)
+            p2->addDirection(-1);
+        break;
+    case Qt::Key_J:
+        if(p2!= nullptr)
+            p2->addDirection(1);
+        break;
+
     default:
         break;
+    }
+}
+void MainWindow::mousePressEvent(QMouseEvent *event) {
+
+    if(p2 != nullptr){
+
+        if(event->button() == Qt::MouseButton::LeftButton){
+            Proyectile * p = p2->shoot();
+            proyectiles.push_back(p);
+        }
+
     }
 }
 
@@ -353,8 +446,11 @@ void MainWindow::check_collitions(Boss *b) {
 Item * MainWindow::get_random_item() {
 
     Item * i = item_bank.back();
-    item_bank.pop_back();
-    return i;
+    if(i != nullptr) {
+        item_bank.pop_back();
+        return i;
+    }
+    return nullptr;
 }
 void MainWindow::load_items(std::string file_name) {
     //loads items from the item bank file
@@ -364,6 +460,11 @@ void MainWindow::update_bodies(){
 
     p1->Player::update();
     check_collitions(p1);
+
+    if(p2 != nullptr){
+        p2->Player::update();
+        check_collitions(p2);
+    }
 
     if(boss != nullptr && current_room_type == "boss"){
 
@@ -377,9 +478,16 @@ void MainWindow::update_bodies(){
             current_room->clear_room();
 
             scene->removeItem(p1);
-            //current_room->spawn_item(get_random_item());
-            current_room->spawn_heart();
+            if(p2 != nullptr){
+                scene->removeItem(p2);
+            }
+
+            current_room->spawn_item(get_random_item());
+            //current_room->spawn_heart();
             scene->addItem(p1);
+            if(p2 != nullptr){
+                scene->addItem(p2);
+            }
 
         }
     }
@@ -416,7 +524,6 @@ void MainWindow::update_bodies(){
 
         if(enemies.empty() && !current_room->isClear()) {
             current_room->clear_room();
-            current_room->spawn_heart();
 
             int r = rand() % 101;
 
@@ -426,11 +533,11 @@ void MainWindow::update_bodies(){
 
                 if(r <= 22 && r >= 0){
 
-                    //current_room->spawn_item(get_random_item());
+                    current_room->spawn_item(get_random_item());
                 }
                 else if (r > 22){
 
-                    //current_room->spawn_heart();
+                    current_room->spawn_heart();
                 }
 
                 scene->addItem(p1);

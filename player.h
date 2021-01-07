@@ -45,14 +45,13 @@ private: // Variables
     QGraphicsScene *scene;
 
 public: // Methods
-    explicit Player(QObject *parent = nullptr, QGraphicsScene *s = nullptr, float x_ = 0, float y_ = 0, float vx_ = 0, float vy_ = 0, float mass_ = 0, int radio_ = 0, float g_ = 0, float K_ = 0, float e_ = 0, float V_ = 0);
+    explicit Player(QObject *parent = nullptr, QGraphicsScene *s = nullptr, std::string name = "", int statPos = 0, float x_ = 0, float y_ = 0, float vx_ = 0, float vy_ = 0, float mass_ = 0, int radio_ = 0, float g_ = 0, float K_ = 0, float e_ = 0, float V_ = 0);
     ~Player();
 
     Proyectile* shoot();
 
     void update_stat(std::string s);
     void update_stat(std::string s, int value);
-    void init_stats();
 
     void take_damage(int damage);
 
@@ -70,6 +69,7 @@ public: // Methods
     short getDirection() const;
 
 private: // Methods
+        void init_stats(int x_reference);
 
 };
 
