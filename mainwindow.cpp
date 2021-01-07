@@ -24,6 +24,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     current_room->load_room();
     enemies = current_room->getEnemies();
 
+    current_room_type = current_room->getType();
+
+    if(current_room_type == "boss") {
+        boss = current_room->getBoss();
+        enemies.clear();
+    }
+    else if(current_room_type == "normal") {
+        enemies = current_room->getEnemies();
+        boss = nullptr;
+    }
+
     scene->addItem(p1);
 
     timer = new QTimer(this);
@@ -42,6 +53,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 MainWindow::~MainWindow() {
 
     current_room = nullptr;
+    boss = nullptr;
 
     delete current_room;
     delete timer;
@@ -87,16 +99,20 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 
                 Door *d = dynamic_cast<Door*>(p1->collidingItems()[k]);
 
-                //d->getSelf()->deload_room();
-                //d->getLink()->load_room();
-
                 current_room->deload_room();
                 current_room = d->getLink();
                 current_room->load_room();
 
-                enemies = d->getLink()->getEnemies();
+                current_room_type = current_room->getType();
 
-                //current_room = d->getLink();
+                if(current_room_type == "boss") {
+                    boss = current_room->getBoss();
+                    enemies.clear();
+                }
+                else if(current_room_type == "normal") {
+                    enemies = current_room->getEnemies();
+                    boss = nullptr;
+                }
 
                 scene->removeItem(p1);
                 scene->addItem(p1);
@@ -219,6 +235,13 @@ bool MainWindow::check_collitions(Proyectile *p) {
                 return true;
             }
         }
+        else if(typeid ( *(p->collidingItems()[k]) ) == typeid(Boss)){
+
+            if(p->getType() != "boss" && p->getType() != "enemy"){
+                dynamic_cast<Boss *>((p->collidingItems()[k]))->take_damage(p->getDamage());
+                return true;
+            }
+        }
 
     }
     return false;
@@ -275,6 +298,57 @@ void MainWindow::check_collitions(Enemy *e) {
         }
     }
 }
+void MainWindow::check_collitions(Boss *b) {
+    /*------EDGES------*/
+    if(b->getX() < b->getRadio()) { //colicion en x por la izquierda
+        b->set_velX(b->getRadio(), -1*b->getE()*b->getVx());
+    }
+    if(b->getX() > h_limit - b->getRadio()) { //colicion en x por la derecha
+        b->set_velX(h_limit - b->getRadio(), -1*b->getE()*b->getVx());
+    }
+    if(b->getY() < b->getRadio()) { //colicion en y por arriba (callendo)
+        b->set_velY(b->getRadio(), -1*b->getE()*b->getVy());
+        //(*k)->setJumping(false);
+    }
+
+    if(b->getY() > v_limit - b->getRadio()) { //colicion en y por abajo (saltando)
+        b->set_velY(v_limit - b->getRadio(), -1*b->getE()*b->getVy());
+    }
+
+    for(int k = 0; k < b->collidingItems().size(); k++){
+
+        /*------WALLS------*/
+        if(typeid( *(b->collidingItems()[k]) )== typeid(Wall)){
+
+            if(b->getX() < b->collidingItems().at(k)->x()) { //colicion en x por la izquierda
+
+                //p->set_velX(p->collidingItems().at(k)->x() - p->getRadio(), -1*p->getE()*p->getVx());
+                //e->set_velX(e->collidingItems().at(k)->x() - e->getRadio() + (e->getDirection() * e->getMovement_speed()), e->getVx()); //fails ******
+
+            }
+            if(b->getX() > b->collidingItems().at(k)->x() + b->collidingItems().at(k)->boundingRect().width()) { //colicion en x por la derecha
+
+                //p->set_velX(p->collidingItems().at(k)->x() + p->collidingItems().at(k)->boundingRect().width() + p->getRadio(), -1*p->getE()*p->getVx());
+                //e->set_velX(e->collidingItems().at(k)->x() + e->collidingItems().at(k)->boundingRect().width() + e->getRadio() + (e->getDirection() * e->getMovement_speed()), e->getVx()); //fails ******
+            }
+            if(b->getY() > v_limit - b->collidingItems().at(k)->y()) { //colicion en y por arriba (callendo)
+
+                b->set_velY(v_limit - b->collidingItems().at(k)->y() + b->getRadio(), -1*b->getE()*b->getVy());
+                //e->setJumping(false);
+
+            }
+            if(b->getY() < v_limit - (b->collidingItems().at(k)->y() + b->collidingItems().at(k)->boundingRect().height())) { //colicion en y por abajo (saltando)
+
+                b->set_velY(v_limit - (b->collidingItems().at(k)->y() + b->collidingItems().at(k)->boundingRect().height() + b->getRadio()), -1*b->getE()*b->getVy());
+
+            }
+        }
+        else if(typeid ( *(b->collidingItems()[k]) ) == typeid(Player)){
+
+            //dynamic_cast<Player *>((e->collidingItems()[k]))->take_damage(e->getDamage()); //too brutal
+        }
+    }
+}
 
 Item * MainWindow::get_random_item() {
 
@@ -282,7 +356,6 @@ Item * MainWindow::get_random_item() {
     item_bank.pop_back();
     return i;
 }
-
 void MainWindow::load_items(std::string file_name) {
     //loads items from the item bank file
 }
@@ -291,6 +364,25 @@ void MainWindow::update_bodies(){
 
     p1->Player::update();
     check_collitions(p1);
+
+    if(boss != nullptr && current_room_type == "boss"){
+
+        boss->update();
+        check_collitions(boss);
+
+        if (boss->getHealth() <= 0){
+            //scene->removeItem(boss);
+            boss = nullptr;
+
+            current_room->clear_room();
+
+            scene->removeItem(p1);
+            //current_room->spawn_item(get_random_item());
+            current_room->spawn_heart();
+            scene->addItem(p1);
+
+        }
+    }
 
     for (auto k = proyectiles.begin(); k != proyectiles.end(); ) { //checks for proyectiles' collitions
 
@@ -306,39 +398,42 @@ void MainWindow::update_bodies(){
             k++;
     }
 
-    for (auto k = enemies.begin(); k != enemies.end(); ) { //checks for enemies' health
+    if(current_room_type == "normal"){
+        for (auto k = enemies.begin(); k != enemies.end(); ) { //checks for enemies' health
 
-        (*k)->update();
-        check_collitions(*k);
+            (*k)->update();
+            check_collitions(*k);
 
-        if ((*k)->getHealth() <= 0){
-            scene->removeItem(*k);
-            //delete(*k);
-            (*k)->stop();
-            k = enemies.erase(k);
+            if ((*k)->getHealth() <= 0){
+                scene->removeItem(*k);
+                //delete(*k);
+                (*k)->stop();
+                k = enemies.erase(k);
+            }
+            else
+                k++;
         }
-        else
-            k++;
-    }
-    if(enemies.empty() && !current_room->isClear()) {
-        current_room->clear_room();
 
-        int r = rand() % 101;
+        if(enemies.empty() && !current_room->isClear()) {
+            current_room->clear_room();
 
-        if(r <= 66 && r >= 0){
+            int r = rand() % 101;
 
-            scene->removeItem(p1);
+            if(r <= 66 && r >= 0){
 
-            if(r <= 22 && r >= 0){
+                scene->removeItem(p1);
 
-                current_room->spawn_item(get_random_item());
+                if(r <= 22 && r >= 0){
+
+                    current_room->spawn_item(get_random_item());
+                }
+                else if (r > 22){
+
+                    current_room->spawn_heart();
+                }
+
+                scene->addItem(p1);
             }
-            else if (r > 22){
-
-                current_room->spawn_heart();
-            }
-
-            scene->addItem(p1);
         }
     }
 }

@@ -9,6 +9,7 @@
 #include "enemy.h"
 #include "door.h"
 #include "item.h"
+#include "boss.h"
 
 class Door;
 
@@ -21,8 +22,9 @@ private: // Variables
     std::list <Wall *> walls;
     std::list <Enemy *> enemies;
     Item *item;
-    //std::list <Door *> doors;
-    //QList< std::vector<int>[2] > spawnpoints;
+    Boss *boss;
+
+    std::string type; // ***change the type on the load room function***
 
     int itemX, itemY;
 
@@ -52,6 +54,10 @@ public: // Methods
 
     void spawn_heart();
     void spawn_item(Item *i);
+
+    std::string getType() const;
+
+    Boss *getBoss() const;
 
 private: // Methods
     void load_room(std::string file_name);

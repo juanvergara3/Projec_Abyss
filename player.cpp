@@ -111,10 +111,9 @@ void Player::update_stat(std::string s, int value) {
 void Player::init_stats() {
 
     health_bar = new QProgressBar;
-    health_bar->setRange(0, health);
+    health_bar->setRange(0, max_health);
     health_bar->setOrientation(Qt::Vertical);
-    health_bar->setGeometry(0, 0,20, health);
-    health_bar->setValue(health);
+    health_bar->setValue(max_health);
     health_bar->setTextVisible(false);
     health_bar->setGeometry(0,0, 20, 120);
 
@@ -137,6 +136,7 @@ void Player::init_stats() {
 
         (*k)->setFont(QFont("System"));
         (*k)->setGeometry(20, y, (*k)->text().length()*8, 20);
+        (*k)->setStyleSheet("QLabel { background-color : white; color : black; }");
         y += 20;
     }
 

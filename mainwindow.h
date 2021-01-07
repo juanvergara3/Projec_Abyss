@@ -30,7 +30,10 @@ private: // Variables
 
     Player *p1;
 
+    Boss *boss;
+
     Room *current_room;
+    std::string current_room_type;
 
     Room *r1;
     Room *r2;
@@ -52,6 +55,7 @@ private: // Methods
     void check_collitions(Player *p);
     bool check_collitions(Proyectile *p);
     void check_collitions(Enemy *e);
+    void check_collitions(Boss *b);
 
     Item *get_random_item();
 

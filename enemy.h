@@ -38,8 +38,6 @@ public: // Methods
 
     void take_damage(int damage);
 
-    void sort_proyectiles();
-
     void init();
     void stop();
 

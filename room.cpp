@@ -6,7 +6,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
     cleared = false;
 
     itemX =  250;
-    itemY = 720-16;
+    itemY = 720 - 16;
     item = nullptr;
 
     if(file_name_ == "1"){
@@ -15,10 +15,15 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         walls.push_back(new Wall(this, 200,660, 40, 60));
         walls.push_back(new Wall(this,700, 720-80, 40, 80));
 
-        enemies.push_back(new Enemy(this, this->scene, "x", p, 1, 700, 300, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+        //enemies.push_back(new Enemy(this, this->scene, "x", p, 1, 700, 300, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
 
         doors.push_back(new Door(this, this, 900, 720-40, 20, 40));
-        //door = new Door(this, this, 900, 720-40, 20, 40);
+
+        boss = new Boss(this, scene, "priest", p, 640, 360, 0, 0, 100, 40, 5, 1e-5, 0.1, 0);
+        //boss = nullptr;
+
+        type = "boss";
+        //type = "normal";
     }
     else if (file_name_ == "2"){
 
@@ -27,13 +32,17 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         enemies.push_back(new Enemy(this, this->scene, "x", p, 4, 700, 300, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
 
-        doors.push_back(new Door(this, this, 900, 720-40, 20, 40));
-        //door = new Door(this, this, 950, 720-40, 20, 40);
+        doors.push_back(new Door(this, this, 30, 720-40, 20, 40));
+
+        boss = nullptr;
+
+        type = "normal";
     }
 }
 Room::~Room() {
     //should it delete the content of the lists?
     delete item;
+    delete boss;
 }
 
 void Room::load_room() {
@@ -43,25 +52,28 @@ void Room::load_room() {
         (*k)->setPos((*k)->getPosx(), (*k)->getPosy());
     }
 
-    for(auto k = enemies.begin(); k!=enemies.end(); k++){
-        scene->addItem(*k);
-        (*k)->setPos((*k)->getX(), (*k)->getY());
-        (*k)->init();
-    }
+    if(type == "normal")
+        for(auto k = enemies.begin(); k!=enemies.end(); k++){
+            scene->addItem(*k);
+            (*k)->setPos((*k)->getX(), (*k)->getY());
+            (*k)->init();
+        }
 
     for(auto k = doors.begin(); k!=doors.end(); k++){
         scene->addItem(*k);
         (*k)->setPos((*k)->getPosx(), (*k)->getPosy());
     }
 
-    if(item != nullptr){
+    if(item){
         scene->addItem(item);
         item->setPos(itemX, itemY);
     }
 
-
-    //scene->addItem(door);
-    //door->setPos(door->getPosx(), door->getPosy());
+    if(type == "boss"){
+        scene->addItem(boss);
+        boss->setPos(boss->getX(), boss->getY());
+        boss->init();
+    }
 }
 void Room::deload_room() {
 
@@ -69,20 +81,17 @@ void Room::deload_room() {
         scene->removeItem(*k);
     }
 
-    for(auto k = enemies.begin(); k!=enemies.end(); k++){
-        scene->removeItem(*k);
-        (*k)->stop();
-    }
+    if(type == "normal")
+        for(auto k = enemies.begin(); k!=enemies.end(); k++){
+            scene->removeItem(*k);
+            (*k)->stop();
+        }
 
-    for(auto k = doors.begin(); k!=doors.end(); k++){
-        //scene->removeItem(*k);
-        //delete(*k);
-        //k = doors.erase(k);
-    }
-
-    if(item != nullptr)
+    if(item)
         scene->removeItem(item);
 
+    if(type == "boss")
+        scene->removeItem(boss);
 }
 
 void Room::load_room(std::string file_name) {
@@ -123,17 +132,27 @@ std::list<Enemy *> Room::getEnemies() const {
 }
 
 void Room::clear_room() {
-//    for (auto k = enemies.begin(); k != enemies.end(); k++) { //checks for enemies' health
-
-//        //delete(*k);
-
-//    }
     cleared = true;
-    enemies.clear();
+
+    if(type == "normal")
+        enemies.clear();
+
+    else  if(type == "boss") {
+        delete boss;
+        boss = nullptr;
+    }
 }
 
 bool Room::isClear() const {
     return cleared;
+}
+
+std::string Room::getType() const {
+    return type;
+}
+
+Boss *Room::getBoss() const {
+    return boss;
 }
 
 int Room::getItemX() const {
@@ -145,6 +164,7 @@ int Room::getItemY() const {
 
 void Room::remove_item() {
     scene->removeItem(item);
+    delete item;
     item = nullptr;
 }
 
