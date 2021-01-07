@@ -64,15 +64,17 @@ void Room::load_room() {
         (*k)->setPos((*k)->getPosx(), (*k)->getPosy());
     }
 
-    if(item){
+    if(item != nullptr){
         scene->addItem(item);
         item->setPos(itemX, itemY);
     }
 
     if(type == "boss"){
-        scene->addItem(boss);
-        boss->setPos(boss->getX(), boss->getY());
-        boss->init();
+        if(boss != nullptr){
+            scene->addItem(boss);
+            boss->setPos(boss->getX(), boss->getY());
+            boss->init(); //if you exit the room and then come back it tries to add the widgets again
+        }
     }
 }
 void Room::deload_room() {
@@ -87,11 +89,14 @@ void Room::deload_room() {
             (*k)->stop();
         }
 
-    if(item)
+    if(item != nullptr)
         scene->removeItem(item);
 
     if(type == "boss")
-        scene->removeItem(boss);
+        if(boss != nullptr){
+            scene->removeItem(boss);
+            boss->stop();
+        }
 }
 
 void Room::load_room(std::string file_name) {

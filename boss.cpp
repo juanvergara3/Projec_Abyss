@@ -100,6 +100,14 @@ Boss::Boss(QObject *parent, QGraphicsScene *s, std::string boss, std::list<Proye
     description_label->setGeometry(20, 750, description_label->text().length()*8, 20);
     description_label->setStyleSheet("QLabel { background-color : white; color : black; }");
 
+    name_label->setVisible(false);
+    description_label->setVisible(false);
+    health_bar->setVisible(false);
+
+    scene->addWidget(name_label);
+    scene->addWidget(description_label);
+    scene->addWidget(health_bar);
+
 }
 Boss::~Boss() {
     delete shooting_timer;
@@ -131,13 +139,17 @@ void Boss::init() {
     shooting_timer->start(fire_rate);
     movement_timer->start(2000);
 
-    scene->addWidget(name_label);
-    scene->addWidget(description_label);
-    scene->addWidget(health_bar);
+    name_label->setVisible(true);
+    description_label->setVisible(true);
+    health_bar->setVisible(true);
 }
 void Boss::stop() {
     shooting_timer->stop();
     movement_timer->stop(); 
+
+    name_label->setVisible(false);
+    description_label->setVisible(false);
+    health_bar->setVisible(false);
 }
 
 void Boss::lamprey_shoot()

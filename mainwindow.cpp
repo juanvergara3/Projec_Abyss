@@ -416,6 +416,7 @@ void MainWindow::update_bodies(){
 
         if(enemies.empty() && !current_room->isClear()) {
             current_room->clear_room();
+            current_room->spawn_heart();
 
             int r = rand() % 101;
 
@@ -425,11 +426,11 @@ void MainWindow::update_bodies(){
 
                 if(r <= 22 && r >= 0){
 
-                    current_room->spawn_item(get_random_item());
+                    //current_room->spawn_item(get_random_item());
                 }
                 else if (r > 22){
 
-                    current_room->spawn_heart();
+                    //current_room->spawn_heart();
                 }
 
                 scene->addItem(p1);
