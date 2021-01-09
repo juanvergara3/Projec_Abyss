@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QPainter>
 #include <QGraphicsPixmapItem>
+#include <QLabel>
 
 class Item : public QObject, public QGraphicsItem {
     Q_OBJECT
@@ -14,12 +15,14 @@ private: //variables
     std::string stat;
     int value;
 
+    QLabel *name;
+
 public: //variables
 
 private: //methods
 
 public: //methods
-    explicit Item(QObject *parent = nullptr, std::string stat = "", int value = 0);
+    explicit Item(QObject *parent = nullptr, std::string name = "", std::string stat = "", int value = 0);
     ~Item();
 
     QRectF boundingRect() const;
@@ -33,6 +36,9 @@ public: //methods
     std::string getStat() const;
     int getValue() const;
 
+    QLabel *getName() const;
+
+    void updateLabel(int x, int y);
 };
 
 #endif // ITEM_H

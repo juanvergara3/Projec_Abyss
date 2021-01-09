@@ -67,6 +67,7 @@ void Room::load_room() {
     if(item != nullptr){
         scene->addItem(item);
         item->setPos(itemX, itemY);
+        item->getName()->setVisible(true);
     }
 
     if(type == "boss"){
@@ -89,8 +90,10 @@ void Room::deload_room() {
             (*k)->stop();
         }
 
-    if(item != nullptr)
+    if(item != nullptr){
         scene->removeItem(item);
+        item->getName()->setVisible(false);
+    }
 
     if(type == "boss")
         if(boss != nullptr){
@@ -174,9 +177,12 @@ void Room::remove_item() {
 }
 
 void Room::spawn_heart() {
-    item = new Item(this, "health", 25);
+    item = new Item(this, "Heart", "health", 25);
     item->setPos(itemX, itemY);
     scene->addItem(item);
+    item->updateLabel(itemX, itemY);
+    scene->addWidget(item->getName());
+    item->getName()->setVisible(true);
 }
 void Room::spawn_item(Item *i) {
 
@@ -184,5 +190,8 @@ void Room::spawn_item(Item *i) {
         item = i;
         item->setPos(itemX, itemY);
         scene->addItem(item);
+        item->updateLabel(itemX, itemY);
+        scene->addWidget(item->getName());
+        item->getName()->setVisible(true);
     }
 }

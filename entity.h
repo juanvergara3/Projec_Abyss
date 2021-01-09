@@ -53,6 +53,8 @@ public: //methods
     int getV_limit() const;
     int getH_limit() const;
 
+    void setG(float value);
+
 private: //methods
 
 };

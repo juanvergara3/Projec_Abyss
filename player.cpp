@@ -7,7 +7,7 @@ Player::Player(QObject *parent, QGraphicsScene *s, std::string name, int statPos
     max_health = 100;
     damage = 20;
     shot_speed = 30;
-    movement_speed = 1;
+    movement_speed = 1.5;
     jump_Speed = 40;
     sight = 1;
     direction = 0;
@@ -105,6 +105,10 @@ void Player::update_stat(std::string s, int value) {
 
         jump_Speed += value;
     }
+//    else if (s == "gravity"){
+
+//        setG(value);
+//    }
 
     update_stat(s);
 }

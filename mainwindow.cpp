@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     p1 = new Player(this, scene, "P1", 0, 0, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
     p2 = new Player(this, scene, "P2", 200, 1000, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
-    p2 = nullptr;
+    //p2 = nullptr;
 
     r1 = new Room(this, scene, &proyectiles, "1");
     r2 = new Room(this, scene, &proyectiles, "2");
@@ -49,16 +49,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     //srand(unsigned(time(0)));
     srand(time(NULL));
 
-    load_items(""); // ***NOTHING IS BEING LOADED YET***
+    load_items("items.txt");
 
-    std::vector<Item*> temp (item_bank.begin(), item_bank.end());
-    std::random_shuffle(temp.begin(), temp.end());
-    std::copy(temp.begin(), temp.end(), item_bank.begin());
+    std::vector<Item*> *temp = new std::vector<Item*>(item_bank.begin(), item_bank.end());
+    std::random_shuffle(temp->begin(), temp->end());
+    std::copy(temp->begin(), temp->end(), item_bank.begin());
+    temp->clear();
+    delete temp;
 }
 MainWindow::~MainWindow() {
 
     current_room = nullptr;
     boss = nullptr;
+
+    enemies.clear();
+    item_bank.clear();
 
     delete current_room;
     delete timer;
@@ -453,7 +458,33 @@ Item * MainWindow::get_random_item() {
     return nullptr;
 }
 void MainWindow::load_items(std::string file_name) {
-    //loads items from the item bank file
+    std::fstream file (file_name, std:: fstream::in | std::fstream::binary);
+
+    if(file.is_open()){
+
+        std::string temp, name, stat;
+        int value;
+        short counter = 1;
+
+        while (file>>temp){
+
+            if(counter == 1){
+                std::replace( temp.begin(), temp.end(), '_', ' ');
+                name = temp;
+            }
+            else if(counter == 2)
+                stat = temp;
+            else if(counter == 3){
+                value = std::stoi(temp);
+                item_bank.push_back(new Item(nullptr, name, stat, value));
+                counter = 0;
+            }
+            counter++;
+        }
+
+        file.close();
+
+    }
 }
 
 void MainWindow::update_bodies(){
@@ -483,7 +514,7 @@ void MainWindow::update_bodies(){
             }
 
             current_room->spawn_item(get_random_item());
-            //current_room->spawn_heart();
+
             scene->addItem(p1);
             if(p2 != nullptr){
                 scene->addItem(p2);
