@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     //p2 = nullptr;
 
     r1 = new Room(this, scene, &proyectiles, "1");
-    r2 = new Room(this, scene, &proyectiles, "2");
+    r2 = new Room(this, scene, &proyectiles, "6");
 
     r1->doors.back()->setLink(r2);
     r2->doors.back()->setLink(r1);
@@ -132,7 +132,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
                     scene->addItem(p2);
                 }
 
-                scene->removeItem(d);
+                //scene->removeItem(d);
             }
             if(typeid( *(p1->collidingItems()[k]) ) == typeid(Item)){
 
@@ -193,7 +193,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
                     scene->removeItem(p2);
                     scene->addItem(p2);
 
-                    scene->removeItem(d);
+                    //scene->removeItem(d);
                 }
                 if(typeid( *(p2->collidingItems()[k]) ) == typeid(Item)){
 
@@ -586,6 +586,7 @@ void MainWindow::update_bodies(){
 
         if(enemies.empty() && !current_room->isClear()) {
             current_room->clear_room();
+            current_room->spawn_item(get_random_item());
 
             int r = rand() % 101;
 
@@ -595,16 +596,21 @@ void MainWindow::update_bodies(){
 
                 if(r <= 22 && r >= 0){
 
-                    current_room->spawn_item(get_random_item());
+                    //current_room->spawn_item(get_random_item());
                 }
                 else if (r > 22){
 
-                    current_room->spawn_heart();
+                    //current_room->spawn_heart();
                 }
 
                 scene->addItem(p1);
             }
         }
+    }
+
+    if(current_room_type == "treasure" && !current_room->isClear()){
+        current_room->clear_room();
+        current_room->spawn_item(get_random_item());
     }
 }
 
