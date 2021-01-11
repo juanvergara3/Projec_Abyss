@@ -12,17 +12,39 @@ private: //variables
     int posx, posy;
     int width, height;
 
-    std::string stat;
-    int value;
-
     QLabel *name;
+
+    float max_health;
+    float health;
+    float damage;
+    float shot_speed;
+    float movement_speed;
+    float jump_Speed;
+    float g_player;
+    float g_proyectiles;
+    float r_player;
+    float r_proyectiles;
+    float e_player;
+    std::string Shooting_mode;
 
 public: //variables
 
 private: //methods
 
 public: //methods
-    explicit Item(QObject *parent = nullptr, std::string name = "", std::string stat = "", int value = 0);
+    explicit Item(QObject *parent = nullptr, std::string name = "",
+                  float m_health = 1,
+                  float health_ = 1,
+                  float damage_ = 1,
+                  float s_speed = 1,
+                  float m_speed = 1,
+                  float j_speed = 1,
+                  float g_player_ = 1,
+                  float g_proyectile_ = 1,
+                  float r_player_ = 1,
+                  float r_proyectiles_ = 1,
+                  float e = 1,
+                  std::string s_mode = "single");
     ~Item();
 
     QRectF boundingRect() const;
@@ -33,12 +55,21 @@ public: //methods
     int getWidth() const;
     int getHeight() const;
 
-    std::string getStat() const;
-    int getValue() const;
+    void updateLabel(int x, int y);
 
     QLabel *getName() const;
-
-    void updateLabel(int x, int y);
+    float getMax_health() const;
+    float getHealth() const;
+    float getDamage() const;
+    float getShot_speed() const;
+    float getMovement_speed() const;
+    float getJump_Speed() const;
+    float getG_player() const;
+    float getG_proyectiles() const;
+    float getR_player() const;
+    float getR_proyectiles() const;
+    float getE_player() const;
+    std::string getShooting_mode() const;
 };
 
 #endif // ITEM_H

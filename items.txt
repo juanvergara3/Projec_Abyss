@@ -1,51 +1,99 @@
-Reinforced_Crossbow damage	5
-P8_Luger    damage	0
-Holy_Arrows damage	0
-Sharpened_Arrows    damage	0
-Armor_Piercing_Arrows   damage	0
-The_Nail    damage	0
-Unholy_Hellbringer  damage	0
-Holy_Grail  max_health	0
-Crist's_Blood   max_health	0
-Energy_Shield   max_health	0
-Undying_Heart   max_health	0
-Blood_of_the_Martyr max_health	0
-Holy_Mantle max_health	0
-Dark_Bible   max_health	0
-Holy_Water  health	0
-Light_Armor movement_speed	0.5
-Plate_Armor   movement_speed	0
-Experimental_Medicine   movement_speed	0
-Light_Boots	jump_speed	0
-Lust	jump_speed	0
-Aerodynamic_Arrows  shot_speed	0
-Steel_Wire  shot_speed	0
-DRINK_ME (smaller_hitbox)	0
-Ceremonial_Robes    (smaller_hitbox)	0
-The_Pact    (smaller_hitbox)	0
-Book_of_Revelations (arrow_hitbox_increased)	0
-Advanced_Arrows  (arrow_hitbox_increased)	0
-Gravitoelectric_Coupler	(gravity_decreased)	0
-Demonic_Possession  (gravity_decreased)	0
-Self_Propelled_Arrows   (no_gravity_arrows)	0
-Gliding_Arrows	(low_gravity_arrows)	0
-Tiny_Planet (orbiting_arrows)	0
-Diplopia (double_shot)	0
-Crossbow_3.0 (triple_shot)	0
-The_curse   (bouncy)	0
--Death's_Touch   (instant_death_or_a_lot_of_damage)	0
--Rust   damage	0
--Pride  max_health	0
--Throbbing_Lump   max_health	0
--Leather_Armor  max_health	0
--Envy   health	0
--Raw_Meat   health	0
--Sloth  movement_speed	0
--Hunters_Bow shot_speed	0
--Somatotropin   (larger_hitbox)	0
--Gluttony   (larger_hitbox)	0
--Greed  (larger_hitbox)	0
--Toothpick (arrow_hitbox_decreased)	0
--Confusion_2.1  (inverted_gravity)	0
--Cursed_Arrows (inverted_gravity_arrows)	0
--Confusion  (invereted_controls)	0
+Reinforced_Crossbow	1	1	1	1	1	1	1	1	1	1	1	single
+P8_Luger	1	1	1	1	1	1	1	1	1	1	1	single
+Holy_Arrows	1	1	1	1	1	1	1	1	1	1	1	single
+Sharpened_Arrows	1	1	1	1	1	1	1	1	1	1	1	single
+Armor_Piercing_Arrows	1	1	1	1	1	1	1	1	1	1	1	single
+The_Nail	1	1	1	1	1	1	1	1	1	1	1	single
+Unholy_Hellbringer	1	1	1	1	1	1	1	1	1	1	1	single
+Holy_Grail	1	1	1	1	1	1	1	1	1	1	1	single
+Crist's_Blood	1	1	1	1	1	1	1	1	1	1	1	single
+Energy_Shield	1	1	1	1	1	1	1	1	1	1	1	single
+Undying_Heart	1	1	1	1	1	1	1	1	1	1	1	single
+Blood_of_the_Martyr	1	1	1	1	1	1	1	1	1	1	1	single
+Holy_Mantle	1	1	1	1	1	1	1	1	1	1	1	single
+Dark_Bible	1	1	1	1	1	1	1	1	1	1	1	single
+Holy_Water	1	1	1	1	1	1	1	1	1	1	1	single
+Light_Armor	1	1	1	1	1	1	1	1	1	1	1	single
+Plate_Armor	1	1	1	1	1	1	1	1	1	1	1	single
+Experimental_Medicine	1	1	1	1	1	1	1	1	1	1	1	single
+Light_Boots	1	1	1	1	1	1	1	1	1	1	1	single
+Lust	1	1	1	1	1	1	1	1	1	1	1	single
+Aerodynamic_Arrows	1	1	1	1	1	1	1	1	1	1	1	single
+Steel_Wire	1	1	1	1	1	1	1	1	1	1	1	single
+DRINK_ME	1	1	1	1	1	1	1	1	1	1	1	single
+Ceremonial_Robes	1	1	1	1	1	1	1	1	1	1	1	single
+The_Pact	1	1	1	1	1	1	1	1	1	1	1	single
+Book_of_Revelations	1	1	1	1	1	1	1	1	1	1	1	single
+Advanced_Arrows	1	1	1	1	1	1	1	1	1	1	1	single
+Gravitoelectric_Coupler	1	1	1	1	1	1	1	1	1	1	1	single
+Demonic_Possession	1	1	1	1	1	1	1	1	1	1	1	single
+Self_Propelled_Arrows	1	1	1	1	1	1	1	1	1	1	1	single
+Gliding_Arrows	1	1	1	1	1	1	1	1	1	1	1	single
+Tiny_Planet	1	1	1	1	1	1	1	1	1	1	1	orbiting
+Diplopia	1	1	1	1	1	1	1	1	1	1	1	double
+Crossbow_3.0	1	1	1	1	1	1	1	1	1	1	1	triple
+The_curse	1	1	1	1	1	1	1	1	1	1	1	single
+-Death's_Touch	1	1	1	1	1	1	1	1	1	1	1	single
+-Envy	1	1	1	1	1	1	1	1	1	1	1	single
+-Raw_Meat	1	1	1	1	1	1	1	1	1	1	1	single
+-Rust	1	1	1	1	1	1	1	1	1	1	1	single
+-Pride	1	1	1	1	1	1	1	1	1	1	1	single
+-Throbbing_Lump	1	1	1	1	1	1	1	1	1	1	1	single
+-Leather_Armor	1	1	1	1	1	1	1	1	1	1	1	single
+-Sloth	1	1	1	1	1	1	1	1	1	1	1	single
+-Hunters_Bow	1	1	1	1	1	1	1	1	1	1	1	single
+-Somatotropin	1	1	1	1	1	1	1	1	1	1	1	single
+-Gluttony	1	1	1	1	1	1	1	1	1	1	1	single
+-Greed		1	1	1	1	1	1	1	1	1	1	1	single
+-Toothpick	1	1	1	1	1	1	1	1	1	1	1	single
+-Confusion_2.1	1	1	1	1	1	1	1	1	1	1	1	single
+-Cursed_Arrows	1	1	1	1	1	1	1	1	1	1	1	single
+-Confusion_2.1	1	1	1	1	1	1	1	1	1	1	1	single
+AirJordan_Retro	1	1	1	1	1	1	1	1	1	1	1	single
+Cadiz_Red	1	1	1	1	1	1	1	1	1	1	1	single
+Sharp_Arrows	1	1	1	1	1	1	1	1	1	1	1	single
+Metal_Arch	1	1	1	1	1	1	1	1	1	1	1	single
+Armored_Shield	1	1	1	1	1	1	1	1	1	1	1	single
+Springs 	1	1	1	1	1	1	1	1	1	1	1	single
+AirJordan_Retrox2	1	1	1	1	1	1	1	1	1	1	1	single
+Total_Health_Restitution	1	1	1	1	1	1	1	1	1	1	1	single
+Fire_arrows	1	1	1	1	1	1	1	1	1	1	1	single
+Carbon_arc	1	1	1	1	1	1	1	1	1	1	1	single
+Shield_semicomplete	1	1	1	1	1	1	1	1	1	1	1	single
+Shield_SuperComplete	1	1	1	1	1	1	1	1	1	1	1	single
+TurboShoes 	1	1	1	1	1	1	1	1	1	1	1	single
+MegaCadiz 	1	1	1	1	1	1	1	1	1	1	1	single
+Destructive_arrows	1	1	1	1	1	1	1	1	1	1	1	single
+Zero_Gravity 	1	1	1	1	1	1	1	1	1	1	1	single
+Superlight_armor	1	1	1	1	1	1	1	1	1	1	1	single
+Springs_jump_Speed	1	1	1	1	1	1	1	1	1	1	1	single
+AirJordan_Retro2	1	1	1	1	1	1	1	1	1	1	1	single
+Cadiz_red 	1	1	1	1	1	1	1	1	1	1	1	single
+Very_sharp_arrows 	1	1	1	1	1	1	1	1	1	1	1	single
+Metal_arch	1	1	1	1	1	1	1	1	1	1	1	single
+Armor_shield 	1	1	1	1	1	1	1	1	1	1	1	single
+Springs	1	1	1	1	1	1	1	1	1	1	1	single
+AirJordan_Retro	1	1	1	1	1	1	1	1	1	1	1	single
+Cadiz_red	1	1	1	1	1	1	1	1	1	1	1	single
+Very_sharp_arrows	1	1	1	1	1	1	1	1	1	1	1	single
+Metal_arch 	1	1	1	1	1	1	1	1	1	1	1	single
+Armor_shield	1	1	1	1	1	1	1	1	1	1	1	single
+Springs	1	1	1	1	1	1	1	1	1	1	1	single
+Cadiz_black 	1	1	1	1	1	1	1	1	1	1	1	single
+AirJordan_Balvin	1	1	1	1	1	1	1	1	1	1	1	single
+Unsharpened_arrows	1	1	1	1	1	1	1	1	1	1	1	single
+-Spreading_arc	1	1	1	1	1	1	1	1	1	1	1	single
+-Iron_armor 	1	1	1	1	1	1	1	1	1	1	1	single
+-Forged_iron_armor 	1	1	1	1	1	1	1	1	1	1	1	single
+-Poison_cobra 	1	1	1	1	1	1	1	1	1	1	1	single
+-Scalable_feet 	1	1	1	1	1	1	1	1	1	1	1	single
+-Rubber_arrows 	1	1	1	1	1	1	1	1	1	1	1	single
+-Rubber_arch 	1	1	1	1	1	1	1	1	1	1	1	single
+-Gravity_Plus	1	1	1	1	1	1	1	1	1	1	1	single
+-Gravity_systemx2 	1	1	1	1	1	1	1	1	1	1	1	single
+-Spreading_arc	1	1	1	1	1	1	1	1	1	1	1	single
+-Iron_armor	1	1	1	1	1	1	1	1	1	1	1	single
+-Forged_iron_armor 	1	1	1	1	1	1	1	1	1	1	1	single
+-Half_dead	1	1	1	1	1	1	1	1	1	1	1	single
+-Immobile	1	1	1	1	1	1	1	1	1	1	1	single
+-Little_life	1	1	1	1	1	1	1	1	1	1	1	single

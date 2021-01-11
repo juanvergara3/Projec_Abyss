@@ -186,3 +186,15 @@ void Enemy::shoot_orbit() {
 void Enemy::jump() {
     set_velY(getY(), 30);
 }
+void Enemy::left_right()
+{
+
+}
+void Enemy::left_right_jump()
+{
+
+}
+void Enemy::zig_zag()
+{
+
+}

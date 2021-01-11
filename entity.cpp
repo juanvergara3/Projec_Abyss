@@ -5,6 +5,16 @@ void Entity::setG(float value)
     g = value;
 }
 
+void Entity::setE(float value)
+{
+    e = value;
+}
+
+void Entity::setRadio(int value)
+{
+    radio = value;
+}
+
 Entity::Entity(QObject *parent, float x_, float y_, float vx_, float vy_, float mass_, int radio_, float g_, float K_, float e_, float V_) : QObject(parent), v_limit(720), h_limit(1280) {
 
     x = x_;

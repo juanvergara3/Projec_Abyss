@@ -177,7 +177,7 @@ void Room::remove_item() {
 }
 
 void Room::spawn_heart() {
-    item = new Item(this, "Heart", "health", 25);
+    item = new Item(this, "Heart", 1, 0.2);
     item->setPos(itemX, itemY);
     scene->addItem(item);
     item->updateLabel(itemX, itemY);

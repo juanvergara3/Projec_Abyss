@@ -1,8 +1,19 @@
 #include "item.h"
 
-Item::Item(QObject *parent, std::string name, std::string stat, int value) : QObject(parent) {
-    this->stat = stat;
-    this->value = value;
+Item::Item(QObject *parent, std::string name, float m_health, float health_, float damage_, float s_speed, float m_speed, float j_speed, float g_player_, float g_proyectiles_, float r_player_, float r_proyectile_, float e, std::string s_mode)
+{
+    max_health = m_health;
+    health = health_;
+    damage = damage_;
+    shot_speed = s_speed;
+    movement_speed = m_speed;
+    jump_Speed = j_speed;
+    g_player = g_player_;
+    g_proyectiles = g_proyectiles_;
+    r_player = r_player_;
+    r_proyectiles = r_proyectile_;
+    e_player = e;
+    Shooting_mode = s_mode;
 
     this->name = new QLabel;
     this->name->setText(name.c_str());
@@ -13,8 +24,8 @@ Item::Item(QObject *parent, std::string name, std::string stat, int value) : QOb
 
     width = 16;
     height = 16;
-
 }
+
 Item::~Item(){
     delete name;
 }
@@ -41,19 +52,61 @@ int Item::getHeight() const {
     return height;
 }
 
-QLabel *Item::getName() const
-{
-    return name;
-}
-
 void Item::updateLabel(int x, int y)
 {
     name->setGeometry(x, y - height - 4, name->width(), name->height());
     name->update();
 }
-std::string Item::getStat() const {
-    return stat;
+
+QLabel *Item::getName() const
+{
+    return name;
 }
-int Item::getValue() const {
-    return value;
+float Item::getMax_health() const
+{
+    return max_health;
+}
+float Item::getHealth() const
+{
+    return health;
+}
+float Item::getDamage() const
+{
+    return damage;
+}
+float Item::getShot_speed() const
+{
+    return shot_speed;
+}
+float Item::getMovement_speed() const
+{
+    return movement_speed;
+}
+float Item::getJump_Speed() const
+{
+    return jump_Speed;
+}
+float Item::getG_player() const
+{
+    return g_player;
+}
+float Item::getG_proyectiles() const
+{
+    return g_proyectiles;
+}
+float Item::getR_player() const
+{
+    return r_player;
+}
+float Item::getR_proyectiles() const
+{
+    return r_proyectiles;
+}
+float Item::getE_player() const
+{
+    return e_player;
+}
+std::string Item::getShooting_mode() const
+{
+    return Shooting_mode;
 }

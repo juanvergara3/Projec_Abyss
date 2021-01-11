@@ -138,7 +138,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 
                 Item *i = dynamic_cast<Item*>(p1->collidingItems()[k]);
 
-                p1->update_stat(i->getStat(), i->getValue());
+                p1->update_stats(i);
 
                 current_room->remove_item();
 
@@ -199,7 +199,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 
                     Item *i = dynamic_cast<Item*>(p2->collidingItems()[k]);
 
-                    p2->update_stat(i->getStat(), i->getValue());
+                    p2->update_stats(i);
 
                     current_room->remove_item();
 
@@ -462,8 +462,9 @@ void MainWindow::load_items(std::string file_name) {
 
     if(file.is_open()){
 
-        std::string temp, name, stat;
-        int value;
+        std::string temp, name;
+        float max_health, health, damage, shot_speed, movement_speed, jump_Speed, g_player, g_proyectiles, r_player, r_proyectiles, e_player;
+        std::string Shooting_mode;
         short counter = 1;
 
         while (file>>temp){
@@ -472,13 +473,43 @@ void MainWindow::load_items(std::string file_name) {
                 std::replace( temp.begin(), temp.end(), '_', ' ');
                 name = temp;
             }
-            else if(counter == 2)
-                stat = temp;
-            else if(counter == 3){
-                value = std::stoi(temp);
-                item_bank.push_back(new Item(nullptr, name, stat, value));
-                counter = 0;
+            else if(counter == 2){
+                max_health = std::stof(temp);
             }
+            else if(counter == 3){
+                health = std::stof(temp);
+            }
+             else if(counter == 4){
+                damage = std::stof(temp);
+            }
+            else if(counter == 5){
+               shot_speed = std::stof(temp);
+           }
+            else if(counter == 6){
+               movement_speed = std::stof(temp);
+           }
+            else if(counter == 7){
+               jump_Speed = std::stof(temp);
+           }
+            else if(counter == 8){
+               g_player = std::stof(temp);
+           }
+            else if(counter == 9){
+               g_proyectiles = std::stof(temp);
+           }
+            else if(counter == 10){
+               r_player = std::stof(temp);
+           }
+            else if(counter == 11){
+               r_proyectiles  = std::stof(temp);
+           }
+            else if(counter == 12){
+               e_player = std::stof(temp);
+           }
+            else if(counter == 13){
+                item_bank.push_back(new Item(nullptr, name, max_health, health, damage, shot_speed, movement_speed, jump_Speed, g_player, g_proyectiles, r_player, r_proyectiles, e_player, temp));
+                counter = 0;
+           }
             counter++;
         }
 

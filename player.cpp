@@ -9,6 +9,13 @@ Player::Player(QObject *parent, QGraphicsScene *s, std::string name, int statPos
     shot_speed = 30;
     movement_speed = 1.5;
     jump_Speed = 40;
+    g = g_;
+    g_p = 1;
+    r = radio_;
+    r_p = 4;
+    e = e_;
+    shooting_mode = "single";
+
     sight = 1;
     direction = 0;
 
@@ -29,7 +36,8 @@ Player::~Player() {
 }
 
 Proyectile *Player::shoot() {
-    Proyectile *p = new Proyectile(this, "player",damage, this->getX(), this->getY(), sight*shot_speed, 0, 1, 4, 1, 1e-5, 0.1, 0);
+
+    Proyectile *p = new Proyectile(this, "player",damage, this->getX(), this->getY(), sight*shot_speed, 0, 1, r_p, g_p, 1e-5, 0.1, 0);
 
     p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
@@ -76,41 +84,36 @@ void Player::update_stat(std::string s) {
         jump_speed_label->setText(temp.c_str());
     }
 }
-void Player::update_stat(std::string s, int value) {
+void Player::update_stats(Item *i) {
 
-    if(s == "max_health"){
+    health += max_health * i->getHealth();
 
-        max_health += value;
-    }
-    else if(s == "health"){
+    if(health > max_health)
+        health = max_health;
 
-        health += value;
+    max_health *= i->getMax_health();
+    damage *= i->getDamage();
+    shot_speed *= i->getShot_speed();
+    movement_speed *= i->getMovement_speed();
+    jump_Speed *= i->getJump_Speed();
+    g *= i->getG_player();
+    g_p *= i->getG_proyectiles();
+    r *= i->getR_player();
+    r_p *= i->getR_proyectiles();
+    e *= i->getE_player();
+    shooting_mode = i->getShooting_mode();
 
-        if(health > max_health)
-            health = max_health;
-    }
-    else if (s == "damage"){
+    update_stat("max_health");
+    update_stat("health");
+    update_stat("damage");
+    update_stat("shot_speed");
+    update_stat("movement_speed");
+    update_stat("jump_speed");
 
-        damage += value;
-    }
-    else if (s == "shot_speed"){
-
-        shot_speed += value;
-    }
-    else if (s == "movement_speed"){
-
-        movement_speed += value;
-    }
-    else if (s == "jump_speed"){
-
-        jump_Speed += value;
-    }
-//    else if (s == "gravity"){
-
-//        setG(value);
-//    }
-
-    update_stat(s);
+    setG(g);
+    setE(e);
+    setRadio(r);
+    //this->QGraphicsItem::update();
 }
 void Player::init_stats(int x_reference) {
 

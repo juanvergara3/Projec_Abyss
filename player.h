@@ -12,18 +12,25 @@
 #include <list>
 #include "entity.h"
 #include "proyectile.h"
+#include "item.h"
 
 class Player : public Entity {
     Q_OBJECT
 public: // Variables
 
 private: // Variables
-    int max_health;
-    int health;
-    int damage;
+    float max_health;
+    float health;
+    float damage;
     float shot_speed;
     float movement_speed;
     float jump_Speed;
+    float g;
+    float g_p;
+    float r;
+    float r_p;
+    float e;
+    std::string shooting_mode;
 
     QProgressBar * health_bar;
     QLabel *name_label;
@@ -51,7 +58,7 @@ public: // Methods
     Proyectile* shoot();
 
     void update_stat(std::string s);
-    void update_stat(std::string s, int value);
+    void update_stats(Item *i);
 
     void take_damage(int damage);
 

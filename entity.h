@@ -54,6 +54,8 @@ public: //methods
     int getH_limit() const;
 
     void setG(float value);
+    void setE(float value);
+    void setRadio(int value);
 
 private: //methods
 

@@ -51,6 +51,9 @@ public slots:
     void shoot_orbit();
 
     void jump();
+    void left_right();
+    void left_right_jump();
+    void zig_zag();
 
 };
 
