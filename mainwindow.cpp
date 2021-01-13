@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     //p2 = nullptr;
 
     r1 = new Room(this, scene, &proyectiles, "1");
-    r2 = new Room(this, scene, &proyectiles, "6");
+    r2 = new Room(this, scene, &proyectiles, "11");
 
     r1->doors.back()->setLink(r2);
     r2->doors.back()->setLink(r1);
