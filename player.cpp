@@ -1,6 +1,6 @@
 #include "player.h"
 
-Player::Player(QObject *parent, QGraphicsScene *s, std::string name, int statPos, float x_, float y_, float vx_, float vy_, float mass_, int radio_, float g_, float K_, float e_, float V_) :
+Player::Player(QObject *parent, QGraphicsScene *s, std::string name, std::list<Proyectile *> *p, int statPos, float x_, float y_, float vx_, float vy_, float mass_, int radio_, float g_, float K_, float e_, float V_) :
     Entity(parent, x_, y_, vx_, vy_, mass_, radio_, g_, K_, e_, V_)
 {
     health = 100;
@@ -21,6 +21,8 @@ Player::Player(QObject *parent, QGraphicsScene *s, std::string name, int statPos
 
     this->name = name;
 
+    proyectiles = p;
+
     scene = s;
 
     init_stats(statPos);
@@ -35,14 +37,48 @@ Player::~Player() {
     delete jump_speed_label;
 }
 
-Proyectile *Player::shoot() {
+void Player::shoot() {
+    Proyectile *p;
 
-    Proyectile *p = new Proyectile(this, "player",damage, this->getX(), this->getY(), sight*shot_speed, 0, 1, r_p, g_p, 1e-5, 0.1, 0);
+    if(shooting_mode == "single"){
+        p = new Proyectile(this, "player", damage, this->getX(), this->getY(), sight*shot_speed, 0, 1, r_p, g_p, 1e-5, 0.1, 0);
+        proyectiles->push_back(p);
+        p->setPos(p->getX(), getV_limit() - p->getY());
+        scene->addItem(p);
+    }
+    else if(shooting_mode == "double"){
+        p = new Proyectile(this, "player", damage, this->getX(), this->getY(), sight*shot_speed, shot_speed/3, 1, r_p, g_p, 1e-5, 0.1, 0);
+        proyectiles->push_back(p);
+        p->setPos(p->getX(), getV_limit() - p->getY());
+        scene->addItem(p);
 
-    p->setPos(p->getX(), getV_limit() - p->getY());
-    scene->addItem(p);
+        p = new Proyectile(this, "player", damage, this->getX(), this->getY(), sight*shot_speed, shot_speed/2, 1, r_p, g_p, 1e-5, 0.1, 0);
+        proyectiles->push_back(p);
+        p->setPos(p->getX(), getV_limit() - p->getY());
+        scene->addItem(p);
+    }
+    else if(shooting_mode == "triple"){
+        p = new Proyectile(this, "player", damage, this->getX(), this->getY(), sight*shot_speed, shot_speed/5, 1, r_p, g_p, 1e-5, 0.1, 0);
+        proyectiles->push_back(p);
+        p->setPos(p->getX(), getV_limit() - p->getY());
+        scene->addItem(p);
 
-    return p;
+        p = new Proyectile(this, "player", damage, this->getX(), this->getY(), sight*shot_speed, shot_speed/3, 1, r_p, g_p, 1e-5, 0.1, 0);
+        proyectiles->push_back(p);
+        p->setPos(p->getX(), getV_limit() - p->getY());
+        scene->addItem(p);
+
+        p = new Proyectile(this, "player", damage, this->getX(), this->getY(), sight*shot_speed, shot_speed/2, 1, r_p, g_p, 1e-5, 0.1, 0);
+        proyectiles->push_back(p);
+        p->setPos(p->getX(), getV_limit() - p->getY());
+        scene->addItem(p);
+    }
+    else if(shooting_mode == "orbiting"){
+        p = new Proyectile(this, this, damage, this->getX() + sight*30, this->getY()+10, sight*(shot_speed/3), shot_speed/5, 1, r_p, g_p, 1e-5, 0.1, 0);
+        proyectiles->push_back(p);
+        p->setPos(p->getX(), getV_limit() - p->getY());
+        scene->addItem(p);
+    }
 }
 
 void Player::update_stat(std::string s) {

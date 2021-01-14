@@ -13,8 +13,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->graphicsView->setFocus();
     this->resize(ui->graphicsView->width()+100, ui->graphicsView->height()+100);
 
-    p1 = new Player(this, scene, "P1", 0, 0, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
-    p2 = new Player(this, scene, "P2", 200, 1000, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
+    p1 = new Player(this, scene, "P1", &proyectiles, 0, 0, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
+    p2 = new Player(this, scene, "P2", &proyectiles, 200, 1000, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
     //p2 = nullptr;
 
     r1 = new Room(this, scene, &proyectiles, "1");
@@ -99,8 +99,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
         p1->set_velY(p1->getY(), -p1->getJump_Speed());
     }
     if(event->key() == Qt::Key_Space){
-        Proyectile * p = p1->shoot();
-        proyectiles.push_back(p);
+        p1->shoot();
     }
     if(event->key() == Qt::Key_E){
 
@@ -239,8 +238,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event) {
     if(p2 != nullptr){
 
         if(event->button() == Qt::MouseButton::LeftButton){
-            Proyectile * p = p2->shoot();
-            proyectiles.push_back(p);
+            p2->shoot();
         }
 
     }
@@ -556,7 +554,7 @@ void MainWindow::update_bodies(){
 
     for (auto k = proyectiles.begin(); k != proyectiles.end(); ) { //checks for proyectiles' collitions
 
-        (*k)->update();
+        (*k)->Proyectile::update();
 
         if (check_collitions(*k)){
             scene->removeItem(*k);

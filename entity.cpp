@@ -1,21 +1,11 @@
 #include "entity.h"
 
-void Entity::setG(float value)
+float Entity::getMass() const
 {
-    g = value;
+    return mass;
 }
 
-void Entity::setE(float value)
-{
-    e = value;
-}
-
-void Entity::setRadio(int value)
-{
-    radio = value;
-}
-
-Entity::Entity(QObject *parent, float x_, float y_, float vx_, float vy_, float mass_, int radio_, float g_, float K_, float e_, float V_) : QObject(parent), v_limit(720), h_limit(1280) {
+Entity::Entity(QObject *parent, float x_, float y_, float vx_, float vy_, float mass_, int radio_, float g_, float K_, float e_, float V_) : QObject(parent), v_limit(720), h_limit(1280), G(6.67384e-11) {
 
     x = x_;
     y = y_;
@@ -62,6 +52,32 @@ void Entity::update() {
 
     setPos(x, v_limit - y);
 }
+
+void Entity::orbital_update(Entity *k)
+{
+    float aux = 0;
+    float dis;
+
+    dis = sqrt(pow((k->getX() - x), 2)+pow((k->getY() - y),2));
+
+    Ax = 0;
+    //aux += (G*((k->getMass()*100)*(k->getX() - x))/(pow(dis, 3)));
+    aux += (1*((k->getMass()*100)*(k->getX() - x))/(pow(dis, 3)));
+    Ax = aux;
+
+    aux = 0;
+    Ay = 0;
+    //aux += (G*((k->getMass()*100)*(k->getY() - y)) / (pow(dis, 3)));
+    aux += (1*((k->getMass()*100)*(k->getY() - y)) / (pow(dis, 3)));
+    Ay = aux;
+
+    Vx = Vx + (Ax*dt);
+    Vy = Vy + (Ay*dt);
+    x = x + (Vx*dt);
+    y = y + (Vy*dt);
+
+    setPos(x, v_limit - y);
+}
 void Entity::set_vel(float px, float py, float vx, float vy) {
     x = px;
     y = py;
@@ -98,6 +114,15 @@ float Entity::getE() const {
 
 void Entity::setK(float value) {
     K = value;
+}
+void Entity::setG(float value) {
+    g = value;
+}
+void Entity::setE(float value) {
+    e = value;
+}
+void Entity::setRadio(int value) {
+    radio = value;
 }
 
 int Entity::getV_limit() const {

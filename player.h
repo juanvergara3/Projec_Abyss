@@ -42,6 +42,8 @@ private: // Variables
 
     std::list<QLabel *> labels;
 
+    std::list<Proyectile *> *proyectiles;
+
     short sight;
     short direction;
 
@@ -52,10 +54,10 @@ private: // Variables
     QGraphicsScene *scene;
 
 public: // Methods
-    explicit Player(QObject *parent = nullptr, QGraphicsScene *s = nullptr, std::string name = "", int statPos = 0, float x_ = 0, float y_ = 0, float vx_ = 0, float vy_ = 0, float mass_ = 0, int radio_ = 0, float g_ = 0, float K_ = 0, float e_ = 0, float V_ = 0);
+    explicit Player(QObject *parent = nullptr, QGraphicsScene *s = nullptr, std::string name = "", std::list<Proyectile *> *p = nullptr, int statPos = 0, float x_ = 0, float y_ = 0, float vx_ = 0, float vy_ = 0, float mass_ = 0, int radio_ = 0, float g_ = 0, float K_ = 0, float e_ = 0, float V_ = 0);
     ~Player();
 
-    Proyectile* shoot();
+    void shoot();
 
     void update_stat(std::string s);
     void update_stats(Item *i);

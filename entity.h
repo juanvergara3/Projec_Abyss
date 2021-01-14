@@ -29,6 +29,8 @@ private: //variables
 
     const int v_limit, h_limit;
 
+    const float G;
+
 public: //methods
     explicit Entity(QObject *parent = nullptr, float x_ = 0, float y_ = 0, float vx_ = 0, float vy_ = 0, float mass_ = 0, int radio_ = 0, float g_ = 0, float K_ = 0, float e_ = 0, float V_ = 0);
     ~Entity();
@@ -37,6 +39,7 @@ public: //methods
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
 
     void update();
+    void orbital_update(Entity *k);
     void set_vel(float px, float py, float vx, float vy);
     void set_velX(float px, float vx);
     void set_velY(float py, float vy);
@@ -47,6 +50,7 @@ public: //methods
     float getY() const;
     int getRadio() const;
     float getE() const;
+    float getMass() const;
 
     void setK(float value);
 
