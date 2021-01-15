@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     //p2 = nullptr;
 
     r1 = new Room(this, scene, &proyectiles, "1");
-    r2 = new Room(this, scene, &proyectiles, "11");
+    r2 = new Room(this, scene, &proyectiles, "lamprey");
 
     r1->doors.back()->setLink(r2);
     r2->doors.back()->setLink(r1);
@@ -396,19 +396,19 @@ void MainWindow::check_collitions(Enemy *e) {
 }
 void MainWindow::check_collitions(Boss *b) {
     /*------EDGES------*/
-    if(b->getX() < b->getRadio()) { //colicion en x por la izquierda
-        b->set_velX(b->getRadio(), -1*b->getE()*b->getVx());
+    if(b->getX() < b->getWidth()/2) { //colicion en x por la izquierda
+        b->set_velX(b->getWidth()/2, -1*b->getE()*b->getVx());
     }
-    if(b->getX() > h_limit - b->getRadio()) { //colicion en x por la derecha
-        b->set_velX(h_limit - b->getRadio(), -1*b->getE()*b->getVx());
+    if(b->getX() > h_limit - b->getWidth()/2) { //colicion en x por la derecha
+        b->set_velX(h_limit - b->getWidth()/2, -1*b->getE()*b->getVx());
     }
-    if(b->getY() < b->getRadio()) { //colicion en y por arriba (callendo)
-        b->set_velY(b->getRadio(), -1*b->getE()*b->getVy());
+    if(b->getY() < b->getHeight()/2) { //colicion en y por arriba (callendo)
+        b->set_velY(b->getHeight()/2, -1*b->getE()*b->getVy());
         //(*k)->setJumping(false);
     }
 
-    if(b->getY() > v_limit - b->getRadio()) { //colicion en y por abajo (saltando)
-        b->set_velY(v_limit - b->getRadio(), -1*b->getE()*b->getVy());
+    if(b->getY() > v_limit - (b->getHeight()/2)) { //colicion en y por abajo (saltando)
+        b->set_velY(v_limit - (b->getHeight()/2), -1*b->getE()*b->getVy());
     }
 
     for(int k = 0; k < b->collidingItems().size(); k++){
@@ -429,13 +429,13 @@ void MainWindow::check_collitions(Boss *b) {
             }
             if(b->getY() > v_limit - b->collidingItems().at(k)->y()) { //colicion en y por arriba (callendo)
 
-                b->set_velY(v_limit - b->collidingItems().at(k)->y() + b->getRadio(), -1*b->getE()*b->getVy());
+                b->set_velY(v_limit - b->collidingItems().at(k)->y() + b->getHeight(), -1*b->getE()*b->getVy());
                 //e->setJumping(false);
 
             }
             if(b->getY() < v_limit - (b->collidingItems().at(k)->y() + b->collidingItems().at(k)->boundingRect().height())) { //colicion en y por abajo (saltando)
 
-                b->set_velY(v_limit - (b->collidingItems().at(k)->y() + b->collidingItems().at(k)->boundingRect().height() + b->getRadio()), -1*b->getE()*b->getVy());
+                b->set_velY(v_limit - (b->collidingItems().at(k)->y() + b->collidingItems().at(k)->boundingRect().height() + b->getHeight()), -1*b->getE()*b->getVy());
 
             }
         }

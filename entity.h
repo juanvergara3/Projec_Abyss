@@ -27,12 +27,16 @@ private: //variables
     float V; //vector de velocidad
     float dt; //delta de tiempo
 
+    int width, height;
+
     const int v_limit, h_limit;
 
     const float G;
 
 public: //methods
     explicit Entity(QObject *parent = nullptr, float x_ = 0, float y_ = 0, float vx_ = 0, float vy_ = 0, float mass_ = 0, int radio_ = 0, float g_ = 0, float K_ = 0, float e_ = 0, float V_ = 0);
+    explicit Entity(QObject *parent = nullptr, float x_ = 0, float y_ = 0, float vx_ = 0, float vy_ = 0, float mass_ = 0, int width_ = 0, int height = 0, float g_ = 0, float K_ = 0, float e_ = 0, float V_ = 0);
+
     ~Entity();
 
     QRectF boundingRect() const;
@@ -60,6 +64,10 @@ public: //methods
     void setG(float value);
     void setE(float value);
     void setRadio(int value);
+
+    int getWidth() const;
+
+    int getHeight() const;
 
 private: //methods
 

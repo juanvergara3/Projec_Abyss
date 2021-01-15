@@ -289,40 +289,74 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         type = "normal";
     }
-    else if(file_name_ == "-1"){
+    else if(file_name_ == "lamprey"){
 
-        walls.push_back(new Wall(this, 200, 620, 150, 40));
+        walls.push_back(new Wall(this, 50, 720-100, 150, 20));
+        walls.push_back(new Wall(this, 300, 720-100, 150, 20));
+        walls.push_back(new Wall(this, 550, 720-100, 150, 20));
+        walls.push_back(new Wall(this, 800, 720-100, 150, 20));
+
+        walls.push_back(new Wall(this, 0, 720-250, 50, 20));
+        walls.push_back(new Wall(this, 150, 720-250, 150, 20));
+        walls.push_back(new Wall(this, 400, 720-250, 150, 20));
+        walls.push_back(new Wall(this, 650, 720-250, 150, 20));
+
+        walls.push_back(new Wall(this, 50, 720-400, 150, 20));
+        walls.push_back(new Wall(this, 300, 720-400, 150, 20));
+        walls.push_back(new Wall(this, 550, 720-400, 150, 20));
+
+        walls.push_back(new Wall(this, 0, 720-550, 50, 20));
+        walls.push_back(new Wall(this, 150, 720-550, 150, 20));
+        walls.push_back(new Wall(this, 400, 720-550, 150, 20));
+
+        doors.push_back(new Door(this, this, 0, 720-40, 20, 40));
+
+        boss = new Boss(this, scene, "lamprey", p, 1280-150, 720/2, 0, 0, 50, 300, 200, 0, 1e-5, 0.1, 0);
+
+        itemX =  475 - 8;
+        itemY = 720 - 550 -16;
+
+        type = "boss";
+    }
+    else if (file_name_ == "priest"){
+
+        walls.push_back(new Wall(this, 450, 620, 150, 40));
         walls.push_back(new Wall(this, 200,660, 40, 60));
-        walls.push_back(new Wall(this,700, 720-80, 40, 80));
 
-        //enemies.push_back(new Enemy(this, this->scene, "x", p, 1, 700, 300, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+        doors.push_back(new Door(this, this, 0, 720-40, 20, 40));
 
-        doors.push_back(new Door(this, this, 900, 720-40, 20, 40));
-
-        boss = new Boss(this, scene, "priest", p, 640, 360, 0, 0, 100, 40, 5, 1e-5, 0.1, 0);
-        //boss = nullptr;
+        boss = new Boss(this, scene, "priest", p, 640, 360, 0, 0, 100, 100, 200, 5, 1e-5, 0.1, 0);
 
         itemX =  250;
         itemY = 720 - 16;
 
         type = "boss";
-        //type = "normal";
     }
-    else if (file_name_ == "-2"){
-
+    else if(file_name_ == "angel"){
         walls.push_back(new Wall(this, 450, 620, 150, 40));
         walls.push_back(new Wall(this, 200,660, 40, 60));
 
-        //enemies.push_back(new Enemy(this, this->scene, "x", p, 4, 700, 300, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+        doors.push_back(new Door(this, this, 0, 720-40, 20, 40));
 
-        doors.push_back(new Door(this, this, 30, 720-40, 20, 40));
-
-        boss = nullptr;
+        boss = new Boss(this, scene, "angel", p, 640, 360, 0, 0, 100, 40, 5, 1e-5, 0.1, 0);
 
         itemX =  250;
         itemY = 720 - 16;
 
-        type = "normal";
+        type = "boss";
+    }
+    else if(file_name_ == "expelled"){
+        walls.push_back(new Wall(this, 450, 620, 150, 40));
+        walls.push_back(new Wall(this, 200,660, 40, 60));
+
+        doors.push_back(new Door(this, this, 0, 720-40, 20, 40));
+
+        boss = new Boss(this, scene, "expelled", p, 640, 360, 0, 0, 100, 40, 5, 1e-5, 0.1, 0);
+
+        itemX =  250;
+        itemY = 720 - 16;
+
+        type = "boss";
     }
 }
 Room::~Room() {
@@ -445,7 +479,6 @@ void Room::clear_room() {
         boss = nullptr;
     }
 }
-
 bool Room::isClear() const {
     return cleared;
 }
