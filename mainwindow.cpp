@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     //p2 = nullptr;
 
     r1 = new Room(this, scene, &proyectiles, "1");
-    r2 = new Room(this, scene, &proyectiles, "lamprey");
+    r2 = new Room(this, scene, &proyectiles, "priest");
 
     r1->doors.back()->setLink(r2);
     r2->doors.back()->setLink(r1);
@@ -429,13 +429,13 @@ void MainWindow::check_collitions(Boss *b) {
             }
             if(b->getY() > v_limit - b->collidingItems().at(k)->y()) { //colicion en y por arriba (callendo)
 
-                b->set_velY(v_limit - b->collidingItems().at(k)->y() + b->getHeight(), -1*b->getE()*b->getVy());
+                b->set_velY(v_limit - b->collidingItems().at(k)->y() + b->getHeight()/2, -1*b->getE()*b->getVy());
                 //e->setJumping(false);
 
             }
             if(b->getY() < v_limit - (b->collidingItems().at(k)->y() + b->collidingItems().at(k)->boundingRect().height())) { //colicion en y por abajo (saltando)
 
-                b->set_velY(v_limit - (b->collidingItems().at(k)->y() + b->collidingItems().at(k)->boundingRect().height() + b->getHeight()), -1*b->getE()*b->getVy());
+                b->set_velY(v_limit - (b->collidingItems().at(k)->y() + b->collidingItems().at(k)->boundingRect().height()/2 + b->getHeight()), -1*b->getE()*b->getVy());
 
             }
         }

@@ -233,7 +233,3 @@ void Enemy::left_right_jump()
 
     set_velX(getX(), movement_speed);
 }
-void Enemy::zig_zag()
-{
-
-}

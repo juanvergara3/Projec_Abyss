@@ -51,12 +51,9 @@ private: // Methods
 public slots:
     void lamprey_shoot();
     void priest_shoot();
-    void angel_shoot();
     void expelled_shoot();
 
     void lamprey_move();
-    void priest_move();
-    void angel_move();
     void expelled_move();
 };
 

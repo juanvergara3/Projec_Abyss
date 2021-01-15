@@ -31,30 +31,15 @@ Boss::Boss(QObject *parent, QGraphicsScene *s, std::string boss, std::list<Proye
     }
     else if (boss == "priest") {
         connect(shooting_timer, SIGNAL(timeout()), this, SLOT(priest_shoot()));
-        connect(movement_timer, SIGNAL(timeout()), this, SLOT(priest_move()));
 
         name_label->setText("Tainted High Priest");
         description_label->setText("~Corrupted by Malice~");
 
-        health = 200;
-        damage = 20;
-        shot_speed = 15;
-        fire_rate = 2500;
-        movement_speed = 20;
-        jump_Speed = 0;
-    }
-    else if (boss == "angel") {
-        connect(shooting_timer, SIGNAL(timeout()), this, SLOT(angel_shoot()));
-        connect(movement_timer, SIGNAL(timeout()), this, SLOT(angel_move()));
-
-        name_label->setText("Rotting Angel");
-        description_label->setText("~Fallen and Devoured~");
-
-        health = 200;
-        damage = 20;
-        shot_speed = 15;
-        fire_rate = 2500;
-        movement_speed = 20;
+        health = 800;
+        damage = 40;
+        shot_speed = 25;
+        fire_rate = 300;
+        movement_speed = 0;
         jump_Speed = 0;
     }
     else if (boss == "expelled") {
@@ -167,11 +152,31 @@ void Boss::lamprey_shoot()
 }
 void Boss::priest_shoot()
 {
+    Proyectile *p;
+    int randX, randY;
 
-}
-void Boss::angel_shoot()
-{
+    randX = rand() % 8;
+    randY = rand() % 8;
+    p = new Proyectile(nullptr, this, damage, this->getX()+sight*80, this->getY(), sight*(shot_speed/randX), shot_speed/randY, 0.5, 6, 1, 1e-6, 0.1, 0);
+    proyectiles->push_back(p);
+    p->setPos(p->getX(), getV_limit() - p->getY());
+    scene->addItem(p);
 
+    randX = rand() % 8;
+    randY = rand() % 8;
+    p = new Proyectile(nullptr, this, damage, this->getX()+sight*80, this->getY(), sight*(shot_speed/randX), shot_speed/randY, 0.5, 6, 1, 1e-6, 0.1, 0);
+    proyectiles->push_back(p);
+    p->setPos(p->getX(), getV_limit() - p->getY());
+    scene->addItem(p);
+
+    randX = rand() % 8;
+    randY = rand() % 8;
+    p = new Proyectile(nullptr, this, damage, this->getX()+sight*80, this->getY(), sight*(shot_speed/randX), shot_speed/randY, 0.5, 6, 1, 1e-6, 0.1, 0);
+    proyectiles->push_back(p);
+    p->setPos(p->getX(), getV_limit() - p->getY());
+    scene->addItem(p);
+
+    sight *= -1;
 }
 void Boss::expelled_shoot()
 {
@@ -182,14 +187,6 @@ void Boss::lamprey_move()
 {
     sight *= -1;
     set_velY(getY(), jump_Speed*sight);
-}
-void Boss::priest_move()
-{
-
-}
-void Boss::angel_move()
-{
-
 }
 void Boss::expelled_move()
 {

@@ -11,9 +11,6 @@ Entity::Entity(QObject *parent, float x_, float y_, float vx_, float vy_, float 
     Ax = 0;
     Ay = 0;
 
-    width = 0;
-    height = 0;
-
     mass = mass_;
     radio = radio_;
     g = g_;
@@ -21,6 +18,9 @@ Entity::Entity(QObject *parent, float x_, float y_, float vx_, float vy_, float 
     e = e_;
     V = V_;
     dt = 0.1;
+
+    width = radio*2;
+    height = radio*2;
 }
 
 Entity::Entity(QObject *parent, float x_, float y_, float vx_, float vy_, float mass_, int width_, int height_, float g_, float K_, float e_, float V_)
@@ -50,9 +50,6 @@ Entity::~Entity() {
 }
 
 QRectF Entity::boundingRect() const {
-    if(width == 0 && height == 0)
-        return QRectF(-radio, -radio, radio*2, radio*2);
-    else
         return QRectF(-width/2, -height/2, width, height);
 }
 void Entity::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
@@ -66,16 +63,8 @@ void Entity::update() {
 
     angle = atan2(Vy, Vx); //arc_tan
 
-    if(width == 0 && height == 0){
-
-        Ax = -1*((K*pow(V, 2) * pow(radio, 2))/mass) * cos(angle);
-        Ay = (-1*((K*pow(V, 2) * pow(radio, 2))/mass) * sin(angle)) - g;
-    }
-    else{
-
-        Ax = -1*((K*pow(V, 2) * pow(width/2, 2))/mass) * cos(angle);
-        Ay = (-1*((K*pow(V, 2) * pow(height/2, 2))/mass) * sin(angle)) - g;
-    }
+    Ax = -1*((K*pow(V, 2) * pow(width/2, 2))/mass) * cos(angle);
+    Ay = (-1*((K*pow(V, 2) * pow(height/2, 2))/mass) * sin(angle)) - g;
 
     x = x + Vx*dt + Ax*pow(dt, 2)/2;
     y = y + Vy*dt + Ay*pow(dt, 2)/2;

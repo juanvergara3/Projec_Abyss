@@ -320,25 +320,38 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
     }
     else if (file_name_ == "priest"){
 
-        walls.push_back(new Wall(this, 450, 620, 150, 40));
-        walls.push_back(new Wall(this, 200,660, 40, 60));
+        walls.push_back(new Wall(this, 580, 720-150, 120, 40));
+        walls.push_back(new Wall(this, 1280/2 - 15, 720-110, 30, 60));
+        walls.push_back(new Wall(this, 1280/2 - 30 - 10, 720-110, 20, 40));
+        walls.push_back(new Wall(this, 1280/2 + 30 - 10, 720-110, 20, 40));
 
-        doors.push_back(new Door(this, this, 0, 720-40, 20, 40));
+        walls.push_back(new Wall(this, 1280/2 - 25, 720 - 250, 50, 50));
 
-        boss = new Boss(this, scene, "priest", p, 640, 360, 0, 0, 100, 100, 200, 5, 1e-5, 0.1, 0);
+        walls.push_back(new Wall(this, 200, 720-100, 100, 20));
+        walls.push_back(new Wall(this, 1280-300, 720-100, 100, 20));
 
-        itemX =  250;
-        itemY = 720 - 16;
+        walls.push_back(new Wall(this, 50, 720-200, 100, 20));
+        walls.push_back(new Wall(this, 1280-150, 720-200, 100, 20));
+        walls.push_back(new Wall(this, 1280-450, 720-200, 100, 20));
+        walls.push_back(new Wall(this, 350, 720-200, 100, 20));
 
-        type = "boss";
-    }
-    else if(file_name_ == "angel"){
-        walls.push_back(new Wall(this, 450, 620, 150, 40));
-        walls.push_back(new Wall(this, 200,660, 40, 60));
+        walls.push_back(new Wall(this, 200, 720-300, 100, 20));
+        walls.push_back(new Wall(this, 1280-300, 720-300, 100, 20));
 
-        doors.push_back(new Door(this, this, 0, 720-40, 20, 40));
+        walls.push_back(new Wall(this, 280, 720-320, 20, 20));
+        walls.push_back(new Wall(this, 1280-300, 720-320, 20, 20));
 
-        boss = new Boss(this, scene, "angel", p, 640, 360, 0, 0, 100, 40, 5, 1e-5, 0.1, 0);
+        walls.push_back(new Wall(this, 1280-450, 720-450, 100, 20));
+        walls.push_back(new Wall(this, 350, 720-450, 100, 20));
+
+        walls.push_back(new Wall(this, 500, 720-600, 100, 20));
+        walls.push_back(new Wall(this, 680, 720-600, 100, 20));
+
+
+        doors.push_back(new Door(this, this, 1280/2 - 10, 720-40, 20, 40));
+
+        boss = new Boss(this, scene, "priest", p, 1280/2, 250, 0, 0, 25, 100, 200, 5, 1e-5, 0.1, 0);
+        //boss = nullptr;
 
         itemX =  250;
         itemY = 720 - 16;
