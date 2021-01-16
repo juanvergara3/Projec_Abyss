@@ -47,7 +47,7 @@ Boss::Boss(QObject *parent, QGraphicsScene *s, std::string boss, std::list<Proye
         connect(movement_timer, SIGNAL(timeout()), this, SLOT(expelled_move()));
 
         name_label->setText("The Expelled One");
-        description_label->setText("~Hatred Incarnation~");
+        description_label->setText("~Hatred Incarnated~");
 
         health = 200;
         damage = 20;
@@ -131,8 +131,7 @@ void Boss::stop() {
     health_bar->setVisible(false);
 }
 
-void Boss::lamprey_shoot()
-{
+void Boss::lamprey_shoot() {
     Proyectile *p;
 
     p = new Proyectile(nullptr, "boss", damage, this->getX(), this->getY(), -1*shot_speed, shot_speed/5, 1, 4, 0.5, 1e-5, 0.1, 0);
@@ -150,8 +149,7 @@ void Boss::lamprey_shoot()
     p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
 }
-void Boss::priest_shoot()
-{
+void Boss::priest_shoot() {
     Proyectile *p;
     int randX, randY;
 
@@ -183,8 +181,7 @@ void Boss::expelled_shoot()
 
 }
 
-void Boss::lamprey_move()
-{
+void Boss::lamprey_move() {
     sight *= -1;
     set_velY(getY(), jump_Speed*sight);
 }

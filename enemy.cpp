@@ -103,11 +103,6 @@ Enemy::Enemy(QObject *parent, QGraphicsScene *s, std::string shooting_type, std:
         connect(movement_timer, SIGNAL(timeout()), this, SLOT(left_right_jump()));
 
     }
-    else if(movement_type == "zig_zag"){
-
-        connect(movement_timer, SIGNAL(timeout()), this, SLOT(zig_zag()));
-
-    }
 }
 Enemy::~Enemy() {
     delete shooting_timer;

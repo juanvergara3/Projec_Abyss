@@ -17,8 +17,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     p2 = new Player(this, scene, "P2", &proyectiles, 200, 1000, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
     //p2 = nullptr;
 
-    r1 = new Room(this, scene, &proyectiles, "1");
-    r2 = new Room(this, scene, &proyectiles, "priest");
+    r1 = new Room(this, scene, &proyectiles, "f3-safe");
+    r2 = new Room(this, scene, &proyectiles, "expelled");
 
     r1->doors.back()->setLink(r2);
     r2->doors.back()->setLink(r1);
