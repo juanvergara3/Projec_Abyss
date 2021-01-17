@@ -61,6 +61,7 @@ public: //methods
     int getV_limit() const;
     int getH_limit() const;
 
+    float getG() const;
     void setG(float value);
     void setE(float value);
     void setRadio(int value);

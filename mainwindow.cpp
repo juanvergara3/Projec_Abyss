@@ -257,7 +257,6 @@ void MainWindow::check_collitions(Player *p) {
         p->set_velY(p->getRadio(), -1*p->getE()*p->getVy());
         p->setJumping(false);
     }
-
     if(p->getY() > v_limit - p->getRadio()) { //colicion en y por abajo (saltando)
         p->set_velY(v_limit - p->getRadio(), -1*p->getE()*p->getVy());
     }
@@ -303,7 +302,6 @@ bool MainWindow::check_collitions(Proyectile *p) {
     if(p->getY() < p->getRadio()) {
         return true;
     }
-
     if(p->getY() > v_limit - p->getRadio()) {
         return true;
     }
@@ -355,7 +353,6 @@ void MainWindow::check_collitions(Enemy *e) {
         e->set_velY(e->getRadio(), -1*e->getE()*e->getVy());
         //(*k)->setJumping(false);
     }
-
     if(e->getY() > v_limit - e->getRadio()) { //colicion en y por abajo (saltando)
         e->set_velY(v_limit - e->getRadio(), -1*e->getE()*e->getVy());
     }
@@ -367,25 +364,19 @@ void MainWindow::check_collitions(Enemy *e) {
 
             if(e->getX() < e->collidingItems().at(k)->x()) { //colicion en x por la izquierda
 
-                //p->set_velX(p->collidingItems().at(k)->x() - p->getRadio(), -1*p->getE()*p->getVx());
-                //e->set_velX(e->collidingItems().at(k)->x() - e->getRadio() + (e->getDirection() * e->getMovement_speed()), e->getVx()); //fails ******
-
+                e->set_velX(e->collidingItems().at(k)->x() - e->getRadio(), -1*e->getE()*e->getVx());
             }
             if(e->getX() > e->collidingItems().at(k)->x() + e->collidingItems().at(k)->boundingRect().width()) { //colicion en x por la derecha
 
-                //p->set_velX(p->collidingItems().at(k)->x() + p->collidingItems().at(k)->boundingRect().width() + p->getRadio(), -1*p->getE()*p->getVx());
-                //e->set_velX(e->collidingItems().at(k)->x() + e->collidingItems().at(k)->boundingRect().width() + e->getRadio() + (e->getDirection() * e->getMovement_speed()), e->getVx()); //fails ******
+                e->set_velX(e->collidingItems().at(k)->x() + e->collidingItems().at(k)->boundingRect().width() + e->getRadio(), -1*e->getE()*e->getVx());
             }
             if(e->getY() > v_limit - e->collidingItems().at(k)->y()) { //colicion en y por arriba (callendo)
 
                 e->set_velY(v_limit - e->collidingItems().at(k)->y() + e->getRadio(), -1*e->getE()*e->getVy());
-                //e->setJumping(false);
-
             }
             if(e->getY() < v_limit - (e->collidingItems().at(k)->y() + e->collidingItems().at(k)->boundingRect().height())) { //colicion en y por abajo (saltando)
 
                 e->set_velY(v_limit - (e->collidingItems().at(k)->y() + e->collidingItems().at(k)->boundingRect().height() + e->getRadio()), -1*e->getE()*e->getVy());
-
             }
         }
         else if(typeid ( *(e->collidingItems()[k]) ) == typeid(Player)){
@@ -406,7 +397,6 @@ void MainWindow::check_collitions(Boss *b) {
         b->set_velY(b->getHeight()/2, -1*b->getE()*b->getVy());
         //(*k)->setJumping(false);
     }
-
     if(b->getY() > v_limit - (b->getHeight()/2)) { //colicion en y por abajo (saltando)
         b->set_velY(v_limit - (b->getHeight()/2), -1*b->getE()*b->getVy());
     }
@@ -418,25 +408,19 @@ void MainWindow::check_collitions(Boss *b) {
 
             if(b->getX() < b->collidingItems().at(k)->x()) { //colicion en x por la izquierda
 
-                //p->set_velX(p->collidingItems().at(k)->x() - p->getRadio(), -1*p->getE()*p->getVx());
-                //e->set_velX(e->collidingItems().at(k)->x() - e->getRadio() + (e->getDirection() * e->getMovement_speed()), e->getVx()); //fails ******
-
+               b->set_velX(b->collidingItems().at(k)->x() - b->getWidth()/2, -1*b->getE()*b->getVx());
             }
             if(b->getX() > b->collidingItems().at(k)->x() + b->collidingItems().at(k)->boundingRect().width()) { //colicion en x por la derecha
 
-                //p->set_velX(p->collidingItems().at(k)->x() + p->collidingItems().at(k)->boundingRect().width() + p->getRadio(), -1*p->getE()*p->getVx());
-                //e->set_velX(e->collidingItems().at(k)->x() + e->collidingItems().at(k)->boundingRect().width() + e->getRadio() + (e->getDirection() * e->getMovement_speed()), e->getVx()); //fails ******
+                b->set_velX(b->collidingItems().at(k)->x() + b->collidingItems().at(k)->boundingRect().width() + b->getWidth()/2, -1*b->getE()*b->getVx());
             }
             if(b->getY() > v_limit - b->collidingItems().at(k)->y()) { //colicion en y por arriba (callendo)
 
                 b->set_velY(v_limit - b->collidingItems().at(k)->y() + b->getHeight()/2, -1*b->getE()*b->getVy());
-                //e->setJumping(false);
-
             }
             if(b->getY() < v_limit - (b->collidingItems().at(k)->y() + b->collidingItems().at(k)->boundingRect().height())) { //colicion en y por abajo (saltando)
 
-                b->set_velY(v_limit - (b->collidingItems().at(k)->y() + b->collidingItems().at(k)->boundingRect().height()/2 + b->getHeight()), -1*b->getE()*b->getVy());
-
+                b->set_velY(v_limit - (b->collidingItems().at(k)->y() + b->collidingItems().at(k)->boundingRect().height() + b->getHeight()/2), -1*b->getE()*b->getVy());
             }
         }
         else if(typeid ( *(b->collidingItems()[k]) ) == typeid(Player)){

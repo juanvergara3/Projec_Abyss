@@ -522,15 +522,14 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
     else if(file_name_ == "expelled"){
         walls.push_back(new Wall(this, 0, 720 - 100, 1280, 100));
 
-        walls.push_back(new Wall(this, 150, 720 - 250, 150, 20));
-        walls.push_back(new Wall(this, 1280-300, 720 -250, 150, 20));
-
-        walls.push_back(new Wall(this, 1280-150-400, 720 - 400, 150, 20));
-        walls.push_back(new Wall(this, 400, 720 - 400, 150, 20));
+        walls.push_back(new Wall(this, 150, 720 - 250, 150, 10));
+        walls.push_back(new Wall(this, 1280-300, 720 -250, 150, 10));
+        walls.push_back(new Wall(this, 1280-150-400, 720 - 400, 150, 10));
+        walls.push_back(new Wall(this, 400, 720 - 400, 150, 10));
 
         doors.push_back(new Door(this, this, 0, 720-140, 20, 40));
 
-        boss = new Boss(this, scene, "expelled", p, 150, 220, 0, 0, 100, 60, 120, 5, 1e-5, 0.1, 0);
+        boss = new Boss(this, scene, "expelled", p, 1200, 220, 0, 0, 20, 60, 120, 5, 1e-5, 0.1, 0);
         //boss = nullptr;
 
         itemX =  250;
