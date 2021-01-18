@@ -3,9 +3,7 @@
 
 #include <QMainWindow>
 
-namespace Ui {
-class MainMenu;
-}
+namespace Ui { class MainMenu; }
 
 class MainMenu : public QMainWindow
 {
@@ -19,6 +17,8 @@ private: // variables
     QList<QWidget*> howtoplayScreen;
     QList<QWidget*> singleplayerScreen;
     QList<QWidget*> multiplayerScreen;
+
+    Ui::MainMenu *ui;
 
 public: // methods
     explicit MainMenu(QWidget *parent = nullptr);
@@ -47,8 +47,20 @@ private slots:
     void on_creditsButton_clicked();
     void on_exitButton_clicked();
 
-private:
-    Ui::MainMenu *ui;
+    void on_gobackButton_3_clicked();
+
+    void on_gobackButton_2_clicked();
+
+    void on_singleplayerButton_clicked();
+    void on_multiplayerButton_clicked();
+    void on_loadgameButton_clicked();
+    void on_gobackButton_1_clicked();
+
+    void on_playButton_single_clicked();
+    void on_gobackButton_4_clicked();
+
+    void on_playButton_2_clicked();
+    void on_gobackButton_5_clicked();
 };
 
 #endif // MAINMENU_H

@@ -4,8 +4,15 @@
 
 class Floor
 {
-public:
-    Floor();
+private: // variables
+
+public: // variables
+
+private: // methods
+
+public: // methods
+        Floor();
+
 };
 
 #endif // FLOOR_H

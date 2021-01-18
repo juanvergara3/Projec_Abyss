@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     //p2 = nullptr;
 
     r1 = new Room(this, scene, &proyectiles, "f3-safe");
-    r2 = new Room(this, scene, &proyectiles, "expelled");
+    r2 = new Room(this, scene, &proyectiles, "f3-item");
 
     r1->doors.back()->setLink(r2);
     r2->doors.back()->setLink(r1);
@@ -46,8 +46,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(timer, SIGNAL(timeout()), this, SLOT(update_bodies()));
     timer->start(3);
 
-    //srand(unsigned(time(0)));
-    srand(time(NULL));
+    unsigned int i = 4294967295;
+
+    srand(i);
+    //srand(time(NULL));
 
     load_items("items.txt");
 

@@ -33,11 +33,15 @@ void MainMenu::init_lists() {
     multiplayerScreen.push_back(ui->player2Name);
     multiplayerScreen.push_back(ui->gobackButton_5);
     multiplayerScreen.push_back(ui->playButton_2);
+    multiplayerScreen.push_back(ui->seed_multi);
+    multiplayerScreen.push_back(ui->seedLabel_2);
 
     singleplayerScreen.push_back(ui->gobackButton_4);
     singleplayerScreen.push_back(ui->playButton_single);
     singleplayerScreen.push_back(ui->playerLabel);
     singleplayerScreen.push_back(ui->playerName);
+    singleplayerScreen.push_back(ui->seed_single);
+    singleplayerScreen.push_back(ui->seedLabel_1);
 
     howtoplayScreen.push_back(ui->directions);
     howtoplayScreen.push_back(ui->gobackButton_2);
@@ -101,7 +105,7 @@ void MainMenu::show_multiplayerScreen() {
         multiplayerScreen.at(k)->setHidden(false);
 }
 
-void MainMenu::on_playButton_clicked() {
+void MainMenu::on_playButton_clicked() { // on main screen
     hide_mainScreen();
     show_playScreen();
 }
@@ -117,4 +121,44 @@ void MainMenu::on_exitButton_clicked() {
     this->close();
 }
 
+void MainMenu::on_gobackButton_3_clicked() { // on credits screen
+    hide_creditsScreen();
+    show_mainScreen();
+}
 
+void MainMenu::on_gobackButton_2_clicked() { // on how to play screen
+    hide_howtoplayScreen();
+    show_mainScreen();
+}
+
+void MainMenu::on_singleplayerButton_clicked() { // on play screen
+    hide_playScreen();
+    show_singleplayerScreen();
+}
+void MainMenu::on_multiplayerButton_clicked() {
+    hide_playScreen();
+    show_multiplayerScreen();
+}
+void MainMenu::on_loadgameButton_clicked() {
+
+}
+void MainMenu::on_gobackButton_1_clicked() {
+    hide_playScreen();
+    show_mainScreen();
+}
+
+void MainMenu::on_playButton_single_clicked() { // on single player screen
+    //starts a single player match
+}
+void MainMenu::on_gobackButton_4_clicked() {
+    hide_singleplayerScreen();
+    show_playScreen();
+}
+
+void MainMenu::on_playButton_2_clicked() { // on multiplayer screen
+    //starts a multiplayer match
+}
+void MainMenu::on_gobackButton_5_clicked() {
+    hide_multiplayerScreen();
+    show_playScreen();
+}
