@@ -7,10 +7,13 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    //MainMenu w;
-    //PauseMenu w;
+    MainMenu m;
+    PauseMenu p;
     MainWindow w;
+
+    w.setPause_menu(&p);
+    p.setMain_window(&w);
+
     w.showMaximized();
-    w.show();
     return a.exec();
 }

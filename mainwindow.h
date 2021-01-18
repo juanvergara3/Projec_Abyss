@@ -18,6 +18,8 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+class PauseMenu;
+
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
@@ -45,14 +47,21 @@ private: // Variables
 
     Player *p1, *p2;
 
+    PauseMenu *pause_menu;
+
 public: // Methods
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(QWidget *parent = nullptr, PauseMenu *p = nullptr);
     ~MainWindow();
 
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
 
     void mousePressEvent(QMouseEvent *event);
+
+    void pause();
+    void resume();
+
+    void setPause_menu(PauseMenu *value);
 
 private: // Methods
     void check_collitions(Player *p);

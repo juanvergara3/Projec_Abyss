@@ -1,7 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "pausemenu.h"
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow), h_limit(1280), v_limit(720) {
+MainWindow::MainWindow(QWidget *parent, PauseMenu *p) : QMainWindow(parent), ui(new Ui::MainWindow), h_limit(1280), v_limit(720), pause_menu(p) {
     ui->setupUi(this);
 
     scene = new QGraphicsScene(this);
@@ -17,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     p2 = new Player(this, scene, "P2", &proyectiles, 200, 1000, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
     //p2 = nullptr;
 
-    current_floor = new Floor(scene, &proyectiles, 3);
+    current_floor = new Floor(scene, &proyectiles, 2);
 
     current_room = current_floor->safe;
     current_room->load_room();
@@ -220,6 +221,12 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
             }
         }
     }
+
+    if(event->key() == Qt::Key_Escape){
+        pause();
+        this->hide();
+        pause_menu->showMaximized();
+    }
 }
 void MainWindow::keyReleaseEvent(QKeyEvent *event) {
 
@@ -256,6 +263,23 @@ void MainWindow::mousePressEvent(QMouseEvent *event) {
         }
 
     }
+}
+
+void MainWindow::pause() {
+    timer->stop();
+    if(boss != nullptr && current_room_type == "boss")
+        boss->stop();
+    else if(current_room_type == "normal")
+        for (auto k = enemies.begin(); k != enemies.end(); k++)  //checks for enemies' health
+            (*k)->stop();
+}
+void MainWindow::resume() {
+    timer->start(3);
+    if(boss != nullptr && current_room_type == "boss")
+        boss->init();
+    else if(current_room_type == "normal")
+        for (auto k = enemies.begin(); k != enemies.end(); k++)  //checks for enemies' health
+            (*k)->init();
 }
 
 void MainWindow::check_collitions(Player *p) {
@@ -620,7 +644,9 @@ void MainWindow::update_bodies(){
     }
 }
 
-
+void MainWindow::setPause_menu(PauseMenu *value) {
+    pause_menu = value;
+}
 
 
 

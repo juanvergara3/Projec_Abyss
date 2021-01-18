@@ -1,9 +1,9 @@
 #include "pausemenu.h"
 #include "ui_pausemenu.h"
+#include "mainwindow.h"
 
-PauseMenu::PauseMenu(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::PauseMenu)
+PauseMenu::PauseMenu(QWidget *parent, MainWindow *m) :
+    QMainWindow(parent), ui(new Ui::PauseMenu), main_window(m)
 {
     ui->setupUi(this);
 
@@ -11,6 +11,8 @@ PauseMenu::PauseMenu(QWidget *parent) :
 
     hide_resetScreen();
     hide_menuScreen();
+
+    current_screen = "main";
 }
 PauseMenu::~PauseMenu() {
     delete ui;
@@ -59,7 +61,9 @@ void PauseMenu::show_menuScreen() {
 }
 
 void PauseMenu::on_resumeButton_clicked() { // on main screen
-
+    this->hide();
+    main_window->showMaximized();
+    main_window->resume();
 }
 void PauseMenu::on_saveButton_clicked() {
 
@@ -67,15 +71,21 @@ void PauseMenu::on_saveButton_clicked() {
 void PauseMenu::on_restartButton_clicked() {
     hide_mainScreen();
     show_resetScreen();
+
+    current_screen = "restart";
 }
 void PauseMenu::on_exitButton_clicked() {
     hide_mainScreen();
     show_menuScreen();
+
+    current_screen = "exit";
 }
 
 void PauseMenu::on_noButton_res_clicked() { // on reset screen
     hide_resetScreen();
     show_mainScreen();
+
+    current_screen = "main";
 }
 void PauseMenu::on_yesButton_res_clicked() {
 
@@ -84,7 +94,51 @@ void PauseMenu::on_yesButton_res_clicked() {
 void PauseMenu::on_noButton_men_clicked() { // on menu screen
     hide_menuScreen();
     show_mainScreen();
+
+    current_screen = "main";
 }
 void PauseMenu::on_yesButton_men_clicked() {
 
 }
+
+void PauseMenu::setMain_window(MainWindow *value) {
+    main_window = value;
+}
+
+void PauseMenu::keyPressEvent(QKeyEvent *event) {
+    if(event->key() == Qt::Key_Escape){
+        if(current_screen == "main"){
+            this->hide();
+            main_window->showMaximized();
+            main_window->resume();
+        }
+        else if (current_screen == "restart") {
+            on_noButton_res_clicked();
+        }
+        else if (current_screen == "exit") {
+            on_noButton_men_clicked();
+        }
+    }
+    else if(event->key() == Qt::Key_Backspace){
+        if(current_screen == "main"){
+            this->hide();
+            main_window->showMaximized();
+            main_window->resume();
+        }
+        else if (current_screen == "restart") {
+            on_noButton_res_clicked();
+        }
+        else if (current_screen == "exit") {
+            on_noButton_men_clicked();
+        }
+    }
+    else if (event->key() == Qt::Key_Enter) {
+        if (current_screen == "restart") {
+            on_yesButton_res_clicked();
+        }
+        else if (current_screen == "exit") {
+            on_yesButton_men_clicked();
+        }
+    }
+}
+

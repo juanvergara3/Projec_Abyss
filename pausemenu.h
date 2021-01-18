@@ -2,8 +2,11 @@
 #define PAUSEMENU_H
 
 #include <QMainWindow>
+#include <QKeyEvent>
 
 namespace Ui { class PauseMenu; }
+
+class MainWindow;
 
 class PauseMenu : public QMainWindow
 {
@@ -17,9 +20,17 @@ private: // variables
 
     Ui::PauseMenu *ui;
 
+    MainWindow *main_window;
+
+    std::string current_screen;
+
 public: // methods
-    explicit PauseMenu(QWidget *parent = nullptr);
+    explicit PauseMenu(QWidget *parent = nullptr, MainWindow *m = nullptr);
     ~PauseMenu();
+
+    void setMain_window(MainWindow *value);
+
+    void keyPressEvent(QKeyEvent *event);
 
 private: // methods
     void init_lists();
