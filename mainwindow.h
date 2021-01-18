@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include<time.h>
 #include <fstream>
-#include "room.h"
+#include "floor.h"
 #include "player.h"
 #include "item.h"
 
@@ -35,8 +35,7 @@ private: // Variables
     Room *current_room;
     std::string current_room_type;
 
-    Room *r1;
-    Room *r2;
+    Floor *current_floor;
 
     int h_limit, v_limit;
 

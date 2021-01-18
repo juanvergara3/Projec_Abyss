@@ -14,7 +14,8 @@ private: //variables
     int width, height;
 
     Room *self;
-    Room *link;
+    //Room *link;
+    Door *link;
 
 public: //variables
 
@@ -33,8 +34,8 @@ public: //methods
     int getWidth() const;
     int getHeight() const;
 
-    Room *getLink() const;
-    void setLink(Room *value);
+    void setLink(Door *value);
+    Door *getLink() const;
 
     Room *getSelf() const;
 

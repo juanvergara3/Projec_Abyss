@@ -5,9 +5,7 @@ Floor::Floor(QGraphicsScene *scene, std::list<Proyectile *> *p, short num)
 {
     load_floor(num);
 }
-
-Floor::~Floor()
-{
+Floor::~Floor() {
     delete safe;
     delete treasure;
     delete boss;
@@ -54,5 +52,68 @@ void Floor::load_floor(short num) {
         r2 = nullptr;
         r3 = nullptr;
         r4 = nullptr;
+    }
+
+    load_links(num);
+}
+
+void Floor::load_links(short num)
+{
+    if(num == 1){
+        safe->right_door->setLink(r1->left_door);
+        r1->left_door->setLink(safe->right_door);
+
+        r1->right_door->setLink(r2->left_door);
+        r2->left_door->setLink(r1->right_door);
+
+        r2->up_door->setLink(treasure->down_door);
+        treasure->down_door->setLink((r2->up_door));
+
+        r1->down_door->setLink(r3->up_door);
+        r3->up_door->setLink(r1->down_door);
+
+        r3->down_door->setLink(r4->up_door);
+        r4->up_door->setLink(r3->down_door);
+
+        r4->right_door->setLink(boss->left_door);
+        boss->left_door->setLink(r4->right_door);
+    }
+    else if (num == 2) {
+        safe->down_door->setLink(r1->up_door);
+        r1->up_door->setLink(safe->down_door);
+
+        r1->left_door->setLink(r2->right_door);
+        r2->right_door->setLink(r1->left_door);
+
+        r2->left_door->setLink(treasure->right_door);
+        treasure->right_door->setLink(r2->left_door);
+
+        r1->right_door->setLink(r3->left_door);
+        r3->left_door->setLink(r1->right_door);
+
+        r3->right_door->setLink(r4->left_door);
+        r4->left_door->setLink(r3->right_door);
+
+        r4->up_door->setLink(boss->down_door);
+        boss->down_door->setLink(r4->up_door);
+    }
+    else if (num == 3) {
+        safe->up_door->setLink(r1->right_door);
+        r1->right_door->setLink(safe->up_door);
+
+        r1->left_door->setLink(treasure->right_door);
+        treasure->right_door->setLink(r1->left_door);
+
+        safe->right_door->setLink(r2->left_door);
+        r2->left_door->setLink(safe->right_door);
+
+        r2->right_door->setLink(r3->up_door);
+        r3->up_door->setLink(r2->right_door);
+
+        r2->up_door->setLink(r4->left_door);
+        r4->left_door->setLink(r2->up_door);
+
+        r4->right_door->setLink(boss->left_door);
+        boss->left_door->setLink(r4->right_door);
     }
 }

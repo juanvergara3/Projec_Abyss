@@ -17,13 +17,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     p2 = new Player(this, scene, "P2", &proyectiles, 200, 1000, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
     //p2 = nullptr;
 
-    r1 = new Room(this, scene, &proyectiles, "f3-safe");
-    r2 = new Room(this, scene, &proyectiles, "f3-2");
+    current_floor = new Floor(scene, &proyectiles, 3);
 
-    r1->doors.back()->setLink(r2);
-    r2->doors.back()->setLink(r1);
-
-    current_room = r2;
+    current_room = current_floor->safe;
     current_room->load_room();
     enemies = current_room->getEnemies();
 
@@ -47,9 +43,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     timer->start(3);
 
     unsigned int i = 4294967295;
-
     srand(i);
-    //srand(time(NULL));
 
     load_items("items.txt");
 
@@ -69,8 +63,7 @@ MainWindow::~MainWindow() {
 
     delete current_room;
     delete timer;
-    delete r1;
-    delete r2;
+    delete current_floor;
     delete p1;
     delete p2;
     delete scene;
@@ -117,13 +110,13 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
                     k = proyectiles.erase(k);
                 }
 
-                current_room->deload_room();
-                current_room = d->getLink();
-                current_room->load_room();
-
-                p1->setPos(d->getPosx(), d->getPosy());
+                p1->set_vel(d->getLink()->getPosx(), v_limit - d->getLink()->getPosy(), 0, 0);
                 if(p2 != nullptr)
-                    p1->setPos(d->getPosx(), d->getPosy());
+                    p2->set_vel(d->getLink()->getPosx(), v_limit - d->getLink()->getPosy(), 0, 0);
+
+                current_room->deload_room();
+                current_room = d->getLink()->getSelf();
+                current_room->load_room();
 
                 current_room_type = current_room->getType();
 
@@ -190,12 +183,12 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
                         k = proyectiles.erase(k);
                     }
 
-                    current_room->deload_room();
-                    current_room = d->getLink();
-                    current_room->load_room();
+                    p1->set_vel(d->getLink()->getPosx(), v_limit - d->getLink()->getPosy(), 0, 0);
+                    p2->set_vel(d->getLink()->getPosx(), v_limit - d->getLink()->getPosy(), 0, 0);
 
-                    p1->setPos(d->getPosx(), d->getPosy());
-                    p1->setPos(d->getPosx(), d->getPosy());
+                    current_room->deload_room();
+                    current_room = d->getLink()->getSelf();
+                    current_room->load_room();
 
                     current_room_type = current_room->getType();
 
@@ -543,16 +536,14 @@ void MainWindow::update_bodies(){
             current_room->clear_room();
 
             scene->removeItem(p1);
-            if(p2 != nullptr){
+            if(p2 != nullptr)
                 scene->removeItem(p2);
-            }
 
             current_room->spawn_item(get_random_item());
 
             scene->addItem(p1);
-            if(p2 != nullptr){
-                scene->addItem(p2);
-            }
+            if(p2 != nullptr)
+                scene->addItem(p2);  
 
         }
     }
@@ -589,24 +580,28 @@ void MainWindow::update_bodies(){
 
         if(enemies.empty() && !current_room->isClear()) {
             current_room->clear_room();
-            current_room->spawn_item(get_random_item());
 
             int r = rand() % 101;
 
             if(r <= 66 && r >= 0){
 
                 scene->removeItem(p1);
+                if(p2 != nullptr)
+                    scene->removeItem(p2);
 
                 if(r <= 22 && r >= 0){
 
-                    //current_room->spawn_item(get_random_item());
+                    current_room->spawn_item(get_random_item());
                 }
                 else if (r > 22){
 
-                    //current_room->spawn_heart();
+                    current_room->spawn_heart();
                 }
 
                 scene->addItem(p1);
+                if(p2 != nullptr)
+                    scene->addItem(p2);
+
             }
         }
     }
@@ -614,6 +609,14 @@ void MainWindow::update_bodies(){
     if(current_room_type == "treasure" && !current_room->isClear()){
         current_room->clear_room();
         current_room->spawn_item(get_random_item());
+
+        scene->removeItem(p1);
+        if(p2 != nullptr)
+            scene->removeItem(p2);
+
+            scene->addItem(p1);
+            if(p2 != nullptr)
+                scene->addItem(p2);
     }
 }
 

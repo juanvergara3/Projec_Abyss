@@ -16,7 +16,10 @@ class Door;
 class Room : public QObject {
     Q_OBJECT
 public: // Variables
-    std::list <Door *> doors;
+    Door *left_door;
+    Door *right_door;
+    Door *up_door;
+    Door *down_door;
 
 private: // Variables
     std::list <Wall *> walls;

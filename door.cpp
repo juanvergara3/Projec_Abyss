@@ -8,7 +8,7 @@ Door::Door(QObject *parent, Room *self, Room *link, int x, int y, int w, int h) 
     height = h;
 
     this->self = self;
-    this->link = link;
+    this->link = nullptr;
 
     setPos(posx, posy);
 }
@@ -49,13 +49,12 @@ int Door::getHeight() const {
     return height;
 }
 
-Room *Door::getLink() const {
-    return link;
-}
-void Door::setLink(Room *value) {
+void Door::setLink(Door *value) {
     link = value;
 }
-
+Door *Door::getLink() const {
+    return link;
+}
 Room *Door::getSelf() const {
     return self;
 }
