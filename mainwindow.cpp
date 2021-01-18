@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     //p2 = nullptr;
 
     r1 = new Room(this, scene, &proyectiles, "f3-safe");
-    r2 = new Room(this, scene, &proyectiles, "f3-item");
+    r2 = new Room(this, scene, &proyectiles, "f3-2");
 
     r1->doors.back()->setLink(r2);
     r2->doors.back()->setLink(r1);
@@ -111,9 +111,19 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 
                 Door *d = dynamic_cast<Door*>(p1->collidingItems()[k]);
 
+                for (auto k = proyectiles.begin(); k != proyectiles.end(); ) { //clears the screen from proyectiles
+                    scene->removeItem(*k);
+                    delete (*k);
+                    k = proyectiles.erase(k);
+                }
+
                 current_room->deload_room();
                 current_room = d->getLink();
                 current_room->load_room();
+
+                p1->setPos(d->getPosx(), d->getPosy());
+                if(p2 != nullptr)
+                    p1->setPos(d->getPosx(), d->getPosy());
 
                 current_room_type = current_room->getType();
 
@@ -174,9 +184,18 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 
                     Door *d = dynamic_cast<Door*>(p2->collidingItems()[k]);
 
+                    for (auto k = proyectiles.begin(); k != proyectiles.end(); ) { //clears the screen from proyectiles
+                        scene->removeItem(*k);
+                        delete (*k);
+                        k = proyectiles.erase(k);
+                    }
+
                     current_room->deload_room();
                     current_room = d->getLink();
                     current_room->load_room();
+
+                    p1->setPos(d->getPosx(), d->getPosy());
+                    p1->setPos(d->getPosx(), d->getPosy());
 
                     current_room_type = current_room->getType();
 

@@ -1,11 +1,10 @@
 #include "room.h"
 
-Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, std::string file_name_) : QObject(parent), scene(scene), v_limit(720), h_limit(1280) {
-    //load_room(file_name_);
+Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, std::string name_) : QObject(parent), scene(scene), v_limit(720), h_limit(1280) {
 
     cleared = false;
     item = nullptr;
-    if(file_name_ == "f1-safe"){
+    if(name_ == "f1-safe"){
         walls.push_back(new Wall(this, 1280 - 300, 720 - 300, 300, 300));
         walls.push_back(new Wall(this, 1280-400, 720-200, 100, 200));
         walls.push_back(new Wall(this, 1280-500, 720-100, 100, 100));
@@ -19,7 +18,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         type = "safe";
     }
-    else if(file_name_ == "f1-1"){
+    else if(name_ == "f1-1"){
         walls.push_back(new Wall(this, 0, 720 - 300, 100, 300));
         walls.push_back(new Wall(this, 100, 720-200, 100, 200));
         walls.push_back(new Wall(this, 200, 720-100, 100, 100));
@@ -44,7 +43,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         type = "normal";
     }
-    else if(file_name_ == "f1-2"){
+    else if(name_ == "f1-2"){
         walls.push_back(new Wall(this, 0, 720 - 300, 200, 40));
         walls.push_back(new Wall(this, 300, 720 - 200, 200, 40));
         walls.push_back(new Wall(this, 500, 720-60, 500, 60));
@@ -68,7 +67,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         type = "normal";
     }
-    else if(file_name_ == "f1-item"){
+    else if(name_ == "f1-item"){
         walls.push_back(new Wall(this, 1280 - 200, 720 - 300, 200, 300));
         walls.push_back(new Wall(this, 1280-300, 720-200, 100, 200));
         walls.push_back(new Wall(this, 1280-400, 720-100, 100, 100));
@@ -89,7 +88,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         type = "treasure";
     }
-    else if(file_name_ == "f1-3"){
+    else if(name_ == "f1-3"){
 
         walls.push_back(new Wall(this, 1280 - 300, 720 - 150, 300, 150));
         walls.push_back(new Wall(this, 0, 720 - 150, 300, 150));
@@ -114,7 +113,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         type = "normal";
     }
-    else if(file_name_ == "f1-4"){
+    else if(name_ == "f1-4"){
 
         walls.push_back(new Wall(this, 1280 - 200, 720 - 300, 200, 300));
         walls.push_back(new Wall(this, 1280-300, 720-200, 100, 200));
@@ -146,7 +145,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         type = "normal";
     }
-    else if(file_name_ == "lamprey"){
+    else if(name_ == "lamprey"){
 
         walls.push_back(new Wall(this, 50, 720-100, 150, 20));
         walls.push_back(new Wall(this, 300, 720-100, 150, 20));
@@ -175,7 +174,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         type = "boss";
     }
-    else if(file_name_ == "f2-item"){
+    else if(name_ == "f2-item"){
         walls.push_back(new Wall(this, 1280-500, 720-300, 500, 300));
         walls.push_back(new Wall(this, 1280-550, 720-200, 50, 200));
         walls.push_back(new Wall(this, 1280-600, 720-100, 50, 100));
@@ -192,7 +191,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         type = "treasure";
     }
-    else if(file_name_ == "f2-1"){
+    else if(name_ == "f2-1"){
 
         walls.push_back(new Wall(this, 0, 720 - 300, 150, 300));
 
@@ -215,7 +214,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         type = "normal";
     }
-    else if(file_name_ == "f2-safe"){
+    else if(name_ == "f2-safe"){
         walls.push_back(new Wall(this, 1280 - 300, 720 - 300, 300, 100));
         walls.push_back(new Wall(this, 1280-400, 720-200, 400, 100));
         walls.push_back(new Wall(this, 1280-500, 720-100, 500, 100));
@@ -235,7 +234,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         type = "safe";
     }
-    else if(file_name_ == "f2-2"){
+    else if(name_ == "f2-2"){
 
         walls.push_back(new Wall(this, 0, 720 - 600, 300, 40));
 
@@ -265,7 +264,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         type = "normal";
     }
-    else if(file_name_ == "f2-3"){
+    else if(name_ == "f2-3"){
 
         walls.push_back(new Wall(this, 0, 720 - 200, 300, 200));
         walls.push_back(new Wall(this, 300, 720 - 200, 50, 20));
@@ -292,7 +291,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         type = "normal";
     }
-    else if(file_name_ == "f2-4"){
+    else if(name_ == "f2-4"){
         walls.push_back(new Wall(this, 1280 - 200, 720 - 300, 200, 300));
         walls.push_back(new Wall(this, 1280-300, 720-200, 100, 200));
         walls.push_back(new Wall(this, 1280-500, 720-100, 200, 100));
@@ -318,7 +317,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         type = "normal";
     }
-    else if(file_name_ == "priest"){
+    else if(name_ == "priest"){
 
         walls.push_back(new Wall(this, 580, 720-150, 120, 40));
         walls.push_back(new Wall(this, 1280/2 - 15, 720-110, 30, 60));
@@ -358,7 +357,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         type = "boss";
     }
-    else if(file_name_ == "f3-safe"){
+    else if(name_ == "f3-safe"){
         walls.push_back(new Wall(this, 400, 720 - 600, 480, 40));
 
         walls.push_back(new Wall(this, 0, 720-200, 300, 200));
@@ -376,7 +375,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         type = "safe";
     }
-    else if(file_name_ == "f3-1"){
+    else if(name_ == "f3-1"){
         walls.push_back(new Wall(this, 0, 720-200, 300, 200));
         walls.push_back(new Wall(this, 300, 720-100, 100, 100));
         walls.push_back(new Wall(this, 1280-300, 720-200, 300, 200));
@@ -407,7 +406,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         type = "normal";
     }
-    else if(file_name_ == "f3-2"){
+    else if(name_ == "f3-2"){
         walls.push_back(new Wall(this, 0, 720-150, 200, 150));
         walls.push_back(new Wall(this, 200, 720-75, 75, 75));
         walls.push_back(new Wall(this, 1280-200, 720-150, 200, 150));
@@ -439,7 +438,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         type = "normal";
     }
-    else if(file_name_ == "f3-item"){
+    else if(name_ == "f3-item"){
         walls.push_back(new Wall(this, 1280-300, 720-300, 300, 300));
         walls.push_back(new Wall(this, 1280-400, 720-350, 100, 350));
         walls.push_back(new Wall(this, 1280-550, 720-400, 150, 400));
@@ -456,7 +455,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         type = "treasure";
     }
-    else if(file_name_ == "f3-3"){
+    else if(name_ == "f3-3"){
         walls.push_back(new Wall(this, 0, 720-150, 200, 150));
         walls.push_back(new Wall(this, 200, 720-75, 75, 75));
         walls.push_back(new Wall(this, 1280-200, 720-150, 200, 150));
@@ -484,7 +483,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         type = "normal";
     }
-    else if(file_name_ == "f3-4"){
+    else if(name_ == "f3-4"){
         walls.push_back(new Wall(this, 0, 720-150, 200, 150));
         walls.push_back(new Wall(this, 200, 720-75, 75, 75));
         walls.push_back(new Wall(this, 1280-200, 720-150, 200, 150));
@@ -519,7 +518,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         type = "normal";
     }
-    else if(file_name_ == "expelled"){
+    else if(name_ == "expelled"){
         walls.push_back(new Wall(this, 0, 720 - 100, 1280, 100));
 
         walls.push_back(new Wall(this, 150, 720 - 250, 150, 10));
@@ -530,12 +529,18 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         doors.push_back(new Door(this, this, 0, 720-140, 20, 40));
 
         boss = new Boss(this, scene, "expelled", p, 1200, 220, 0, 0, 20, 60, 120, 5, 1e-5, 0.1, 0);
-        //boss = nullptr;
 
         itemX =  250;
         itemY = 720 - 16;
 
         type = "boss";
+    }
+    else{
+        itemX =  0;
+        itemY = 0;
+
+        type = "normal";
+        boss = nullptr;
     }
 }
 Room::~Room() {
@@ -608,39 +613,6 @@ void Room::deload_room() {
             scene->removeItem(boss);
             boss->stop();
         }
-}
-
-void Room::load_room(std::string file_name) {
-
-    std::fstream file (file_name, std:: fstream::in | std::fstream::binary);
-
-     if(file.is_open()){
-
-         std::string x_, y_, w_, h_, temp;
-         short counter = 1;
-
-         while (file >> temp){
-
-             if(counter == 1)
-                 x_ = temp;
-
-             else if (counter == 2)
-                 y_ = temp;
-
-             else if (counter == 3)
-                 w_ = temp;
-
-             else if (counter == 4){
-                 h_ = temp;
-
-                 walls.push_back(new Wall(nullptr, stoi(x_), stoi(y_), stoi(w_), stoi(h_)));
-
-                 counter = 0;
-             }
-             counter++;
-         }
-     }
-     file.close();
 }
 
 std::list<Enemy *> Room::getEnemies() const {

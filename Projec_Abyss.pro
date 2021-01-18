@@ -21,6 +21,7 @@ SOURCES += \
     enemy.cpp \
     entity.cpp \
     floor.cpp \
+    game.cpp \
     item.cpp \
     main.cpp \
     mainmenu.cpp \
@@ -37,6 +38,7 @@ HEADERS += \
     enemy.h \
     entity.h \
     floor.h \
+    game.h \
     item.h \
     mainmenu.h \
     mainwindow.h \

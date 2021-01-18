@@ -8,8 +8,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     //MainMenu w;
-    PauseMenu w;
-    //MainWindow w;
+    //PauseMenu w;
+    MainWindow w;
     w.showMaximized();
     w.show();
     return a.exec();

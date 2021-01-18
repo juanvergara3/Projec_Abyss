@@ -24,7 +24,7 @@ private: // Variables
     Item *item;
     Boss *boss;
 
-    std::string type; // ***change the type on the load room function***
+    std::string type;
 
     int itemX, itemY;
 
@@ -35,7 +35,7 @@ private: // Variables
     const int v_limit, h_limit;
 
 public: // Methods
-    explicit Room(QObject *parent = nullptr, QGraphicsScene* scene = nullptr , std::list<Proyectile *> *p = nullptr, std::string file_name_ = "");
+    explicit Room(QObject *parent = nullptr, QGraphicsScene* scene = nullptr , std::list<Proyectile *> *p = nullptr, std::string name_ = "");
     ~Room();
 
     void load_room();
@@ -60,7 +60,6 @@ public: // Methods
     Boss *getBoss() const;
 
 private: // Methods
-    void load_room(std::string file_name);
 
 };
 
