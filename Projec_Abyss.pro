@@ -20,9 +20,12 @@ SOURCES += \
     door.cpp \
     enemy.cpp \
     entity.cpp \
+    floor.cpp \
     item.cpp \
     main.cpp \
+    mainmenu.cpp \
     mainwindow.cpp \
+    pausemenu.cpp \
     player.cpp \
     proyectile.cpp \
     room.cpp \
@@ -33,15 +36,20 @@ HEADERS += \
     door.h \
     enemy.h \
     entity.h \
+    floor.h \
     item.h \
+    mainmenu.h \
     mainwindow.h \
+    pausemenu.h \
     player.h \
     proyectile.h \
     room.h \
     wall.h
 
 FORMS += \
-    mainwindow.ui
+    mainmenu.ui \
+    mainwindow.ui \
+    pausemenu.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

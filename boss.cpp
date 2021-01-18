@@ -49,10 +49,10 @@ Boss::Boss(QObject *parent, QGraphicsScene *s, std::string boss, std::list<Proye
         name_label->setText("The Expelled One");
         description_label->setText("~Hatred Incarnated~");
 
-        health = 200;
+        health = 400;
         damage = 20;
         shot_speed = 15;
-        fire_rate = 1000;
+        fire_rate = 1200;
         movement_speed = 20;
         jump_Speed = 0;
     }
