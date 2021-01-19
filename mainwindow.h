@@ -39,6 +39,8 @@ private: // Variables
 
     Floor *current_floor;
 
+    Floor *f2;
+
     int h_limit, v_limit;
 
     std::list<Proyectile*> proyectiles;

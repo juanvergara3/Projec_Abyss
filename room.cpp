@@ -4,6 +4,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
     cleared = false;
     item = nullptr;
+    boss_door = nullptr;
+
     if(name_ == "f1-safe"){
         walls.push_back(new Wall(this, 1280 - 300, 720 - 300, 300, 300));
         walls.push_back(new Wall(this, 1280-400, 720-200, 100, 200));
@@ -182,6 +184,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         right_door = nullptr;
         up_door = nullptr;
         down_door = nullptr;
+
+        boss_door = new Door(this, nullptr, 1280/2, 610, 1280 - 150 - 20, 720-80, 40, 80);
 
         boss = new Boss(this, scene, "lamprey", p, 1280-150, 720/2, 0, 0, 50, 300, 200, 0, 1e-5, 0.1, 0);
 
@@ -402,6 +406,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         up_door = nullptr;
         down_door = new Door(this, this, 1280/2 - 10, 720-40, 20, 40);
 
+        boss_door = new Door(this, nullptr, 150, 0, 150 - 20, 720-80, 40, 80);
+
         boss = new Boss(this, scene, "priest", p, 1280/2, 250, 0, 0, 25, 100, 200, 5, 1e-5, 0.1, 0);
 
         itemX =  1280/2 - 8;
@@ -579,7 +585,9 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         up_door = nullptr;
         down_door = nullptr;
 
-        boss = new Boss(this, scene, "expelled", p, 1200, 220, 0, 0, 20, 60, 120, 5, 1e-5, 0.1, 0);
+        boss_door = new Door(this, nullptr, 0, 0, 1280 - 150 - 20, 720-80, 40, 80);
+
+        boss = new Boss(this, scene, "expelled", p, 1200, 220, 0, 0, 20, 60, 120, 5, 1e-5, 0.1, 0); // what do i do with this ??
 
         itemX =  250;
         itemY = 720 - 16;
@@ -639,6 +647,8 @@ void Room::load_room() {
             boss->setPos(boss->getX(), boss->getY());
             boss->init(); //if you exit the room and then come back it tries to add the widgets again
         }
+        if(cleared)
+            scene->addItem(boss_door);
     }
 
     if(left_door != nullptr) {
@@ -676,11 +686,14 @@ void Room::deload_room() {
             (*k)->stop();
         }
 
-    if(type == "boss")
+    if(type == "boss"){
         if(boss != nullptr){
             scene->removeItem(boss);
             boss->stop();
         }
+        if(cleared)
+            scene->removeItem(boss_door);
+    }
 
     if(left_door != nullptr)
         scene->removeItem(left_door);
@@ -710,6 +723,8 @@ void Room::clear_room() {
     else  if(type == "boss") {
         delete boss;
         boss = nullptr;
+
+        scene->addItem(boss_door);
     }
 }
 bool Room::isClear() const {

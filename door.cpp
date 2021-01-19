@@ -1,17 +1,7 @@
 #include "door.h"
 #include "room.h"
+#include "floor.h"
 
-Door::Door(QObject *parent, Room *self, Room *link, int x, int y, int w, int h) : QObject(parent) {
-    posx = x;
-    posy = y;
-    width = w;
-    height = h;
-
-    this->self = self;
-    this->link = nullptr;
-
-    setPos(posx, posy);
-}
 Door::Door(QObject *parent, Room *self, int x, int y, int w, int h) {
     posx = x;
     posy = y;
@@ -22,6 +12,29 @@ Door::Door(QObject *parent, Room *self, int x, int y, int w, int h) {
     this->link = nullptr;
 
     setPos(posx, posy);
+
+    next = nullptr;
+
+    type = "normal";
+}
+
+Door::Door(QObject *parent, Floor *next, int playerX, int playerY, int x, int y, int w, int h) {
+    posx = x;
+    posy = y;
+    width = w;
+    height = h;
+
+    setPos(posx, posy);
+
+    self  = nullptr;
+    link = nullptr;
+
+    this->playerX = playerX;
+    this->playerY = playerY;
+
+    this->next = next;
+
+    type = "boss";
 }
 Door::~Door(){
 
@@ -58,5 +71,24 @@ Door *Door::getLink() const {
 Room *Door::getSelf() const {
     return self;
 }
+
+void Door::setNext(Floor *value) {
+    next = value;
+}
+Floor *Door::getNext() const {
+    return next;
+}
+
+int Door::getPlayerX() const {
+    return playerX;
+}
+int Door::getPlayerY() const {
+    return playerY;
+}
+
+std::string Door::getType() const {
+    return type;
+}
+
 
 

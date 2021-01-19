@@ -21,6 +21,8 @@ public: // Variables
     Door *up_door;
     Door *down_door;
 
+    Door *boss_door;
+
 private: // Variables
     std::list <Wall *> walls;
     std::list <Enemy *> enemies;

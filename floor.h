@@ -4,14 +4,14 @@
 
 class Floor {
 private: // variables
-    Room *treasure, *boss;
+    Room *treasure;
     Room *r1,*r2, *r3, *r4;
 
     QGraphicsScene *scene;
     std::list<Proyectile *> *proyectiles;
 
 public: // variables
-    Room *safe;
+    Room *safe,*boss;
 
 private: // methods
     void load_floor(short num);
