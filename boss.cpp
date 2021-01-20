@@ -38,7 +38,7 @@ Boss::Boss(QObject *parent, QGraphicsScene *s, std::string boss, std::list<Proye
         health = 800;
         damage = 40;
         shot_speed = 25;
-        fire_rate = 300;
+        fire_rate = 1000; // 300 worked fine before adding the music
         movement_speed = 0;
         jump_Speed = 0;
     }

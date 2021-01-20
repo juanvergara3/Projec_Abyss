@@ -15,6 +15,38 @@ Floor::~Floor() {
     delete r4;
 }
 
+void Floor::start_floor_music() {
+    floor_music->play();
+}
+void Floor::stop_floor_music() {
+    floor_music->stop();
+}
+void Floor::start_boss_music() {
+    boss_music->play();
+}
+void Floor::stop_boss_music() {
+    boss_music->stop();
+}
+
+bool Floor::is_playing(std::string type) {
+
+    if(type == "boss"){
+        if(boss_music->state() == QMediaPlayer::PlayingState)
+            return true;
+        else
+            return false;
+    }
+    else if (type == "floor") {
+        if(floor_music->state() == QMediaPlayer::PlayingState)
+            return true;
+        else
+            return false;
+    }
+
+    return false;
+}
+
+
 void Floor::load_floor(short num) {
 
     if(num == 1){
@@ -25,6 +57,20 @@ void Floor::load_floor(short num) {
         r2 = new Room(nullptr, scene, proyectiles, "f1-2");
         r3 = new Room(nullptr, scene, proyectiles, "f1-3");
         r4 = new Room(nullptr, scene, proyectiles, "f1-4");
+
+        floor_playlist = new QMediaPlaylist();
+        floor_playlist->addMedia(QUrl("qrc:/Assets/OST/The Binding of Isaac Antibirth OST Descent (Title).mp3"));
+        floor_playlist->setPlaybackMode(QMediaPlaylist::Loop);
+        floor_music = new QMediaPlayer;
+        floor_music->setPlaylist(floor_playlist);
+        floor_music->setVolume(15);
+
+        boss_playlist = new QMediaPlaylist();
+        boss_playlist->addMedia(QUrl("qrc:/Assets/OST/Epic Dark Battle Music - Escape [Powerful Fantasy Horror by Ebunny].mp3"));
+        boss_playlist->setPlaybackMode(QMediaPlaylist::Loop);
+        boss_music = new QMediaPlayer;
+        boss_music->setPlaylist(boss_playlist);
+        boss_music->setVolume(15);
     }
     else if (num == 2) {
         safe = new Room(nullptr, scene, proyectiles, "f2-safe");
@@ -34,6 +80,20 @@ void Floor::load_floor(short num) {
         r2 = new Room(nullptr, scene, proyectiles, "f2-2");
         r3 = new Room(nullptr, scene, proyectiles, "f2-3");
         r4 = new Room(nullptr, scene, proyectiles, "f2-4");
+
+        floor_playlist = new QMediaPlaylist();
+        floor_playlist->addMedia(QUrl("qrc:/Assets/OST/The Binding of Isaac Antibirth OST Machine in the Walls (Mausoleum).mp3"));
+        floor_playlist->setPlaybackMode(QMediaPlaylist::Loop);
+        floor_music = new QMediaPlayer;
+        floor_music->setPlaylist(floor_playlist);
+        floor_music->setVolume(15);
+
+        boss_playlist = new QMediaPlaylist();
+        boss_playlist->addMedia(QUrl("qrc:/Assets/OST/The Binding of Isaac Antibirth OST The Hammer of Pompeii (Necropolis).mp3"));
+        boss_playlist->setPlaybackMode(QMediaPlaylist::Loop);
+        boss_music = new QMediaPlayer;
+        boss_music->setPlaylist(boss_playlist);
+        boss_music->setVolume(15);
     }
     else if (num == 3) {
         safe = new Room(nullptr, scene, proyectiles, "f3-safe");
@@ -43,6 +103,20 @@ void Floor::load_floor(short num) {
         r2 = new Room(nullptr, scene, proyectiles, "f3-2");
         r3 = new Room(nullptr, scene, proyectiles, "f3-3");
         r4 = new Room(nullptr, scene, proyectiles, "f3-4");
+
+        floor_playlist = new QMediaPlaylist();
+        floor_playlist->addMedia(QUrl("qrc:/Assets/OST/Innocence Glitched (Basement).mp3"));
+        floor_playlist->setPlaybackMode(QMediaPlaylist::Loop);
+        floor_music = new QMediaPlayer;
+        floor_music->setPlaylist(floor_playlist);
+        floor_music->setVolume(15);
+
+        boss_playlist = new QMediaPlaylist();
+        boss_playlist->addMedia(QUrl("qrc:/Assets/OST/Mittsies - Epitomize.mp3"));
+        boss_playlist->setPlaybackMode(QMediaPlaylist::Loop);
+        boss_music = new QMediaPlayer;
+        boss_music->setPlaylist(boss_playlist);
+        boss_music->setVolume(15);
     }
     else{
         safe = nullptr;

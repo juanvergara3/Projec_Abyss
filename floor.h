@@ -1,5 +1,7 @@
 #ifndef FLOOR_H
 #define FLOOR_H
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
 #include "room.h"
 
 class Floor {
@@ -9,6 +11,12 @@ private: // variables
 
     QGraphicsScene *scene;
     std::list<Proyectile *> *proyectiles;
+
+    QMediaPlayer *floor_music;
+    QMediaPlayer *boss_music;
+
+    QMediaPlaylist *floor_playlist;
+    QMediaPlaylist *boss_playlist;
 
 public: // variables
     Room *safe,*boss;
@@ -20,6 +28,13 @@ private: // methods
 public: // methods
     Floor(QGraphicsScene *scene = nullptr, std::list<Proyectile *> *p = nullptr, short num = 0);
     ~Floor();
+
+    void start_floor_music();
+    void stop_floor_music();
+    void start_boss_music();
+    void stop_boss_music();
+
+    bool is_playing(std::string type);
 };
 
 #endif // FLOOR_H

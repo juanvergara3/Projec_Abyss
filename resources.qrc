@@ -1,2 +1,11 @@
-<!DOCTYPE RCC>
-<RCC version="1.0"/>
+<RCC>
+    <qresource prefix="/">
+        <file>Assets/OST/Epic Dark Battle Music - Escape [Powerful Fantasy Horror by Ebunny].mp3</file>
+        <file>Assets/OST/Innocence Glitched (Basement).mp3</file>
+        <file>Assets/OST/Mittsies - Epitomize.mp3</file>
+        <file>Assets/OST/The Arid Flats - Ridiculon The End Is Nigh OST.mp3</file>
+        <file>Assets/OST/The Binding of Isaac Antibirth OST Descent (Title).mp3</file>
+        <file>Assets/OST/The Binding of Isaac Antibirth OST Machine in the Walls (Mausoleum).mp3</file>
+        <file>Assets/OST/The Binding of Isaac Antibirth OST The Hammer of Pompeii (Necropolis).mp3</file>
+    </qresource>
+</RCC>

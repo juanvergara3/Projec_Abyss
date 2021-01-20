@@ -3,16 +3,6 @@
 #include "pausemenu.h"
 #include "mainmenu.h"
 
-void MainWindow::setGameover_window(MessageWindow *value)
-{
-    gameover_window = value;
-}
-
-void MainWindow::setVictory_window(MessageWindow *value)
-{
-    victory_window = value;
-}
-
 MainWindow::MainWindow(QWidget *parent, PauseMenu *p) : QMainWindow(parent), ui(new Ui::MainWindow), pause_menu(p), main_menu(nullptr), h_limit(1280), v_limit(720) {
     ui->setupUi(this);
 
@@ -114,6 +104,17 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
                         current_room->load_room();
                         current_room_type = current_room->getType();
 
+                        if(current_room_type == "boss" || current_room_type == "final_boss"){
+                            current_floor->start_boss_music();
+                            current_floor->stop_floor_music();
+                        }
+                        else{
+                            if(!current_floor->is_playing("floor"))
+                                current_floor->start_floor_music();
+                            if(current_floor->is_playing("boss"))
+                                current_floor->stop_boss_music();
+                        }
+
                         if(current_room_type == "boss" || current_room_type == "final_boss") {
                             boss = current_room->getBoss();
                             enemies.clear();
@@ -132,10 +133,16 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
                     }
                     else if(d->getType() == "boss"){
 
+                        current_floor->stop_boss_music();
+                        current_floor->stop_floor_music();
+
                         current_room->deload_room();
                         current_room = d->getNext()->safe;
+                        current_floor = d->getNext();
                         current_room->load_room();
-                        current_room_type = current_room->getType();\
+                        current_room_type = current_room->getType();
+
+                        current_floor->start_floor_music();
 
                         boss = current_room->getBoss();
                         enemies.clear();
@@ -214,6 +221,17 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
                             current_room->load_room();
                             current_room_type = current_room->getType();
 
+                            if(current_room_type == "boss" || current_room_type == "final_boss"){
+                                current_floor->start_boss_music();
+                                current_floor->stop_floor_music();
+                            }
+                            else{
+                                if(!current_floor->is_playing("floor"))
+                                    current_floor->start_floor_music();
+                                if(current_floor->is_playing("boss"))
+                                    current_floor->stop_boss_music();
+                            }
+
                             if(current_room_type == "boss" || current_room_type == "final_boss") {
                                 boss = current_room->getBoss();
                                 enemies.clear();
@@ -230,10 +248,16 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
                         }
                         else if(d->getType() == "boss"){
 
+                            current_floor->stop_boss_music();
+                            current_floor->stop_floor_music();
+
                             current_room->deload_room();
                             current_room = d->getNext()->safe;
+                            current_floor = d->getNext();
                             current_room->load_room();
-                            current_room_type = current_room->getType();\
+                            current_room_type = current_room->getType();
+
+                            current_floor->start_floor_music();
 
                             boss = current_room->getBoss();
                             enemies.clear();
@@ -349,6 +373,9 @@ void MainWindow::reset_game() {
 
     pause();
 
+    current_floor->stop_boss_music();
+    current_floor->stop_floor_music();
+
     //scene->clear();
 
     enemies.clear();
@@ -370,6 +397,9 @@ void MainWindow::reset_game() {
 void MainWindow::close_game() {
 
     if(game != nullptr){
+
+        current_floor->stop_boss_music();
+        current_floor->stop_floor_music();
 
         current_room->deload_room();
 
@@ -404,11 +434,17 @@ void MainWindow::game_over() {
     this->close();
     pause();
 
+    current_floor->stop_boss_music();
+    current_floor->stop_floor_music();
+
     gameover_window->showMaximized();
 }
 void MainWindow::victory() {
     this->close();
     pause();
+
+    current_floor->stop_boss_music();
+    current_floor->stop_floor_music();
 
     victory_window->showMaximized();
 }
@@ -683,31 +719,31 @@ void MainWindow::update_bodies(){
         }
     }
 
-    if(p1->getHealth() == 0 && p1->getAlive()){
-        p1->die();
-        scene->removeItem(p1);
-    }
-    if(p2 != nullptr){
-        if(p2->getHealth() == 0 && p2->getAlive())
-            scene->removeItem(p2);
-    }
+    //    if(p1->getHealth() == 0 && p1->getAlive()){
+    //        p1->die();
+    //        scene->removeItem(p1);
+    //    }
+    //    if(p2 != nullptr){
+    //        if(p2->getHealth() == 0 && p2->getAlive())
+    //            scene->removeItem(p2);
+    //    }
 
-    if(game->getType() == "singleplayer"){
-        if(p1->getHealth() == 0)
-            p1->die();
-        if(!p1->getAlive())
-            game_over();
-    }
-    else if(game->getType() == "multiplayer"){
+    //    if(game->getType() == "singleplayer"){
+    //        if(p1->getHealth() == 0)
+    //            p1->die();
+    //        if(!p1->getAlive())
+    //            game_over();
+    //    }
+    //    else if(game->getType() == "multiplayer"){
 
-        if(p1->getHealth() == 0)
-            p1->die();
-        if(p2->getHealth() == 0)
-            p2->die();
+    //        if(p1->getHealth() == 0)
+    //            p1->die();
+    //        if(p2->getHealth() == 0)
+    //            p2->die();
 
-        if(!p1->getAlive() && !p2->getAlive())
-            game_over();
-    }
+    //        if(!p1->getAlive() && !p2->getAlive())
+    //            game_over();
+    //    }
 
     if(boss != nullptr && (current_room_type == "boss" || current_room_type == "final_boss")){
 
@@ -823,7 +859,12 @@ void MainWindow::setPause_menu(PauseMenu *value) {
 void MainWindow::setMain_menu(MainMenu *value) {
     main_menu = value;
 }
-
+void MainWindow::setGameover_window(MessageWindow *value) {
+    gameover_window = value;
+}
+void MainWindow::setVictory_window(MessageWindow *value) {
+    victory_window = value;
+}
 
 void MainWindow::setGame(Game *value) {
 
@@ -834,6 +875,8 @@ void MainWindow::setGame(Game *value) {
 
     current_floor = game->getFloor1();
     current_room = current_floor->safe;
+
+    current_floor->start_floor_music();
 
     current_room->load_room();
     current_room_type = current_room->getType();
