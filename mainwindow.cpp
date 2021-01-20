@@ -1,8 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "pausemenu.h"
+#include "mainmenu.h"
 
-MainWindow::MainWindow(QWidget *parent, PauseMenu *p) : QMainWindow(parent), ui(new Ui::MainWindow), h_limit(1280), v_limit(720), pause_menu(p) {
+MainWindow::MainWindow(QWidget *parent, PauseMenu *p) : QMainWindow(parent), ui(new Ui::MainWindow), pause_menu(p), main_menu(nullptr), h_limit(1280), v_limit(720) {
     ui->setupUi(this);
 
     scene = new QGraphicsScene(this);
@@ -14,65 +15,36 @@ MainWindow::MainWindow(QWidget *parent, PauseMenu *p) : QMainWindow(parent), ui(
     ui->graphicsView->setFocus();
     this->resize(ui->graphicsView->width()+100, ui->graphicsView->height()+100);
 
-    p1 = new Player(this, scene, "P1", &proyectiles, 0, 0, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
-    p2 = new Player(this, scene, "P2", &proyectiles, 200, 1000, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
-    //p2 = nullptr;
+    p1 = nullptr;
+    p2 = nullptr;
 
-    current_floor = new Floor(scene, &proyectiles, 2);
+    current_floor = nullptr;
 
-    f2 = new Floor(scene, &proyectiles, 3);
+    current_room = nullptr;
 
-    current_floor->boss->boss_door->setNext(f2);
+    boss = nullptr;
 
-    current_room = current_floor->safe;
-    current_room->load_room();
-    enemies = current_room->getEnemies();
-
-    current_room_type = current_room->getType();
-
-    if(current_room_type == "boss") {
-        boss = current_room->getBoss();
-        enemies.clear();
-    }
-    else if(current_room_type == "normal") {
-        enemies = current_room->getEnemies();
-        boss = nullptr;
-    }
-
-    scene->addItem(p1);
-    if(p2 != nullptr)
-        scene->addItem(p2);
+    game = nullptr;
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update_bodies()));
-    timer->start(3);
-
-    unsigned int i = 4294967295;
-    srand(i);
-
-    load_items("items.txt");
-
-    std::vector<Item*> *temp = new std::vector<Item*>(item_bank.begin(), item_bank.end());
-    std::random_shuffle(temp->begin(), temp->end());
-    std::copy(temp->begin(), temp->end(), item_bank.begin());
-    temp->clear();
-    delete temp;
 }
 MainWindow::~MainWindow() {
 
+    current_floor = nullptr;
     current_room = nullptr;
     boss = nullptr;
 
     enemies.clear();
     item_bank.clear();
+    proyectiles.clear();
 
-    delete current_room;
+    pause_menu = nullptr;
+    main_menu = nullptr;
+
     delete timer;
-    delete current_floor;
-    delete f2;
-    delete p1;
-    delete p2;
     delete scene;
+    delete game;
     delete ui;
 }
 
@@ -268,7 +240,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 
     if(event->key() == Qt::Key_Escape){
         pause();
-        this->hide();
+        //this->hide();
+        this->close();
         pause_menu->showMaximized();
     }
 }
@@ -324,6 +297,69 @@ void MainWindow::resume() {
     else if(current_room_type == "normal")
         for (auto k = enemies.begin(); k != enemies.end(); k++)  //checks for enemies' health
             (*k)->init();
+}
+void MainWindow::reset_game() {
+
+    current_room->deload_room();
+
+    for (auto k = proyectiles.begin(); k != proyectiles.end(); ) { //clears the screen from proyectiles
+        scene->removeItem(*k);
+        delete (*k);
+        k = proyectiles.erase(k);
+    }
+
+    pause();
+
+    //scene->clear();
+
+    enemies.clear();
+    item_bank.clear();
+
+    p1 = nullptr;
+    p2 = nullptr;
+
+    current_floor = nullptr;
+
+    current_room = nullptr;
+
+    boss = nullptr;
+
+    game->reset();
+
+    setGame(game);
+}
+void MainWindow::close_game() {
+
+    if(game != nullptr){
+
+        current_room->deload_room();
+
+        for (auto k = proyectiles.begin(); k != proyectiles.end(); ) { //clears the screen from proyectiles
+            scene->removeItem(*k);
+            delete (*k);
+            k = proyectiles.erase(k);
+        }
+
+        pause();
+
+        //scene->clear();
+
+        enemies.clear();
+        item_bank.clear();
+
+        p1 = nullptr;
+        p2 = nullptr;
+
+        current_floor = nullptr;
+
+        current_room = nullptr;
+
+        boss = nullptr;
+
+        delete game;
+
+        game = nullptr;
+    }
 }
 
 void MainWindow::check_collitions(Player *p) {
@@ -691,11 +727,47 @@ void MainWindow::update_bodies(){
 void MainWindow::setPause_menu(PauseMenu *value) {
     pause_menu = value;
 }
+void MainWindow::setMain_menu(MainMenu *value) {
+    main_menu = value;
+}
 
 
+void MainWindow::setGame(Game *value) {
 
+    game = value;
 
+    p1 = game->getP1();
+    p2 = game->getP2();
 
+    current_floor = game->getFloor1();
+    current_room = current_floor->safe;
+
+    current_room->load_room();
+    current_room_type = current_room->getType();
+
+    scene->addItem(p1);
+    if(p2 != nullptr)
+        scene->addItem(p2);
+
+    srand(game->getSeed());
+
+    load_items("items.txt");
+
+    std::vector<Item*> *temp = new std::vector<Item*>(item_bank.begin(), item_bank.end());
+    std::random_shuffle(temp->begin(), temp->end());
+    std::copy(temp->begin(), temp->end(), item_bank.begin());
+    temp->clear();
+    delete temp;
+
+    timer->start(3); // not sure about this one right here
+}
+
+std::list<Proyectile *> *MainWindow::getProyectiles() {
+    return &proyectiles;
+}
+QGraphicsScene *MainWindow::getScene() const {
+    return scene;
+}
 
 
 

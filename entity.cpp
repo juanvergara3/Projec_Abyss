@@ -159,17 +159,13 @@ int Entity::getH_limit() const {
     return h_limit;
 }
 
-float Entity::getMass() const
-{
+float Entity::getMass() const {
     return mass;
 }
 
-int Entity::getWidth() const
-{
+int Entity::getWidth() const {
     return width;
 }
-
-int Entity::getHeight() const
-{
+int Entity::getHeight() const {
     return height;
 }

@@ -7,6 +7,7 @@
 namespace Ui { class PauseMenu; }
 
 class MainWindow;
+class MainMenu;
 
 class PauseMenu : public QMainWindow
 {
@@ -21,6 +22,7 @@ private: // variables
     Ui::PauseMenu *ui;
 
     MainWindow *main_window;
+    MainMenu *main_menu;
 
     std::string current_screen;
 
@@ -29,6 +31,7 @@ public: // methods
     ~PauseMenu();
 
     void setMain_window(MainWindow *value);
+    void setMain_menu(MainMenu *value);
 
     void keyPressEvent(QKeyEvent *event);
 

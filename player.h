@@ -77,8 +77,10 @@ public: // Methods
 
     short getDirection() const;
 
+    std::string getName() const;
+
 private: // Methods
-        void init_stats(int x_reference);
+    void init_stats(int x_reference);
 
 };
 

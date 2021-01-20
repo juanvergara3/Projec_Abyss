@@ -1,9 +1,10 @@
 #include "pausemenu.h"
 #include "ui_pausemenu.h"
 #include "mainwindow.h"
+#include "mainmenu.h"
 
 PauseMenu::PauseMenu(QWidget *parent, MainWindow *m) :
-    QMainWindow(parent), ui(new Ui::PauseMenu), main_window(m)
+    QMainWindow(parent), ui(new Ui::PauseMenu), main_window(m), main_menu(nullptr)
 {
     ui->setupUi(this);
 
@@ -15,6 +16,11 @@ PauseMenu::PauseMenu(QWidget *parent, MainWindow *m) :
     current_screen = "main";
 }
 PauseMenu::~PauseMenu() {
+
+    //this->close();
+
+    main_menu = nullptr;
+    main_window = nullptr;
     delete ui;
 }
 
@@ -61,7 +67,8 @@ void PauseMenu::show_menuScreen() {
 }
 
 void PauseMenu::on_resumeButton_clicked() { // on main screen
-    this->hide();
+    //this->hide();
+    this->close();
     main_window->showMaximized();
     main_window->resume();
 }
@@ -88,7 +95,14 @@ void PauseMenu::on_noButton_res_clicked() { // on reset screen
     current_screen = "main";
 }
 void PauseMenu::on_yesButton_res_clicked() {
+    hide_resetScreen();
+    show_mainScreen();
 
+    //this->hide();
+    this->close();
+
+    main_window->showMaximized();
+    main_window->reset_game();
 }
 
 void PauseMenu::on_noButton_men_clicked() { // on menu screen
@@ -98,17 +112,30 @@ void PauseMenu::on_noButton_men_clicked() { // on menu screen
     current_screen = "main";
 }
 void PauseMenu::on_yesButton_men_clicked() {
+    hide_menuScreen();
+    show_mainScreen();
 
+    //this->hide();
+    this->close();
+    //main_window->close_game();
+    //main_window->hide();
+    main_window->close();
+
+
+    main_menu->showMaximized();
 }
 
 void PauseMenu::setMain_window(MainWindow *value) {
     main_window = value;
 }
-
+void PauseMenu::setMain_menu(MainMenu *value) {
+    main_menu = value;
+}
 void PauseMenu::keyPressEvent(QKeyEvent *event) {
     if(event->key() == Qt::Key_Escape){
         if(current_screen == "main"){
-            this->hide();
+            //this->hide();
+            this->close();
             main_window->showMaximized();
             main_window->resume();
         }
@@ -121,7 +148,8 @@ void PauseMenu::keyPressEvent(QKeyEvent *event) {
     }
     else if(event->key() == Qt::Key_Backspace){
         if(current_screen == "main"){
-            this->hide();
+            //this->hide();
+            this->close();
             main_window->showMaximized();
             main_window->resume();
         }

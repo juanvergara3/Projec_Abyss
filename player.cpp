@@ -1,5 +1,10 @@
 #include "player.h"
 
+std::string Player::getName() const
+{
+    return name;
+}
+
 Player::Player(QObject *parent, QGraphicsScene *s, std::string name, std::list<Proyectile *> *p, int statPos, float x_, float y_, float vx_, float vy_, float mass_, int radio_, float g_, float K_, float e_, float V_) :
     Entity(parent, x_, y_, vx_, vy_, mass_, radio_, g_, K_, e_, V_)
 {
@@ -178,7 +183,7 @@ void Player::init_stats(int x_reference) {
     for (auto k = labels.begin(); k != labels.end(); k++) {
 
         (*k)->setFont(QFont("System"));
-        (*k)->setGeometry(20 + x_reference, y, (*k)->text().length()*8, 20);
+        (*k)->setGeometry(20 + x_reference, y, (*k)->text().length()*9, 20);
         (*k)->setStyleSheet("QLabel { background-color : white; color : black; }");
         y += 20;
     }

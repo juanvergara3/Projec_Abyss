@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "mainmenu.h"
-#include "pausemenu.h" //termporary
+#include "pausemenu.h"
 
 #include <QApplication>
 
@@ -8,12 +8,19 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainMenu m;
-    PauseMenu p;
-    MainWindow w;
+    //PauseMenu p;
+    //MainWindow w;
 
-    w.setPause_menu(&p);
-    p.setMain_window(&w);
+    //m.setMainwindow(&w);
+    //m.setPausemenu(&p);
+    //w.setPause_menu(&p);
+   //w.setMain_menu(&m);
+    //p.setMain_window(&w);
+    //p.setMain_menu(&m);
 
-    w.showMaximized();
+    m.showMaximized();
+    //w.close();
+    //p.close();
+
     return a.exec();
 }

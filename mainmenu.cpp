@@ -1,10 +1,20 @@
 #include "mainmenu.h"
 #include "ui_mainmenu.h"
+#include "mainwindow.h"
+#include "pausemenu.h"
 
-MainMenu::MainMenu(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainMenu)
+MainMenu::MainMenu(QWidget *parent, MainWindow *w) :
+    QMainWindow(parent), ui(new Ui::MainMenu), mainwindow(w), pausemenu(nullptr)
 {
+    mainwindow = new MainWindow(nullptr, nullptr);
+    pausemenu = new PauseMenu(nullptr, nullptr);
+
+    mainwindow->setPause_menu(pausemenu);
+    mainwindow->setMain_menu(this);
+
+    pausemenu->setMain_window(mainwindow);
+    pausemenu->setMain_menu(this);
+
     ui->setupUi(this);
 
     init_lists();
@@ -14,9 +24,13 @@ MainMenu::MainMenu(QWidget *parent) :
     hide_howtoplayScreen();
     hide_singleplayerScreen();
     hide_multiplayerScreen();
-
 }
 MainMenu::~MainMenu() {
+    //mainwindow->close();
+    //pausemenu->close();
+
+    //delete mainwindow;
+    //delete pausemenu;
     delete ui;
 }
 
@@ -119,6 +133,8 @@ void MainMenu::on_creditsButton_clicked() {
 }
 void MainMenu::on_exitButton_clicked() {
     this->close();
+    //mainwindow->close();
+    //pausemenu->close();
 }
 
 void MainMenu::on_gobackButton_3_clicked() { // on credits screen
@@ -148,7 +164,14 @@ void MainMenu::on_gobackButton_1_clicked() {
 }
 
 void MainMenu::on_playButton_single_clicked() { // on single player screen
-    //starts a single player match
+    hide_singleplayerScreen();
+    show_mainScreen();
+    //this->hide();
+    this->close();
+
+    mainwindow->close_game();
+    mainwindow->setGame(new Game(mainwindow->getScene(), mainwindow->getProyectiles(), ui->seed_single->text().toStdString(), "singleplayer", ui->playerName->text().toStdString(), "Tomoe"));
+    mainwindow->showMaximized();
 }
 void MainMenu::on_gobackButton_4_clicked() {
     hide_singleplayerScreen();
@@ -156,9 +179,23 @@ void MainMenu::on_gobackButton_4_clicked() {
 }
 
 void MainMenu::on_playButton_2_clicked() { // on multiplayer screen
-    //starts a multiplayer match
+    hide_multiplayerScreen();
+    show_mainScreen();
+    //this->hide();
+    this->close();
+
+    mainwindow->close_game();
+    mainwindow->setGame(new Game(mainwindow->getScene(), mainwindow->getProyectiles(), ui->seed_multi->text().toStdString(), "multiplayer", ui->player1Name->text().toStdString(), ui->player2Name->text().toStdString()));
+    mainwindow->showMaximized();
 }
 void MainMenu::on_gobackButton_5_clicked() {
     hide_multiplayerScreen();
     show_playScreen();
+}
+
+void MainMenu::setMainwindow(MainWindow *value) {
+    mainwindow = value;
+}
+void MainMenu::setPausemenu(PauseMenu *value) {
+    pausemenu = value;
 }

@@ -5,6 +5,9 @@
 
 namespace Ui { class MainMenu; }
 
+class MainWindow;
+class PauseMenu;
+
 class MainMenu : public QMainWindow
 {
     Q_OBJECT
@@ -20,9 +23,15 @@ private: // variables
 
     Ui::MainMenu *ui;
 
+    MainWindow *mainwindow;
+    PauseMenu *pausemenu;
+
 public: // methods
-    explicit MainMenu(QWidget *parent = nullptr);
+    explicit MainMenu(QWidget *parent = nullptr, MainWindow *w = nullptr);
     ~MainMenu();
+
+    void setMainwindow(MainWindow *value);
+    void setPausemenu(PauseMenu *value);
 
 private: // methods
     void init_lists();

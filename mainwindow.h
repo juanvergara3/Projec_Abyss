@@ -10,15 +10,14 @@
 #include <stdlib.h>
 #include<time.h>
 #include <fstream>
-#include "floor.h"
-#include "player.h"
-#include "item.h"
+#include "game.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
 class PauseMenu;
+class MainMenu;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -27,29 +26,25 @@ public: // Variables
 
 private: // Variables
     Ui::MainWindow *ui;
+    PauseMenu *pause_menu;
+    MainMenu *main_menu;
 
     QGraphicsScene *scene;
 
     QTimer *timer;
 
+    Game *game;
     Boss *boss;
-
     Room *current_room;
     std::string current_room_type;
-
     Floor *current_floor;
-
-    Floor *f2;
-
-    int h_limit, v_limit;
+    Player *p1, *p2;
 
     std::list<Proyectile*> proyectiles;
     std::list<Enemy*> enemies;
     std::list<Item*> item_bank;
 
-    Player *p1, *p2;
-
-    PauseMenu *pause_menu;
+     int h_limit, v_limit;
 
 public: // Methods
     MainWindow(QWidget *parent = nullptr, PauseMenu *p = nullptr);
@@ -62,8 +57,16 @@ public: // Methods
 
     void pause();
     void resume();
+    void reset_game();
+    void close_game();
 
     void setPause_menu(PauseMenu *value);
+    void setMain_menu(MainMenu *value);
+
+    void setGame(Game *value);
+
+    std::list<Proyectile *> *getProyectiles();
+    QGraphicsScene *getScene() const;
 
 private: // Methods
     void check_collitions(Player *p);

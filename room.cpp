@@ -32,10 +32,10 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         walls.push_back(new Wall(this, 700, 720 - 300, 300, 40));
         walls.push_back(new Wall(this, 650, 720 - 550, 300, 40));
 
-        //enemies.push_back(new Enemy(this, this->scene, "x", p, 4, 850, 20, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
-        //enemies.push_back(new Enemy(this, this->scene, "x", p, 4, 400, 420, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
-        //enemies.push_back(new Enemy(this, this->scene, "x", p, 4, 850, 320, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
-        //enemies.push_back(new Enemy(this, this->scene, "x", p, 4, 850, 570, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+        enemies.push_back(new Enemy(this, this->scene, "x", "", p, 4, 850, 20, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+        enemies.push_back(new Enemy(this, this->scene, "x", "", p, 4, 400, 420, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+        enemies.push_back(new Enemy(this, this->scene, "x", "", p, 4, 850, 320, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+        enemies.push_back(new Enemy(this, this->scene, "x", "", p, 4, 850, 570, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
 
         left_door = new Door(this, this, 40, 720-300-40, 20, 40);
         right_door = new Door(this, this, 1280-60, 720-300-40, 20, 40);
@@ -59,9 +59,9 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         walls.push_back(new Wall(this, 200, 720 - 550, 200, 40));
         walls.push_back(new Wall(this, 500, 720 - 650, 200, 40));
 
-//        enemies.push_back(new Enemy(this, this->scene, "x", p, 4, 780, 80, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
-//        enemies.push_back(new Enemy(this, this->scene, "x", p, 4, 290, 560, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
-//        enemies.push_back(new Enemy(this, this->scene, "x", p, 4, 200, 20, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+        enemies.push_back(new Enemy(this, this->scene, "x", "", p, 4, 780, 80, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+        enemies.push_back(new Enemy(this, this->scene, "x", "", p, 4, 290, 560, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+        enemies.push_back(new Enemy(this, this->scene, "x", "", p, 4, 200, 20, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
 
         left_door = new Door(this, this, 40, 720-300-40, 20, 40);
         right_door = nullptr;
@@ -110,9 +110,9 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         walls.push_back(new Wall(this, 500, 720 - 450, 280, 40));
         walls.push_back(new Wall(this, 500, 720 - 120, 280, 40));
 
-        //        enemies.push_back(new Enemy(this, this->scene, "x", p, 4, 140, 170, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
-        //        enemies.push_back(new Enemy(this, this->scene, "x", p, 4, 1280-140, 170, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
-        //        enemies.push_back(new Enemy(this, this->scene, "x", p, 4, 1280/2, 140, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+                enemies.push_back(new Enemy(this, this->scene, "x", "", p, 4, 140, 170, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+                enemies.push_back(new Enemy(this, this->scene, "x", "", p, 4, 1280-140, 170, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+                enemies.push_back(new Enemy(this, this->scene, "x", "", p, 4, 1280/2, 140, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
 
         left_door = nullptr;
         right_door = nullptr;
@@ -144,9 +144,9 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         walls.push_back(new Wall(this, 50, 720-50, 150, 50));
         walls.push_back(new Wall(this, 200, 720-25, 150, 25));
 
-//        enemies.push_back(new Enemy(this, this->scene, "x", p, 4, 1280-250, 220, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
-//        enemies.push_back(new Enemy(this, this->scene, "x", p, 4, 1280-350, 120, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
-//        enemies.push_back(new Enemy(this, this->scene, "x", p, 4, 1280-450, 20, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+        enemies.push_back(new Enemy(this, this->scene, "x", "", p, 4, 1280-250, 220, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+        enemies.push_back(new Enemy(this, this->scene, "x", "", p, 4, 1280-350, 120, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+        enemies.push_back(new Enemy(this, this->scene, "x", "", p, 4, 1280-450, 20, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
 
         left_door = nullptr;
         right_door = new Door(this, this, 1280 - 100 - 20, 720-300-80, 40, 80);
@@ -325,9 +325,6 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         up_door = nullptr;
         down_door = nullptr;
 
-        //doors.push_back();
-        //doors.push_back();
-
         itemX = 1280/2 - 8;
         itemY = 720 - 16;
 
@@ -445,9 +442,9 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         walls.push_back(new Wall(this, 550, 720 - 380, 280, 40));
         walls.push_back(new Wall(this, 550, 720 - 120, 280, 40));
 
-        //        enemies.push_back(new Enemy(this, this->scene, "x", p, 4, 130, 320, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
-        //        enemies.push_back(new Enemy(this, this->scene, "x", p, 4, 300, 20, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
-        //        enemies.push_back(new Enemy(this, this->scene, "x", p, 4, 690, 400, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+                enemies.push_back(new Enemy(this, this->scene, "x", "", p, 4, 130, 320, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+                enemies.push_back(new Enemy(this, this->scene, "x", "", p, 4, 300, 20, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+                enemies.push_back(new Enemy(this, this->scene, "x", "", p, 4, 690, 400, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
 
         left_door = new Door(this, this, 150/2 -10, 720-300-40, 20, 40);
         right_door = new Door(this, this, 1280-280, 720-40, 20, 40);
@@ -499,8 +496,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         walls.push_back(new Wall(this, 950, 720-150, 50, 150));
         walls.push_back(new Wall(this, 1000, 720-50, 50, 50));
 
-//        enemies.push_back(new Enemy(this, this->scene, "x", p, 4, 480, 20, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
-//        enemies.push_back(new Enemy(this, this->scene, "x", p, 4, 825, 470, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+        enemies.push_back(new Enemy(this, this->scene, "x", "", p, 4, 480, 20, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+        enemies.push_back(new Enemy(this, this->scene, "x", "", p, 4, 825, 470, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
 
         left_door = new Door(this, this, 150/2 -10, 720-300-40, 20, 40);
         right_door = new Door(this, this, 1280-120, 720-40, 20, 40);
@@ -534,8 +531,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         down_door = nullptr;
 
         enemies.push_back(new Enemy(this, this->scene, "cross", "left_right_jump", p, 4, 150-10, 320, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
-//        enemies.push_back(new Enemy(this, this->scene, "double", p, 4, 1065, 650+20, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
-//        enemies.push_back(new Enemy(this, this->scene, "x", p, 4, 550, 20, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+        enemies.push_back(new Enemy(this, this->scene, "double", "", p, 4, 1065, 650+20, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+        enemies.push_back(new Enemy(this, this->scene, "x", "", p, 4, 550, 20, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
 
         itemX = 450 - 8;
         itemY = 720 - 350 - 16;
@@ -557,8 +554,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         walls.push_back(new Wall(this, 1280-300, 0, 100, 200));
         walls.push_back(new Wall(this, 1280-400, 0, 100, 100));
 
-//        enemies.push_back(new Enemy(this, this->scene, "x", p, 4, 1280-700, 320, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
-//        enemies.push_back(new Enemy(this, this->scene, "x", p, 4, 1280-400, 120, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+        enemies.push_back(new Enemy(this, this->scene, "x", "", p, 4, 1280-700, 320, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
+        enemies.push_back(new Enemy(this, this->scene, "x", "", p, 4, 1280-400, 120, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
 
         left_door = new Door(this, this, 50, 720-40, 20, 40);
         right_door = new Door(this, this, 1280 - 100 - 20, 720-300-80, 40, 80);
@@ -609,7 +606,6 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
     }
 }
 Room::~Room() {
-    //should it delete the content of the lists?
 
     walls.clear();
     enemies.clear();
@@ -622,9 +618,12 @@ Room::~Room() {
         delete up_door;
     if(down_door != nullptr)
         delete down_door;
-
-    delete item;
-    delete boss;
+    if(boss_door != nullptr)
+        delete boss_door;
+    if(item != nullptr)
+        delete item;
+    if(item != nullptr)
+        delete boss;
 }
 
 void Room::load_room() {
@@ -645,7 +644,7 @@ void Room::load_room() {
         if(boss != nullptr){
             scene->addItem(boss);
             boss->setPos(boss->getX(), boss->getY());
-            boss->init(); //if you exit the room and then come back it tries to add the widgets again
+            boss->init();
         }
         if(cleared)
             scene->addItem(boss_door);

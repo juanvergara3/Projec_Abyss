@@ -105,6 +105,9 @@ Enemy::Enemy(QObject *parent, QGraphicsScene *s, std::string shooting_type, std:
     }
 }
 Enemy::~Enemy() {
+    shooting_timer->stop();
+    movement_timer->stop();
+
     delete shooting_timer;
     delete movement_timer;
 }
