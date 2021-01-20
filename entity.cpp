@@ -79,9 +79,7 @@ void Entity::update() {
 
     setPos(x, v_limit - y);
 }
-
-void Entity::orbital_update(Entity *k)
-{
+void Entity::orbital_update(Entity *k) {
     float aux = 0;
     float dis;
 
@@ -105,6 +103,7 @@ void Entity::orbital_update(Entity *k)
 
     setPos(x, v_limit - y);
 }
+
 void Entity::set_vel(float px, float py, float vx, float vy) {
     x = px;
     y = py;

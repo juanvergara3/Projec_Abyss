@@ -49,6 +49,8 @@ private: // Variables
 
     bool jumping;
 
+    bool alive;
+
     std::string name;
 
     QGraphicsScene *scene;
@@ -78,6 +80,12 @@ public: // Methods
     short getDirection() const;
 
     std::string getName() const;
+
+    float getHealth() const;
+
+    bool getAlive() const;
+
+    void die();
 
 private: // Methods
     void init_stats(int x_reference);

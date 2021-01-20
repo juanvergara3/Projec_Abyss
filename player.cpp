@@ -5,6 +5,20 @@ std::string Player::getName() const
     return name;
 }
 
+float Player::getHealth() const
+{
+    return health;
+}
+
+bool Player::getAlive() const
+{
+    return alive;
+}
+
+void Player::die() {
+    alive = false;
+}
+
 Player::Player(QObject *parent, QGraphicsScene *s, std::string name, std::list<Proyectile *> *p, int statPos, float x_, float y_, float vx_, float vy_, float mass_, int radio_, float g_, float K_, float e_, float V_) :
     Entity(parent, x_, y_, vx_, vy_, mass_, radio_, g_, K_, e_, V_)
 {
@@ -25,6 +39,8 @@ Player::Player(QObject *parent, QGraphicsScene *s, std::string name, std::list<P
     direction = 0;
 
     this->name = name;
+
+    alive = true;
 
     proyectiles = p;
 

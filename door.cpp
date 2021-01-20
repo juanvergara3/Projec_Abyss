@@ -18,7 +18,7 @@ Door::Door(QObject *parent, Room *self, int x, int y, int w, int h) {
     type = "normal";
 }
 
-Door::Door(QObject *parent, Floor *next, int playerX, int playerY, int x, int y, int w, int h) {
+Door::Door(QObject *parent, Floor *next, std::string type_, int playerX, int playerY, int x, int y, int w, int h) {
     posx = x;
     posy = y;
     width = w;
@@ -34,7 +34,7 @@ Door::Door(QObject *parent, Floor *next, int playerX, int playerY, int x, int y,
 
     this->next = next;
 
-    type = "boss";
+    type = type_;
 }
 Door::~Door(){
 

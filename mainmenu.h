@@ -2,6 +2,7 @@
 #define MAINMENU_H
 
 #include <QMainWindow>
+#include "messagewindow.h"
 
 namespace Ui { class MainMenu; }
 
@@ -25,6 +26,8 @@ private: // variables
 
     MainWindow *mainwindow;
     PauseMenu *pausemenu;
+    MessageWindow *gameover_window;
+    MessageWindow *victory_window;
 
 public: // methods
     explicit MainMenu(QWidget *parent = nullptr, MainWindow *w = nullptr);

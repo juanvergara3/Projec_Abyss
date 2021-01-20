@@ -185,7 +185,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         up_door = nullptr;
         down_door = nullptr;
 
-        boss_door = new Door(this, nullptr, 1280/2, 610, 1280 - 150 - 20, 720-80, 40, 80);
+        boss_door = new Door(this, nullptr, "boss", 1280/2, 610, 1280 - 150 - 20, 720-80, 40, 80);
 
         boss = new Boss(this, scene, "lamprey", p, 1280-150, 720/2, 0, 0, 50, 300, 200, 0, 1e-5, 0.1, 0);
 
@@ -403,7 +403,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         up_door = nullptr;
         down_door = new Door(this, this, 1280/2 - 10, 720-40, 20, 40);
 
-        boss_door = new Door(this, nullptr, 150, 0, 150 - 20, 720-80, 40, 80);
+        boss_door = new Door(this, nullptr, "boss", 150, 0, 150 - 20, 720-80, 40, 80);
 
         boss = new Boss(this, scene, "priest", p, 1280/2, 250, 0, 0, 25, 100, 200, 5, 1e-5, 0.1, 0);
 
@@ -582,14 +582,14 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         up_door = nullptr;
         down_door = nullptr;
 
-        boss_door = new Door(this, nullptr, 0, 0, 1280 - 150 - 20, 720-80, 40, 80);
+        boss_door = new Door(this, nullptr, "final_boss", 0, 0, 1280 - 150 - 20, 720-100-80, 40, 80);
 
-        boss = new Boss(this, scene, "expelled", p, 1200, 220, 0, 0, 20, 60, 120, 5, 1e-5, 0.1, 0); // what do i do with this ??
+        boss = new Boss(this, scene, "expelled", p, 1200, 220, 0, 0, 20, 60, 120, 5, 1e-5, 0.1, 0);
 
         itemX =  250;
         itemY = 720 - 16;
 
-        type = "boss";
+        type = "final_boss";
     }
 
     else{
@@ -640,7 +640,7 @@ void Room::load_room() {
             (*k)->init();
         }
 
-    if(type == "boss"){
+    if(type == "boss" || type == "final_boss"){
         if(boss != nullptr){
             scene->addItem(boss);
             boss->setPos(boss->getX(), boss->getY());
@@ -685,7 +685,7 @@ void Room::deload_room() {
             (*k)->stop();
         }
 
-    if(type == "boss"){
+    if(type == "boss" || type == "final_boss"){
         if(boss != nullptr){
             scene->removeItem(boss);
             boss->stop();
@@ -719,7 +719,7 @@ void Room::clear_room() {
     if(type == "normal")
         enemies.clear();
 
-    else  if(type == "boss") {
+    else  if(type == "boss" || type == "final_boss") {
         delete boss;
         boss = nullptr;
 

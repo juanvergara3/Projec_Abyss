@@ -26,6 +26,7 @@ SOURCES += \
     main.cpp \
     mainmenu.cpp \
     mainwindow.cpp \
+    messagewindow.cpp \
     pausemenu.cpp \
     player.cpp \
     proyectile.cpp \
@@ -42,6 +43,7 @@ HEADERS += \
     item.h \
     mainmenu.h \
     mainwindow.h \
+    messagewindow.h \
     pausemenu.h \
     player.h \
     proyectile.h \
@@ -51,6 +53,7 @@ HEADERS += \
 FORMS += \
     mainmenu.ui \
     mainwindow.ui \
+    messagewindow.ui \
     pausemenu.ui
 
 # Default rules for deployment.

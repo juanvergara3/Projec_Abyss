@@ -9,8 +9,18 @@ MainMenu::MainMenu(QWidget *parent, MainWindow *w) :
     mainwindow = new MainWindow(nullptr, nullptr);
     pausemenu = new PauseMenu(nullptr, nullptr);
 
+    gameover_window = new MessageWindow(nullptr, "gameover");
+    victory_window = new MessageWindow(nullptr, "victory");
+
+    gameover_window->setMain_menu(this);
+    gameover_window->setMain_window(mainwindow);
+    victory_window->setMain_menu(this);
+    victory_window->setMain_window(mainwindow);
+
     mainwindow->setPause_menu(pausemenu);
     mainwindow->setMain_menu(this);
+    mainwindow->setVictory_window(victory_window);
+    mainwindow->setGameover_window(gameover_window);
 
     pausemenu->setMain_window(mainwindow);
     pausemenu->setMain_menu(this);

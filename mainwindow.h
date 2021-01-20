@@ -11,6 +11,7 @@
 #include<time.h>
 #include <fstream>
 #include "game.h"
+#include "messagewindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -28,6 +29,9 @@ private: // Variables
     Ui::MainWindow *ui;
     PauseMenu *pause_menu;
     MainMenu *main_menu;
+
+    MessageWindow *gameover_window;
+    MessageWindow *victory_window;
 
     QGraphicsScene *scene;
 
@@ -59,6 +63,8 @@ public: // Methods
     void resume();
     void reset_game();
     void close_game();
+    void game_over();
+    void victory();
 
     void setPause_menu(PauseMenu *value);
     void setMain_menu(MainMenu *value);
@@ -67,6 +73,10 @@ public: // Methods
 
     std::list<Proyectile *> *getProyectiles();
     QGraphicsScene *getScene() const;
+
+    void setGameover_window(MessageWindow *value);
+
+    void setVictory_window(MessageWindow *value);
 
 private: // Methods
     void check_collitions(Player *p);

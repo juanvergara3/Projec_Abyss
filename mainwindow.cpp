@@ -3,8 +3,21 @@
 #include "pausemenu.h"
 #include "mainmenu.h"
 
+void MainWindow::setGameover_window(MessageWindow *value)
+{
+    gameover_window = value;
+}
+
+void MainWindow::setVictory_window(MessageWindow *value)
+{
+    victory_window = value;
+}
+
 MainWindow::MainWindow(QWidget *parent, PauseMenu *p) : QMainWindow(parent), ui(new Ui::MainWindow), pause_menu(p), main_menu(nullptr), h_limit(1280), v_limit(720) {
     ui->setupUi(this);
+
+    gameover_window = nullptr;
+    victory_window = nullptr;
 
     scene = new QGraphicsScene(this);
     scene->setSceneRect(0, 0 ,1280, 720);
@@ -53,128 +66,36 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
     if (event->isAutoRepeat())
         return;
 
-    if(event->key() == Qt::Key_D){
-        //p1->set_velX(p1->getX(), p1->getMovement_speed());
-        p1->addDirection(1);
-        p1->setSight(1);
-    }
-    if(event->key() == Qt::Key_A){
-        //p1->set_velX(p1->getX(), -p1->getMovement_speed());
-        p1->addDirection(-1);
-        p1->setSight(-1);
-    }
-    if(event->key() == Qt::Key_W){
-        if(!p1->getJumping())
-            p1->set_velY(p1->getY(), p1->getJump_Speed());
-        p1->setJumping(true);
-    }
-    if(event->key() == Qt::Key_S){
-        p1->set_velY(p1->getY(), -p1->getJump_Speed());
-    }
-    if(event->key() == Qt::Key_Space){
-        p1->shoot();
-    }
-    if(event->key() == Qt::Key_E){
+    if(p1->getAlive()){
 
-        for(int k = 0; k < p1->collidingItems().size(); k++){
-
-            if(typeid( *(p1->collidingItems()[k]) ) == typeid(Door)){
-
-                Door *d = dynamic_cast<Door*>(p1->collidingItems()[k]);
-
-                for (auto k = proyectiles.begin(); k != proyectiles.end(); ) { //clears the screen from proyectiles
-                    scene->removeItem(*k);
-                    delete (*k);
-                    k = proyectiles.erase(k);
-                }
-
-                if(d->getType() == "normal"){
-
-                    p1->set_vel(d->getLink()->getPosx(), v_limit - d->getLink()->getPosy(), 0, 0);
-                    if(p2 != nullptr)
-                        p2->set_vel(d->getLink()->getPosx(), v_limit - d->getLink()->getPosy(), 0, 0);
-
-                    current_room->deload_room();
-                    current_room = d->getLink()->getSelf();
-                    current_room->load_room();
-                    current_room_type = current_room->getType();
-
-                    if(current_room_type == "boss") {
-                        boss = current_room->getBoss();
-                        enemies.clear();
-                    }
-                    else if(current_room_type == "normal") {
-                        enemies = current_room->getEnemies();
-                        boss = nullptr;
-                    }
-
-                    scene->removeItem(p1);
-                    scene->addItem(p1);
-                    if(p2 != nullptr){
-                        scene->removeItem(p2);
-                        scene->addItem(p2);
-                    }
-                }
-                else if(d->getType() == "boss"){
-
-                    current_room->deload_room();
-                    current_room = d->getNext()->safe;
-                    current_room->load_room();
-                    current_room_type = current_room->getType();\
-
-                    boss = current_room->getBoss();
-                    enemies.clear();
-
-                    p1->set_vel(d->getPlayerX(),  d->getPlayerY(), 0, 0);
-                    if(p2 != nullptr)
-                        p2->set_vel(d->getPlayerX(),  d->getPlayerY(), 0, 0);
-
-                    scene->removeItem(p1);
-                    scene->addItem(p1);
-                    if(p2 != nullptr){
-                        scene->removeItem(p2);
-                        scene->addItem(p2);
-                    }
-                }
-            }
-            if(typeid( *(p1->collidingItems()[k]) ) == typeid(Item)){
-
-                Item *i = dynamic_cast<Item*>(p1->collidingItems()[k]);
-
-                p1->update_stats(i);
-
-                current_room->remove_item();
-
-            }
+        if(event->key() == Qt::Key_D){
+            //p1->set_velX(p1->getX(), p1->getMovement_speed());
+            p1->addDirection(1);
+            p1->setSight(1);
         }
-    }
-
-    if(p2 != nullptr){
-        if(event->key() == Qt::Key_L){
-            //p2->set_velX(p1->getX(), p2->getMovement_speed());
-            p2->addDirection(1);
-            p2->setSight(1);
+        if(event->key() == Qt::Key_A){
+            //p1->set_velX(p1->getX(), -p1->getMovement_speed());
+            p1->addDirection(-1);
+            p1->setSight(-1);
         }
-        if(event->key() == Qt::Key_J){
-            //p2->set_velX(p1->getX(), -p2->getMovement_speed());
-            p2->addDirection(-1);
-            p2->setSight(-1);
+        if(event->key() == Qt::Key_W){
+            if(!p1->getJumping())
+                p1->set_velY(p1->getY(), p1->getJump_Speed());
+            p1->setJumping(true);
         }
-        if(event->key() == Qt::Key_I){
-            if(!p2->getJumping())
-                p2->set_velY(p2->getY(), p2->getJump_Speed());
-            p2->setJumping(true);
+        if(event->key() == Qt::Key_S){
+            p1->set_velY(p1->getY(), -p1->getJump_Speed());
         }
-        if(event->key() == Qt::Key_K){
-            p2->set_velY(p2->getY(), -p2->getJump_Speed());
+        if(event->key() == Qt::Key_Space){
+            p1->shoot();
         }
-        if(event->key() == Qt::Key_O){
+        if(event->key() == Qt::Key_E){
 
-            for(int k = 0; k < p2->collidingItems().size(); k++){
+            for(int k = 0; k < p1->collidingItems().size(); k++){
 
-                if(typeid( *(p2->collidingItems()[k]) ) == typeid(Door)){
+                if(typeid( *(p1->collidingItems()[k]) ) == typeid(Door)){
 
-                    Door *d = dynamic_cast<Door*>(p2->collidingItems()[k]);
+                    Door *d = dynamic_cast<Door*>(p1->collidingItems()[k]);
 
                     for (auto k = proyectiles.begin(); k != proyectiles.end(); ) { //clears the screen from proyectiles
                         scene->removeItem(*k);
@@ -185,14 +106,15 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
                     if(d->getType() == "normal"){
 
                         p1->set_vel(d->getLink()->getPosx(), v_limit - d->getLink()->getPosy(), 0, 0);
-                        p2->set_vel(d->getLink()->getPosx(), v_limit - d->getLink()->getPosy(), 0, 0);
+                        if(p2 != nullptr)
+                            p2->set_vel(d->getLink()->getPosx(), v_limit - d->getLink()->getPosy(), 0, 0);
 
                         current_room->deload_room();
                         current_room = d->getLink()->getSelf();
                         current_room->load_room();
                         current_room_type = current_room->getType();
 
-                        if(current_room_type == "boss") {
+                        if(current_room_type == "boss" || current_room_type == "final_boss") {
                             boss = current_room->getBoss();
                             enemies.clear();
                         }
@@ -203,8 +125,10 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 
                         scene->removeItem(p1);
                         scene->addItem(p1);
-                        scene->removeItem(p2);
-                        scene->addItem(p2);
+                        if(p2 != nullptr){
+                            scene->removeItem(p2);
+                            scene->addItem(p2);
+                        }
                     }
                     else if(d->getType() == "boss"){
 
@@ -217,19 +141,25 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
                         enemies.clear();
 
                         p1->set_vel(d->getPlayerX(),  d->getPlayerY(), 0, 0);
-                        p2->set_vel(d->getPlayerX(),  d->getPlayerY(), 0, 0);
+                        if(p2 != nullptr)
+                            p2->set_vel(d->getPlayerX(),  d->getPlayerY(), 0, 0);
 
                         scene->removeItem(p1);
                         scene->addItem(p1);
-                        scene->removeItem(p2);
-                        scene->addItem(p2);
+                        if(p2 != nullptr){
+                            scene->removeItem(p2);
+                            scene->addItem(p2);
+                        }
+                    }
+                    else if (d->getType() == "final_boss"){
+                        victory();
                     }
                 }
-                if(typeid( *(p2->collidingItems()[k]) ) == typeid(Item)){
+                if(typeid( *(p1->collidingItems()[k]) ) == typeid(Item)){
 
-                    Item *i = dynamic_cast<Item*>(p2->collidingItems()[k]);
+                    Item *i = dynamic_cast<Item*>(p1->collidingItems()[k]);
 
-                    p2->update_stats(i);
+                    p1->update_stats(i);
 
                     current_room->remove_item();
 
@@ -238,9 +168,104 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
         }
     }
 
+    if(p2 != nullptr){
+
+        if(p2->getAlive()){
+
+            if(event->key() == Qt::Key_L){
+                //p2->set_velX(p1->getX(), p2->getMovement_speed());
+                p2->addDirection(1);
+                p2->setSight(1);
+            }
+            if(event->key() == Qt::Key_J){
+                //p2->set_velX(p1->getX(), -p2->getMovement_speed());
+                p2->addDirection(-1);
+                p2->setSight(-1);
+            }
+            if(event->key() == Qt::Key_I){
+                if(!p2->getJumping())
+                    p2->set_velY(p2->getY(), p2->getJump_Speed());
+                p2->setJumping(true);
+            }
+            if(event->key() == Qt::Key_K){
+                p2->set_velY(p2->getY(), -p2->getJump_Speed());
+            }
+            if(event->key() == Qt::Key_O){
+
+                for(int k = 0; k < p2->collidingItems().size(); k++){
+
+                    if(typeid( *(p2->collidingItems()[k]) ) == typeid(Door)){
+
+                        Door *d = dynamic_cast<Door*>(p2->collidingItems()[k]);
+
+                        for (auto k = proyectiles.begin(); k != proyectiles.end(); ) { //clears the screen from proyectiles
+                            scene->removeItem(*k);
+                            delete (*k);
+                            k = proyectiles.erase(k);
+                        }
+
+                        if(d->getType() == "normal"){
+
+                            p1->set_vel(d->getLink()->getPosx(), v_limit - d->getLink()->getPosy(), 0, 0);
+                            p2->set_vel(d->getLink()->getPosx(), v_limit - d->getLink()->getPosy(), 0, 0);
+
+                            current_room->deload_room();
+                            current_room = d->getLink()->getSelf();
+                            current_room->load_room();
+                            current_room_type = current_room->getType();
+
+                            if(current_room_type == "boss" || current_room_type == "final_boss") {
+                                boss = current_room->getBoss();
+                                enemies.clear();
+                            }
+                            else if(current_room_type == "normal") {
+                                enemies = current_room->getEnemies();
+                                boss = nullptr;
+                            }
+
+                            scene->removeItem(p1);
+                            scene->addItem(p1);
+                            scene->removeItem(p2);
+                            scene->addItem(p2);
+                        }
+                        else if(d->getType() == "boss"){
+
+                            current_room->deload_room();
+                            current_room = d->getNext()->safe;
+                            current_room->load_room();
+                            current_room_type = current_room->getType();\
+
+                            boss = current_room->getBoss();
+                            enemies.clear();
+
+                            p1->set_vel(d->getPlayerX(),  d->getPlayerY(), 0, 0);
+                            p2->set_vel(d->getPlayerX(),  d->getPlayerY(), 0, 0);
+
+                            scene->removeItem(p1);
+                            scene->addItem(p1);
+                            scene->removeItem(p2);
+                            scene->addItem(p2);
+                        }
+                        else if (d->getType() == "final_boss"){
+                            victory();
+                        }
+                    }
+                    if(typeid( *(p2->collidingItems()[k]) ) == typeid(Item)){
+
+                        Item *i = dynamic_cast<Item*>(p2->collidingItems()[k]);
+
+                        p2->update_stats(i);
+
+                        current_room->remove_item();
+
+                    }
+                }
+            }
+        }
+    }
+
     if(event->key() == Qt::Key_Escape){
         pause();
-        //this->hide();
         this->close();
         pause_menu->showMaximized();
     }
@@ -252,19 +277,23 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
 
     switch (event->key()) {
     case Qt::Key_D:
-        p1->addDirection(-1);
+        if(p1->getAlive())
+            p1->addDirection(-1);
         break;
     case Qt::Key_A:
-        p1->addDirection(1);
+        if(p1->getAlive())
+            p1->addDirection(1);
         break;
 
     case Qt::Key_L:
         if(p2!= nullptr)
-            p2->addDirection(-1);
+            if(p2->getAlive())
+                p2->addDirection(-1);
         break;
     case Qt::Key_J:
         if(p2!= nullptr)
-            p2->addDirection(1);
+            if(p2->getAlive())
+                p2->addDirection(1);
         break;
 
     default:
@@ -275,10 +304,20 @@ void MainWindow::mousePressEvent(QMouseEvent *event) {
 
     if(p2 != nullptr){
 
-        if(event->button() == Qt::MouseButton::LeftButton){
-            p2->shoot();
-        }
+        if(p2->getAlive()){
 
+            if(event->button() == Qt::MouseButton::LeftButton){
+                p2->shoot();
+            }
+        }
+    }
+    else{
+        if(p1->getAlive()){
+
+            if(event->button() == Qt::MouseButton::LeftButton){
+                p1->shoot();
+            }
+        }
     }
 }
 
@@ -360,6 +399,18 @@ void MainWindow::close_game() {
 
         game = nullptr;
     }
+}
+void MainWindow::game_over() {
+    this->close();
+    pause();
+
+    gameover_window->showMaximized();
+}
+void MainWindow::victory() {
+    this->close();
+    pause();
+
+    victory_window->showMaximized();
 }
 
 void MainWindow::check_collitions(Player *p) {
@@ -620,15 +671,45 @@ void MainWindow::load_items(std::string file_name) {
 
 void MainWindow::update_bodies(){
 
-    p1->Player::update();
-    check_collitions(p1);
-
-    if(p2 != nullptr){
-        p2->Player::update();
-        check_collitions(p2);
+    if(p1->getAlive()){
+        p1->Player::update();
+        check_collitions(p1);
     }
 
-    if(boss != nullptr && current_room_type == "boss"){
+    if(p2 != nullptr){
+        if(p2->getAlive()){
+            p2->Player::update();
+            check_collitions(p2);
+        }
+    }
+
+    if(p1->getHealth() == 0 && p1->getAlive()){
+        p1->die();
+        scene->removeItem(p1);
+    }
+    if(p2 != nullptr){
+        if(p2->getHealth() == 0 && p2->getAlive())
+            scene->removeItem(p2);
+    }
+
+    if(game->getType() == "singleplayer"){
+        if(p1->getHealth() == 0)
+            p1->die();
+        if(!p1->getAlive())
+            game_over();
+    }
+    else if(game->getType() == "multiplayer"){
+
+        if(p1->getHealth() == 0)
+            p1->die();
+        if(p2->getHealth() == 0)
+            p2->die();
+
+        if(!p1->getAlive() && !p2->getAlive())
+            game_over();
+    }
+
+    if(boss != nullptr && (current_room_type == "boss" || current_room_type == "final_boss")){
 
         boss->update();
         check_collitions(boss);
@@ -639,16 +720,28 @@ void MainWindow::update_bodies(){
 
             current_room->clear_room();
 
-            scene->removeItem(p1);
-            if(p2 != nullptr)
-                scene->removeItem(p2);
+            if(current_room_type == "boss"){
 
-            current_room->spawn_item(get_random_item());
+                scene->removeItem(p1);
+                if(p2 != nullptr)
+                    scene->removeItem(p2);
 
-            scene->addItem(p1);
-            if(p2 != nullptr)
-                scene->addItem(p2);  
+                current_room->spawn_item(get_random_item());
 
+                scene->addItem(p1);
+                if(p2 != nullptr)
+                    scene->addItem(p2);
+            }
+            else if(current_room_type == "final_boss"){
+
+                scene->removeItem(p1);
+                if(p2 != nullptr)
+                    scene->removeItem(p2);
+
+                scene->addItem(p1);
+                if(p2 != nullptr)
+                    scene->addItem(p2);
+            }
         }
     }
 

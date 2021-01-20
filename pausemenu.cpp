@@ -115,12 +115,9 @@ void PauseMenu::on_yesButton_men_clicked() {
     hide_menuScreen();
     show_mainScreen();
 
-    //this->hide();
     this->close();
-    //main_window->close_game();
-    //main_window->hide();
+    main_window->close_game();
     main_window->close();
-
 
     main_menu->showMaximized();
 }
