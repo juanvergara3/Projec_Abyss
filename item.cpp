@@ -52,8 +52,7 @@ int Item::getHeight() const {
     return height;
 }
 
-void Item::updateLabel(int x, int y)
-{
+void Item::updateLabel(int x, int y) {
     name->setGeometry(x, y - height - 4, name->width(), name->height());
     name->update();
 }

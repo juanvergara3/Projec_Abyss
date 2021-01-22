@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Assets/Sprites/f1-1.png</file>
+        <file>Assets/Sprites/f1-2.png</file>
+        <file>Assets/Sprites/f1-3.png</file>
+        <file>Assets/Sprites/f1-4.png</file>
+        <file>Assets/Sprites/f1-boss.png</file>
+        <file>Assets/Sprites/f1-item.png</file>
+        <file>Assets/Sprites/f2-1.png</file>
+        <file>Assets/Sprites/f2-2.png</file>
+        <file>Assets/Sprites/f2-3.png</file>
+        <file>Assets/Sprites/f2-4.png</file>
+        <file>Assets/Sprites/f2-boss.png</file>
+        <file>Assets/Sprites/f2-item.png</file>
+        <file>Assets/Sprites/f2-safe.png</file>
+    </qresource>
+</RCC>

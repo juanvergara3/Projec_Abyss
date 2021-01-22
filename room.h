@@ -4,6 +4,7 @@
 #include <QObject>
 #include <fstream>
 #include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
 #include <list>
 #include "wall.h"
 #include "enemy.h"
@@ -13,7 +14,7 @@
 
 class Door;
 
-class Room : public QObject {
+class Room : public QObject, public QGraphicsItem {
     Q_OBJECT
 public: // Variables
     Door *left_door;
@@ -35,6 +36,8 @@ private: // Variables
 
     QGraphicsScene *scene;
 
+    QPixmap *bg;
+
     bool cleared;
 
     const int v_limit, h_limit;
@@ -47,6 +50,9 @@ public: // Methods
     void deload_room();
 
     std::list<Enemy *> getEnemies() const;
+
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *options, QWidget *widget);
 
     void clear_room();
 

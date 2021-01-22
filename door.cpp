@@ -44,8 +44,8 @@ QRectF Door::boundingRect() const{
     return QRectF(0, 0, width, height);
 }
 void Door::paint(QPainter *painter, const QStyleOptionGraphicsItem *options, QWidget *widget) {
-    painter->setBrush(Qt::blue);
-    //painter->setPen(Qt::NoPen);
+    //painter->setBrush(Qt::blue);
+    painter->setPen(Qt::NoPen);
     painter->drawRect(boundingRect());
 }
 

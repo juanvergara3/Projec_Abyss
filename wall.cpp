@@ -16,8 +16,8 @@ QRectF Wall::boundingRect() const{
     return QRectF(0, 0, width, height);
 }
 void Wall::paint(QPainter *painter, const QStyleOptionGraphicsItem *options, QWidget *widget) {
-    painter->setBrush(Qt::green);
-    //painter->setPen(Qt::NoPen);
+    //painter->setBrush(Qt::green);
+    painter->setPen(Qt::NoPen);
     painter->drawRect(boundingRect());
 }
 

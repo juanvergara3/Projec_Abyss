@@ -58,7 +58,7 @@ QRectF Entity::boundingRect() const {
         return QRectF(-width/2, -height/2, width, height);
 }
 void Entity::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-    painter->setBrush(Qt::black);
+    painter->setBrush(Qt::white);
     painter->drawRect(boundingRect());
 }
 
