@@ -32,6 +32,7 @@ SOURCES += \
     player.cpp \
     proyectile.cpp \
     room.cpp \
+    spring.cpp \
     wall.cpp
 
 HEADERS += \
@@ -49,6 +50,7 @@ HEADERS += \
     player.h \
     proyectile.h \
     room.h \
+    spring.h \
     wall.h
 
 FORMS += \

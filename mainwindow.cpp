@@ -29,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent, PauseMenu *p) : QMainWindow(parent), ui(
 
     game = nullptr;
 
+    spring = nullptr;
+
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update_bodies()));
 }
@@ -103,6 +105,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
                         current_room = d->getLink()->getSelf();
                         current_room->load_room();
                         current_room_type = current_room->getType();
+
+                        spring = current_room->getSpring();
 
                         if(current_room_type == "boss" || current_room_type == "final_boss"){
                             current_floor->start_boss_music();
@@ -256,6 +260,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
                             current_floor = d->getNext();
                             current_room->load_room();
                             current_room_type = current_room->getType();
+
+                            spring = current_room->getSpring();
 
                             current_floor->start_floor_music();
 
@@ -494,6 +500,36 @@ void MainWindow::check_collitions(Player *p) {
 
             }
         }
+        if(typeid( *(p->collidingItems()[k]) )== typeid(Spring)){
+
+            if(p->getX() < p->collidingItems().at(k)->x()) { //colicion en x por la izquierda
+
+                //p->set_velX(p->collidingItems().at(k)->x() - p->getRadio(), -1*p->getE()*p->getVx());
+                p->set_velX(p->collidingItems().at(k)->x() - p->getRadio() + (p->getDirection() * p->getMovement_speed()), p->getVx()); //fails ******
+
+            }
+            if(p->getX() > p->collidingItems().at(k)->x() + p->collidingItems().at(k)->boundingRect().width()) { //colicion en x por la derecha
+
+                //p->set_velX(p->collidingItems().at(k)->x() + p->collidingItems().at(k)->boundingRect().width() + p->getRadio(), -1*p->getE()*p->getVx());
+                p->set_velX(p->collidingItems().at(k)->x() + p->collidingItems().at(k)->boundingRect().width() + p->getRadio() + (p->getDirection() * p->getMovement_speed()), p->getVx()); //fails ******
+            }
+            if(p->getY() > v_limit - p->collidingItems().at(k)->y()) { //colicion en y por arriba (callendo)
+
+                Spring *s = dynamic_cast<Spring*>(p1->collidingItems()[k]);
+
+                s->setSpeed(p->getVy());
+
+                p->set_velY(s->getHeight() + p->getRadio()*2, -1*p->getE()*p->getVy() * 10);
+                p->setJumping(false);
+
+            }
+            if(p->getY() < v_limit - (p->collidingItems().at(k)->y() + p->collidingItems().at(k)->boundingRect().height())) { //colicion en y por abajo (saltando)
+
+                //p->set_velY(v_limit - (p->collidingItems().at(k)->y() + p->collidingItems().at(k)->boundingRect().height() + p->getRadio()), -1*p->getE()*p->getVy());
+
+            }
+
+        }
     }
 }
 bool MainWindow::check_collitions(Proyectile *p) {
@@ -719,6 +755,12 @@ void MainWindow::update_bodies(){
         }
     }
 
+    if(spring != nullptr){
+        scene->removeItem(spring);
+        spring->update();
+        scene->addItem(spring);
+    }
+
     //    if(p1->getHealth() == 0 && p1->getAlive()){
     //        p1->die();
     //        scene->removeItem(p1);
@@ -880,6 +922,8 @@ void MainWindow::setGame(Game *value) {
 
     current_room->load_room();
     current_room_type = current_room->getType();
+
+    spring = current_room->getSpring();
 
     scene->addItem(p1);
     if(p2 != nullptr)

@@ -43,6 +43,7 @@ private: // Variables
     std::string current_room_type;
     Floor *current_floor;
     Player *p1, *p2;
+    Spring *spring;
 
     std::list<Proyectile*> proyectiles;
     std::list<Enemy*> enemies;

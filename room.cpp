@@ -1,9 +1,15 @@
 #include "room.h"
 
+Spring *Room::getSpring() const
+{
+    return spring;
+}
+
 Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, std::string name_) : QObject(parent), scene(scene), v_limit(720), h_limit(1280) {
 
     cleared = false;
     item = nullptr;
+    spring = nullptr;
     boss_door = nullptr;
 
     bg = nullptr;
@@ -12,6 +18,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         walls.push_back(new Wall(this, 1280 - 300, 720 - 300, 300, 300));
         walls.push_back(new Wall(this, 1280-400, 720-200, 100, 200));
         walls.push_back(new Wall(this, 1280-500, 720-100, 100, 100));
+
+        spring = new Spring(nullptr, 100, 0, 100, 40, 0.025f, 0.25f);
 
         left_door = nullptr;
         right_door = new Door(this, this, 1280-160, 720-300-40, 20, 40);
@@ -691,12 +699,17 @@ Room::~Room() {
         delete boss;
     if(bg != nullptr)
         delete bg;
+    if(spring != nullptr)
+        delete spring;
 }
 
 void Room::load_room() {
 
     if(bg != nullptr)
-    scene->addItem(this);
+        scene->addItem(this);
+
+    if(spring != nullptr)
+        scene->addItem(spring);
 
     for(auto k = walls.begin(); k!=walls.end(); k++){
         scene->addItem(*k);
@@ -745,7 +758,10 @@ void Room::load_room() {
 void Room::deload_room() {
 
     if(bg != nullptr)
-    scene->removeItem(this);
+        scene->removeItem(this);
+
+    if(spring != nullptr)
+        scene->removeItem(spring);
 
     for(auto k = walls.begin(); k!=walls.end(); k++){
         scene->removeItem(*k);

@@ -11,6 +11,7 @@
 #include "door.h"
 #include "item.h"
 #include "boss.h"
+#include "spring.h"
 
 class Door;
 
@@ -29,6 +30,7 @@ private: // Variables
     std::list <Enemy *> enemies;
     Item *item;
     Boss *boss;
+    Spring *spring;
 
     std::string type;
 
@@ -69,6 +71,8 @@ public: // Methods
     std::string getType() const;
 
     Boss *getBoss() const;
+
+    Spring *getSpring() const;
 
 private: // Methods
 
