@@ -13,6 +13,8 @@ private: //variables
     int width, height;
 
     QLabel *name_label;
+    QPixmap *sprite;
+    std::string sprite_name;
 
     std::string name;
     float max_health;
@@ -45,7 +47,8 @@ public: //methods
                   float r_player_ = 1,
                   float r_proyectiles_ = 1,
                   float e = 1,
-                  std::string s_mode = "single");
+                  std::string s_mode = "single",
+                  std::string sprite = "");
     ~Item();
 
     QRectF boundingRect() const;
@@ -72,6 +75,7 @@ public: //methods
     float getE_player() const;
     std::string getShooting_mode() const;
     QLabel *getName_label() const;
+    std::string getSprite_name() const;
 };
 
 #endif // ITEM_H

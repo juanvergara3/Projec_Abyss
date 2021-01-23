@@ -176,7 +176,8 @@ void Player::update_stats(Item *i) {
     r *= i->getR_player();
     r_p *= i->getR_proyectiles();
     e *= i->getE_player();
-    if(shooting_mode != i->getShooting_mode())
+
+    if(i->getShooting_mode() != "single")
         shooting_mode = i->getShooting_mode();
 
     update_stat("max_health");

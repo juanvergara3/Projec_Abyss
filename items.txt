@@ -1,99 +1,95 @@
-Reinforced_Crossbow	1	1	1	1	1	1	1	1	1	1	1	single
-P8_Luger	1	1	1	1	1	1	1	1	1	1	1	single
-Holy_Arrows	1	1	1	1	1	1	1	1	1	1	1	single
-Sharpened_Arrows	1	1	1	1	1	1	1	1	1	1	1	single
-Armor_Piercing_Arrows	1	1	1	1	1	1	1	1	1	1	1	single
-The_Nail	1	1	1	1	1	1	1	1	1	1	1	single
-Unholy_Hellbringer	1	1	1	1	1	1	1	1	1	1	1	single
-Holy_Grail	1	1	1	1	1	1	1	1	1	1	1	single
-Crist's_Blood	1	1	1	1	1	1	1	1	1	1	1	single
-Energy_Shield	1	1	1	1	1	1	1	1	1	1	1	single
-Undying_Heart	1	1	1	1	1	1	1	1	1	1	1	single
-Blood_of_the_Martyr	1	1	1	1	1	1	1	1	1	1	1	single
-Holy_Mantle	1	1	1	1	1	1	1	1	1	1	1	single
-Dark_Bible	1	1	1	1	1	1	1	1	1	1	1	single
-Holy_Water	1	1	1	1	1	1	1	1	1	1	1	single
-Light_Armor	1	1	1	1	1	1	1	1	1	1	1	single
-Plate_Armor	1	1	1	1	1	1	1	1	1	1	1	single
-Experimental_Medicine	1	1	1	1	1	1	1	1	1	1	1	single
-Light_Boots	1	1	1	1	1	1	1	1	1	1	1	single
-Lust	1	1	1	1	1	1	1	1	1	1	1	single
-Aerodynamic_Arrows	1	1	1	1	1	1	1	1	1	1	1	single
-Steel_Wire	1	1	1	1	1	1	1	1	1	1	1	single
-DRINK_ME	1	1	1	1	1	1	1	1	1	1	1	single
-Ceremonial_Robes	1	1	1	1	1	1	1	1	1	1	1	single
-The_Pact	1	1	1	1	1	1	1	1	1	1	1	single
-Book_of_Revelations	1	1	1	1	1	1	1	1	1	1	1	single
-Advanced_Arrows	1	1	1	1	1	1	1	1	1	1	1	single
-Gravitoelectric_Coupler	1	1	1	1	1	1	1	1	1	1	1	single
-Demonic_Possession	1	1	1	1	1	1	1	1	1	1	1	single
-Self_Propelled_Arrows	1	1	1	1	1	1	1	1	1	1	1	single
-Gliding_Arrows	1	1	1	1	1	1	1	1	1	1	1	single
-Tiny_Planet	1	1	1	1	1	1	1	1	1	1	1	orbiting
-Diplopia	1	1	1	1	1	1	1	1	1	1	1	double
-Crossbow_3.0	1	1	1	1	1	1	1	1	1	1	1	triple
-The_curse	1	1	1	1	1	1	1	1	1	1	1	single
--Death's_Touch	1	1	1	1	1	1	1	1	1	1	1	single
--Envy	1	1	1	1	1	1	1	1	1	1	1	single
--Raw_Meat	1	1	1	1	1	1	1	1	1	1	1	single
--Rust	1	1	1	1	1	1	1	1	1	1	1	single
--Pride	1	1	1	1	1	1	1	1	1	1	1	single
--Throbbing_Lump	1	1	1	1	1	1	1	1	1	1	1	single
--Leather_Armor	1	1	1	1	1	1	1	1	1	1	1	single
--Sloth	1	1	1	1	1	1	1	1	1	1	1	single
--Hunters_Bow	1	1	1	1	1	1	1	1	1	1	1	single
--Somatotropin	1	1	1	1	1	1	1	1	1	1	1	single
--Gluttony	1	1	1	1	1	1	1	1	1	1	1	single
--Greed		1	1	1	1	1	1	1	1	1	1	1	single
--Toothpick	1	1	1	1	1	1	1	1	1	1	1	single
--Confusion_2.1	1	1	1	1	1	1	1	1	1	1	1	single
--Cursed_Arrows	1	1	1	1	1	1	1	1	1	1	1	single
--Confusion_2.1	1	1	1	1	1	1	1	1	1	1	1	single
-AirJordan_Retro	1	1	1	1	1	1	1	1	1	1	1	single
-Cadiz_Red	1	1	1	1	1	1	1	1	1	1	1	single
-Sharp_Arrows	1	1	1	1	1	1	1	1	1	1	1	single
-Metal_Arch	1	1	1	1	1	1	1	1	1	1	1	single
-Armored_Shield	1	1	1	1	1	1	1	1	1	1	1	single
-Springs 	1	1	1	1	1	1	1	1	1	1	1	single
-AirJordan_Retrox2	1	1	1	1	1	1	1	1	1	1	1	single
-Total_Health_Restitution	1	1	1	1	1	1	1	1	1	1	1	single
-Fire_arrows	1	1	1	1	1	1	1	1	1	1	1	single
-Carbon_arc	1	1	1	1	1	1	1	1	1	1	1	single
-Shield_semicomplete	1	1	1	1	1	1	1	1	1	1	1	single
-Shield_SuperComplete	1	1	1	1	1	1	1	1	1	1	1	single
-TurboShoes 	1	1	1	1	1	1	1	1	1	1	1	single
-MegaCadiz 	1	1	1	1	1	1	1	1	1	1	1	single
-Destructive_arrows	1	1	1	1	1	1	1	1	1	1	1	single
-Zero_Gravity 	1	1	1	1	1	1	1	1	1	1	1	single
-Superlight_armor	1	1	1	1	1	1	1	1	1	1	1	single
-Springs_jump_Speed	1	1	1	1	1	1	1	1	1	1	1	single
-AirJordan_Retro2	1	1	1	1	1	1	1	1	1	1	1	single
-Cadiz_red 	1	1	1	1	1	1	1	1	1	1	1	single
-Very_sharp_arrows 	1	1	1	1	1	1	1	1	1	1	1	single
-Metal_arch	1	1	1	1	1	1	1	1	1	1	1	single
-Armor_shield 	1	1	1	1	1	1	1	1	1	1	1	single
-Springs	1	1	1	1	1	1	1	1	1	1	1	single
-AirJordan_Retro	1	1	1	1	1	1	1	1	1	1	1	single
-Cadiz_red	1	1	1	1	1	1	1	1	1	1	1	single
-Very_sharp_arrows	1	1	1	1	1	1	1	1	1	1	1	single
-Metal_arch 	1	1	1	1	1	1	1	1	1	1	1	single
-Armor_shield	1	1	1	1	1	1	1	1	1	1	1	single
-Springs	1	1	1	1	1	1	1	1	1	1	1	single
-Cadiz_black 	1	1	1	1	1	1	1	1	1	1	1	single
-AirJordan_Balvin	1	1	1	1	1	1	1	1	1	1	1	single
-Unsharpened_arrows	1	1	1	1	1	1	1	1	1	1	1	single
--Spreading_arc	1	1	1	1	1	1	1	1	1	1	1	single
--Iron_armor 	1	1	1	1	1	1	1	1	1	1	1	single
--Forged_iron_armor 	1	1	1	1	1	1	1	1	1	1	1	single
--Poison_cobra 	1	1	1	1	1	1	1	1	1	1	1	single
--Scalable_feet 	1	1	1	1	1	1	1	1	1	1	1	single
--Rubber_arrows 	1	1	1	1	1	1	1	1	1	1	1	single
--Rubber_arch 	1	1	1	1	1	1	1	1	1	1	1	single
--Gravity_Plus	1	1	1	1	1	1	1	1	1	1	1	single
--Gravity_systemx2 	1	1	1	1	1	1	1	1	1	1	1	single
--Spreading_arc	1	1	1	1	1	1	1	1	1	1	1	single
--Iron_armor	1	1	1	1	1	1	1	1	1	1	1	single
--Forged_iron_armor 	1	1	1	1	1	1	1	1	1	1	1	single
--Half_dead	1	1	1	1	1	1	1	1	1	1	1	single
--Immobile	1	1	1	1	1	1	1	1	1	1	1	single
--Little_life	1	1	1	1	1	1	1	1	1	1	1	single
+-???	1	1	1	1	*	1	1	1	1	1	1	single	:/Assets/Sprites/Items/question_mark.png
+-???	1	1	*	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/question_mark.png
+-???	1	1	1	*	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/question_mark.png
+-???	1	1	1	*	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/question_mark.png
+-???	1	1	1	1	1	*	1	1	1	1	1	single	:/Assets/Sprites/Items/question_mark.png
+-???	1	1	1	1	1	*	1	1	1	1	1	single	:/Assets/Sprites/Items/question_mark.png
+-???	1	*	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/question_mark.png
+-???	1	1	1	1	*	1	1	1	1	1	1	single	:/Assets/Sprites/Items/question_mark.png
+-???	*	1	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/question_mark.png
+-Confusion	1	1	1	1	1	1	*(inverted gravity)	1	1	1	1	single	:/Assets/Sprites/Items/confusion.png
+-Confusion_2.1	1	1	1	1	*(inverted controls)	1	1	1	1	1	1	single	:/Assets/Sprites/Items/confusion2.1.png
+-Cursed_Arrows	1	1	1	1	1	1	1	*(inverted gravity)	1	1	1	single	:/Assets/Sprites/Items/cursed_arrows.png
+-Death's_Touch	1	*	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/Death's_Touch.png
+-Envy	1	*	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/envy.png
+-Forged_Armor 	1	1	1	1	*	*	1	1	1	1	1	single	:/Assets/Sprites/Items/forged_armor.png
+-Gluttony	1	1	1	1	1	1	1	1	*	1	1	single	:/Assets/Sprites/Items/glutony.png
+-Greed	1	1	1	1	1	1	1	1	*	1	1	single	:/Assets/Sprites/Items/greed.png
+-Hunters_Bow	1	1	1	*	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/hunter's_bow.png
+-Iron_Armor 	1	1	1	1	1	*	1	1	1	1	1	single	:/Assets/Sprites/Items/iron_armor.png
+-Leather_Armor	*	1	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/Leather_Armor.png
+-MIR	1	1	1	1	1	1	*(higher gravity)	1	1	1	1	single	:/Assets/Sprites/Items/MIR.png
+-Poison_Cobra 	1	*	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/poison_cobra.png
+-Pride	*	1	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/pride.png
+-Raw_Meat	1	*	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/raw_meat.png
+-Rust	1	1	*	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/rust.png
+-Sloth	1	1	1	1	*	1	1	1	1	1	1	single	:/Assets/Sprites/Items/sloth.png
+-Somatotropin	1	1	1	1	1	1	1	1	*	1	1	single	:/Assets/Sprites/Items/Somatotropin.png
+-Throbbing_Lump	*	1	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/Throbbing_Lump.png
+-Toothpick	1	1	1	1	1	1	1	1	1	*	1	single	:/Assets/Sprites/Items/toothpick.png
+???	1	1	1	*	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/question_mark.png
+???	1	1	1	1	*	1	1	1	1	1	1	single	:/Assets/Sprites/Items/question_mark.png
+???	1	1	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/question_mark.png
+???	1	1	1	1	*	1	1	1	1	1	1	single	:/Assets/Sprites/Items/question_mark.png
+???	1	*	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/question_mark.png
+???	1	1	*	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/question_mark.png
+???	1	1	1	1	*	1	1	1	1	1	1	single	:/Assets/Sprites/Items/question_mark.png
+???	1	*	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/question_mark.png
+???	1	1	*	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/question_mark.png
+???	1	1	1	1	*	1	1	1	1	1	1	single	:/Assets/Sprites/Items/question_mark.png
+???	*	1	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/question_mark.png
+???	1	*	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/question_mark.png
+???	1	1	1	1	*	1	1	1	1	1	1	single	:/Assets/Sprites/Items/question_mark.png
+???	1	1	*	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/question_mark.png
+???	1	1	1	*	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/question_mark.png
+Armor_Piercing_Tips	1	1	*	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/Armor_Piercing_Tips.png
+Armored_Shield	*	1	1	1	1	*	1	1	1	1	1	single	:/Assets/Sprites/Items/armored_shield.png
+Blood_of_the_Martyr	*	1	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/Blood_of_the_Martyr.png
+Book_of_Revelations	1	1	1	1	1	1	1	1	1	*	1	single	:/Assets/Sprites/Items/book_of_revelations.png
+Carbon	1	1	1	*	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/carbon.png
+Ceremonial_Robes	1	1	1	1	1	1	1	1	*	1	1	single	:/Assets/Sprites/Items/Ceremonial_Robes.png
+Christ's_Blood	*	1	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/christ's_blood.png
+Cool_Shoes 	1	1	1	1	*	1	1	1	1	1	1	single	:/Assets/Sprites/Items/cool_shoes.png
+Crossbow_3.0	1	1	1	1	1	1	1	1	1	1	1	triple	:/Assets/Sprites/Items/crossbow3.0.png
+Dark_Arrows	1	1	1	1	1	1	1	1	1	*	1	single	:/Assets/Sprites/Items/dark_arrows.png
+Dark_Bible	*	1	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/dark_bible.png
+Demonic_Possession	1	1	1	1	1	1	*	1	1	1	1	single	:/Assets/Sprites/Items/demonic_possession.png
+Diplopia	1	1	1	1	1	1	1	1	1	1	1	double	:/Assets/Sprites/Items/diplopia.png
+DRINK_ME	1	1	1	1	1	1	1	1	*	1	1	single	:/Assets/Sprites/Items/drink_me.png
+Energy_Shield	*	1	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/Energy_Shield.png
+Experimental_Medicine	1	1	1	1	*	1	1	1	1	1	1	single	:/Assets/Sprites/Items/experimental_medicine.png
+Fire_arrows	1	1	*	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/fire_arrows.png
+glasses	-*	1	*	1	1	1	1	1	1	1	1	double	:/Assets/Sprites/Items/glasses.png
+Gliding_Arrows	1	1	1	1	1	1	1	*	1	1	1	single	:/Assets/Sprites/Items/gliding_arrows.png
+Gravitoelectric_Coupler	1	1	*	1	1	1	1	inverted gravity	1	large hitbox	1	triple	:/Assets/Sprites/Items/Gravitoelectric_Coupler.png
+Healing_potion	1	*	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/healing_potion.png
+Holy_Arrows	1	1	*	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/holy_arrows.png
+Holy_Grail	*	1	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/holy_grail.png
+Holy_Mantle	*	1	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/holy_mantle.png
+Holy_Water	1	*	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/holy_water.png
+Hylian_Shield 	*	1	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/hylian_shield.png
+ISS	1	1	1	1	1	1	*(No gravity)	1	1	1	1	single	:/Assets/Sprites/Items/ISS.png
+Lead	1	1	*	*	*-	1	1	1	1	large hitbox	1	orbiting	:/Assets/Sprites/Items/lead.png
+Light_Armor	1	1	1	1	*	1	1	1	1	1	1	single	:/Assets/Sprites/Items/light_armor.png
+Light_Boots	1	1	1	1	1	*	1	1	1	1	1	single	:/Assets/Sprites/Items/light_boots.png
+Lust	1	1	1	1	1	*	1	1	1	1	1	single	:/Assets/Sprites/Items/lust.png
+Metal_Bow	1	1	1	*	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/metal_bow.png
+Meteorite	1	1	1	1	1	1	*	1	1	1	1	single	:/Assets/Sprites/Items/Meteorite.png
+P8_Luger	1	1	*	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/p8_luger.png
+Plate_Armor	1	1	1	1	*	1	1	1	1	1	1	single	:/Assets/Sprites/Items/plate_armor.png
+Railgun	1	1	*	*	1	1	1	*(no gravity)	1	-*	1	single	:/Assets/Sprites/Items/railgun.png
+Reinforced_Crossbow	1	1	*	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/reinforced_crossbow.png
+Rubber_Duck	1	1	1	1	1	*	1	1	1	1	*	single	:/Assets/Sprites/Items/Rubber_Duck.png
+Self_Propelled_Arrows	1	1	1	1	1	1	1	*(no gravity)	1	1	1	single	:/Assets/Sprites/Items/self_proppeled_arrows.png
+Sharpened_Arrows	1	1	*	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/sharpened_arrows.png
+Shield_SemiComplete	*	1	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/shield_semicomplete.png
+Shield_SuperComplete	*	1	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/shield_supercomplete.png
+Springs 	1	1	1	1	*	1	1	1	1	1	*	single	:/Assets/Sprites/Items/springs.png
+Steel_Wire	1	1	1	*	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/steel_wire.png
+Superlight_armor	1	1	1	1	1	*	1	1	1	1	1	single	:/Assets/Sprites/Items/superlight_armor.png
+The_curse	1	1	1	1	1	1	1	1	1	1	*	single	:/Assets/Sprites/Items/the_curse.png
+The_Nail	1	1	*	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/the_nail.png
+The_Pact	1	1	1	1	1	1	1	1	*	1	1	single	:/Assets/Sprites/Items/the_pact.png
+Tiny_Planet	1	1	1	1	1	1	1	1	1	1	1	orbiting	:/Assets/Sprites/Items/Tiny_Planet.png
+Undying_Heart	*	1	1	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/undying_heart.png
+Unholy_Hellbringer	1	1	*	1	1	1	1	1	1	1	1	single	:/Assets/Sprites/Items/Unholy_Hellbringer.png

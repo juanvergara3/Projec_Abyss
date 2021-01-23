@@ -64,8 +64,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         bg = new QPixmap(":/Assets/Sprites/f1-1.png");
         setPos(0,0);
 
-        itemX = 840;
-        itemY = 720 - 550 - 16;
+        itemX = 840 - 24;
+        itemY = 720 - 550 - 32;
 
         boss = nullptr;
 
@@ -94,8 +94,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         bg = new QPixmap(":/Assets/Sprites/f1-2.png");
         setPos(0,0);
 
-        itemX = 300 - 16;
-        itemY = 720 - 550 - 16;
+        itemX = 300 - 32;
+        itemY = 720 - 550 - 32;
 
         boss = nullptr;
 
@@ -122,8 +122,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         bg = new QPixmap(":/Assets/Sprites/f1-item.png");
         setPos(0,0);
 
-        itemX = 1280/2 - 8;
-        itemY = 720 - 500 - 16;
+        itemX = 1280/2 - 16;
+        itemY = 720 - 500 - 32;
 
         boss = nullptr;
 
@@ -153,8 +153,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         bg = new QPixmap(":/Assets/Sprites/f1-3.png");
         setPos(0,0);
 
-        itemX = 1280/2 - 8;
-        itemY = 720 - 120 - 16;
+        itemX = 1280/2 - 16;
+        itemY = 720 - 120 - 32;
 
         boss = nullptr;
 
@@ -191,8 +191,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         bg = new QPixmap(":/Assets/Sprites/f1-4.png");
         setPos(0,0);
 
-        itemX = 125 - 8;
-        itemY = 720 - 50 - 16;
+        itemX = 125 - 16;
+        itemY = 720 - 50 - 32;
 
         boss = nullptr;
 
@@ -231,8 +231,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         boss = new Boss(this, scene, "lamprey", p, 1280-150, 720/2, 0, 0, 50, 300, 200, 0, 1e-5, 0.1, 0);
 
-        itemX =  475 - 8;
-        itemY = 720 - 550 -16;
+        itemX =  475 - 16;
+        itemY = 720 - 550 -32;
 
         type = "boss";
         name = "boss";
@@ -291,8 +291,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         bg = new QPixmap(":/Assets/Sprites/f2-1.png");
         setPos(0,0);
 
-        itemX = 1280/2 - 8;
-        itemY = 720 - 16;
+        itemX = 1280/2 - 16;
+        itemY = 720 - 32;
 
         boss = nullptr;
 
@@ -329,8 +329,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         bg = new QPixmap(":/Assets/Sprites/f2-2.png");
         setPos(0,0);
 
-        itemX = 1280/2+25-8;
-        itemY = 720 -100-16;
+        itemX = 1280/2+25-16;
+        itemY = 720 -100-32;
 
         boss = nullptr;
 
@@ -353,8 +353,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         bg = new QPixmap(":/Assets/Sprites/f2-item.png");
         setPos(0,0);
 
-        itemX = 1280 - 483;
-        itemY = 720 - 420 - 16;
+        itemX = 1280 - 483-24;
+        itemY = 720 - 420 - 32;
 
         boss = nullptr;
 
@@ -387,8 +387,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         bg = new QPixmap(":/Assets/Sprites/f2-3.png");
         setPos(0,0);
 
-        itemX = 1280/2 - 8;
-        itemY = 720 - 16;
+        itemX = 1280/2 - 16;
+        itemY = 720 - 32;
 
         boss = nullptr;
 
@@ -428,8 +428,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         bg = new QPixmap(":/Assets/Sprites/f2-4.png");
         setPos(0,0);
 
-        itemX = 1280/2 - 8;
-        itemY = 720 - 16;
+        itemX = 1280/2 - 16;
+        itemY = 720 - 32;
 
         boss = nullptr;
 
@@ -477,8 +477,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         bg = new QPixmap(":/Assets/Sprites/f2-boss.png");
         setPos(0,0);
 
-        itemX =  1280/2 - 8;
-        itemY = 720 - 150 -16;
+        itemX =  1280/2 - 16;
+        itemY = 720 - 150 -32;
 
         type = "boss";
         name = "boss";
@@ -500,8 +500,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         bg = new QPixmap("");
         setPos(0,0);
 
-        itemX = 150 - 8;
-        itemY = 720 - 600 - 16;
+        itemX = 150 - 16;
+        itemY = 720 - 600 - 32;
 
         boss = nullptr;
 
@@ -529,8 +529,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         bg = new QPixmap("");
         setPos(0,0);
 
-        itemX = 1280/2 - 8;
-        itemY = 720 - 120 - 16;
+        itemX = 1280/2 - 16;
+        itemY = 720 - 120 - 32;
 
         boss = nullptr;
 
@@ -590,8 +590,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         bg = new QPixmap("");
         setPos(0,0);
 
-        itemX = 450 - 8;
-        itemY = 720 - 450 - 16;
+        itemX = 450 - 16;
+        itemY = 720 - 450 - 32;
 
         boss = nullptr;
 
@@ -624,8 +624,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         bg = new QPixmap("");
         setPos(0,0);
 
-        itemX = 450 - 8;
-        itemY = 720 - 350 - 16;
+        itemX = 450 - 16;
+        itemY = 720 - 350 - 32;
 
         boss = nullptr;
 
@@ -656,8 +656,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         bg = new QPixmap("");
         setPos(0,0);
 
-        itemX = 1280-700 - 8;
-        itemY = 720 - 300 - 16;
+        itemX = 1280-700 - 16;
+        itemY = 720 - 300 - 32;
 
         boss = nullptr;
 
@@ -875,7 +875,7 @@ void Room::remove_item() {
 }
 
 void Room::spawn_heart() {
-    item = new Item(nullptr, "Heart", 1, 0.2);
+    item = new Item(nullptr, "Heart", 1, 0.2, 1, 1, 1, 1, 1, 1 ,1, 1, 1, "single", ":/Assets/Sprites/Items/heart.png");
     item->setPos(itemX, itemY);
     scene->addItem(item);
     item->updateLabel(itemX, itemY);

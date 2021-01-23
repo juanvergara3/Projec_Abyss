@@ -1,6 +1,11 @@
 #include "item.h"
 
-Item::Item(QWidget *parent, std::string name, float m_health, float health_, float damage_, float s_speed, float m_speed, float j_speed, float g_player_, float g_proyectiles_, float r_player_, float r_proyectile_, float e, std::string s_mode)
+std::string Item::getSprite_name() const
+{
+    return sprite_name;
+}
+
+Item::Item(QWidget *parent, std::string name, float m_health, float health_, float damage_, float s_speed, float m_speed, float j_speed, float g_player_, float g_proyectiles_, float r_player_, float r_proyectile_, float e, std::string s_mode, std::string sprite)
 {
     max_health = m_health;
     health = health_;
@@ -15,6 +20,9 @@ Item::Item(QWidget *parent, std::string name, float m_health, float health_, flo
     e_player = e;
     Shooting_mode = s_mode;
 
+    this->sprite = new QPixmap(sprite.c_str());
+    this->sprite_name = sprite;
+
     this->name_label = new QLabel;
     //if(parent != nullptr)
         //this->name->setParent(parent);
@@ -25,21 +33,22 @@ Item::Item(QWidget *parent, std::string name, float m_health, float health_, flo
     this->name_label ->setStyleSheet("QLabel { background-color : white; color : black; }");
     this->name_label ->setVisible(false);
 
-    width = 16;
-    height = 16;
+    width = 32;
+    height = 32;
 }
 
 Item::~Item(){
-    delete name_label ;
+    delete name_label;
+    delete sprite;
 }
 
 QRectF Item::boundingRect() const{
     return QRectF(0, 0, width, height);
 }
 void Item::paint(QPainter *painter, const QStyleOptionGraphicsItem *options, QWidget *widget) {
-    painter->setBrush(Qt::red);
-    //painter->setPen(Qt::NoPen);
-    painter->drawRect(boundingRect());
+    //painter->setBrush(Qt::red);
+    painter->drawPixmap(0, 0, sprite->scaledToWidth(width), 0, 0, 128, 128);
+    //painter->drawRect(boundingRect());
 }
 
 int Item::getPosx() const {

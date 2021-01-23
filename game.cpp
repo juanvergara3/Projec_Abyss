@@ -52,7 +52,7 @@ Game::Game(std::string file_name, QGraphicsScene * scene, std::list<Proyectile *
 
     float x, y;
     int statPos;
-    std::string name, temp;
+    std::string name, temp, shooting_mode;
     float max_health, health, damage, shot_speed, movement_speed, jump_Speed, g, g_p, r, r_p, e;
 
     if(file.is_open()){
@@ -423,7 +423,10 @@ Game::Game(std::string file_name, QGraphicsScene * scene, std::list<Proyectile *
                 e = std::stof(temp);
             }
             else if(counter == 13){
-                item_bank.push_back(new Item(nullptr, name, max_health, health, damage, shot_speed, movement_speed, jump_Speed, g, g_p, r, r_p, e, temp));
+                shooting_mode = temp;
+            }
+            else if(counter == 14){
+                item_bank.push_back(new Item(nullptr, name, max_health, health, damage, shot_speed, movement_speed, jump_Speed, g, g_p, r, r_p, e, shooting_mode, temp));
                 counter = 0;
             }
             counter++;
@@ -589,7 +592,7 @@ void Game::save_game(std::string file_name) {
         file<<floor3->r4->isClear()<<"\r\n";
 
         //items
-        std::string name;
+        std::string name, sprite;
 
         for(auto k = item_bank.begin(); k != item_bank.end(); k++){
 
@@ -608,7 +611,8 @@ void Game::save_game(std::string file_name) {
             file<<(*k)->getR_player()<<'\t';
             file<<(*k)->getR_proyectiles()<<'\t';
             file<<(*k)->getE_player()<<'\t';
-            file<<(*k)->getShooting_mode()<<"\r\n";
+            file<<(*k)->getShooting_mode()<<'\t';
+            file<<(*k)->getSprite_name()<<"\r\n";
         }
         file.close();
     }
@@ -697,7 +701,10 @@ void Game::load_items(std::string file_name) {
                e_player = std::stof(temp);
            }
             else if(counter == 13){
-                item_bank.push_back(new Item(nullptr, name, max_health, health, damage, shot_speed, movement_speed, jump_Speed, g_player, g_proyectiles, r_player, r_proyectiles, e_player, temp));
+               Shooting_mode = temp;
+           }
+            else if(counter == 14){
+                item_bank.push_back(new Item(nullptr, name, max_health, health, damage, shot_speed, movement_speed, jump_Speed, g_player, g_proyectiles, r_player, r_proyectiles, e_player, Shooting_mode, temp));
                 counter = 0;
            }
             counter++;
