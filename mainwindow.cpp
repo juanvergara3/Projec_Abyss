@@ -3,6 +3,16 @@
 #include "pausemenu.h"
 #include "mainmenu.h"
 
+Room *MainWindow::getCurrent_room() const
+{
+    return current_room;
+}
+
+Floor *MainWindow::getCurrent_floor() const
+{
+    return current_floor;
+}
+
 MainWindow::MainWindow(QWidget *parent, PauseMenu *p) : QMainWindow(parent), ui(new Ui::MainWindow), pause_menu(p), main_menu(nullptr), h_limit(1280), v_limit(720) {
     ui->setupUi(this);
 
@@ -41,7 +51,6 @@ MainWindow::~MainWindow() {
     boss = nullptr;
 
     enemies.clear();
-    item_bank.clear();
     proyectiles.clear();
 
     pause_menu = nullptr;
@@ -140,6 +149,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
                         current_floor->stop_boss_music();
                         current_floor->stop_floor_music();
 
+                        current_floor->setClear_state(true);
                         current_room->deload_room();
                         current_room = d->getNext()->safe;
                         current_floor = d->getNext();
@@ -255,6 +265,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
                             current_floor->stop_boss_music();
                             current_floor->stop_floor_music();
 
+                            current_floor->setClear_state(true);
                             current_room->deload_room();
                             current_room = d->getNext()->safe;
                             current_floor = d->getNext();
@@ -385,7 +396,6 @@ void MainWindow::reset_game() {
     //scene->clear();
 
     enemies.clear();
-    item_bank.clear();
 
     p1 = nullptr;
     p2 = nullptr;
@@ -420,13 +430,11 @@ void MainWindow::close_game() {
         //scene->clear();
 
         enemies.clear();
-        item_bank.clear();
 
         p1 = nullptr;
         p2 = nullptr;
 
         current_floor = nullptr;
-
         current_room = nullptr;
 
         boss = nullptr;
@@ -500,7 +508,9 @@ void MainWindow::check_collitions(Player *p) {
 
             }
         }
-        if(typeid( *(p->collidingItems()[k]) )== typeid(Spring)){
+
+        /*------SPRINGS------*/
+        if(typeid( *(p->collidingItems()[k]) ) == typeid(Spring)){
 
             if(p->getX() < p->collidingItems().at(k)->x()) { //colicion en x por la izquierda
 
@@ -515,7 +525,7 @@ void MainWindow::check_collitions(Player *p) {
             }
             if(p->getY() > v_limit - p->collidingItems().at(k)->y()) { //colicion en y por arriba (callendo)
 
-                Spring *s = dynamic_cast<Spring*>(p1->collidingItems()[k]);
+                Spring *s = dynamic_cast<Spring*>(p->collidingItems()[k]);
 
                 s->setSpeed(p->getVy());
 
@@ -671,76 +681,6 @@ void MainWindow::check_collitions(Boss *b) {
     }
 }
 
-Item * MainWindow::get_random_item() {
-
-    Item * i = item_bank.back();
-    if(i != nullptr) {
-        item_bank.pop_back();
-        return i;
-    }
-    return nullptr;
-}
-void MainWindow::load_items(std::string file_name) {
-    std::fstream file (file_name, std:: fstream::in | std::fstream::binary);
-
-    if(file.is_open()){
-
-        std::string temp, name;
-        float max_health, health, damage, shot_speed, movement_speed, jump_Speed, g_player, g_proyectiles, r_player, r_proyectiles, e_player;
-        std::string Shooting_mode;
-        short counter = 1;
-
-        while (file>>temp){
-
-            if(counter == 1){
-                std::replace( temp.begin(), temp.end(), '_', ' ');
-                name = temp;
-            }
-            else if(counter == 2){
-                max_health = std::stof(temp);
-            }
-            else if(counter == 3){
-                health = std::stof(temp);
-            }
-             else if(counter == 4){
-                damage = std::stof(temp);
-            }
-            else if(counter == 5){
-               shot_speed = std::stof(temp);
-           }
-            else if(counter == 6){
-               movement_speed = std::stof(temp);
-           }
-            else if(counter == 7){
-               jump_Speed = std::stof(temp);
-           }
-            else if(counter == 8){
-               g_player = std::stof(temp);
-           }
-            else if(counter == 9){
-               g_proyectiles = std::stof(temp);
-           }
-            else if(counter == 10){
-               r_player = std::stof(temp);
-           }
-            else if(counter == 11){
-               r_proyectiles  = std::stof(temp);
-           }
-            else if(counter == 12){
-               e_player = std::stof(temp);
-           }
-            else if(counter == 13){
-                item_bank.push_back(new Item(nullptr, name, max_health, health, damage, shot_speed, movement_speed, jump_Speed, g_player, g_proyectiles, r_player, r_proyectiles, e_player, temp));
-                counter = 0;
-           }
-            counter++;
-        }
-
-        file.close();
-
-    }
-}
-
 void MainWindow::update_bodies(){
 
     if(p1->getAlive()){
@@ -804,7 +744,7 @@ void MainWindow::update_bodies(){
                 if(p2 != nullptr)
                     scene->removeItem(p2);
 
-                current_room->spawn_item(get_random_item());
+                current_room->spawn_item(game->get_random_item());
 
                 scene->addItem(p1);
                 if(p2 != nullptr)
@@ -866,7 +806,7 @@ void MainWindow::update_bodies(){
 
                 if(r <= 22 && r >= 0){
 
-                    current_room->spawn_item(get_random_item());
+                    current_room->spawn_item(game->get_random_item());
                 }
                 else if (r > 22){
 
@@ -883,7 +823,7 @@ void MainWindow::update_bodies(){
 
     if(current_room_type == "treasure" && !current_room->isClear()){
         current_room->clear_room();
-        current_room->spawn_item(get_random_item());
+        current_room->spawn_item(game->get_random_item());
 
         scene->removeItem(p1);
         if(p2 != nullptr)
@@ -915,31 +855,35 @@ void MainWindow::setGame(Game *value) {
     p1 = game->getP1();
     p2 = game->getP2();
 
-    current_floor = game->getFloor1();
-    current_room = current_floor->safe;
-
-    current_floor->start_floor_music();
+    current_floor = game->getCurrent_floor();
+    current_room = game->getCurrent_room();
 
     current_room->load_room();
     current_room_type = current_room->getType();
 
+    if(current_room_type == "normal" || current_room_type == "safe" || current_room_type == "treasure"){
+            current_floor->start_floor_music();
+            if(current_room_type == "normal")
+                enemies = current_room->getEnemies();
+    }
+    else if(current_room_type == "boss" || current_room_type == "final_boss"){
+        boss = current_room->getBoss();
+        boss->init();
+        current_floor->start_boss_music();
+    }
+
     spring = current_room->getSpring();
 
-    scene->addItem(p1);
+    if(p1->getHealth() > 0)
+        scene->addItem(p1);
     if(p2 != nullptr)
-        scene->addItem(p2);
-
-    srand(game->getSeed());
-
-    load_items("items.txt");
-
-    std::vector<Item*> *temp = new std::vector<Item*>(item_bank.begin(), item_bank.end());
-    std::random_shuffle(temp->begin(), temp->end());
-    std::copy(temp->begin(), temp->end(), item_bank.begin());
-    temp->clear();
-    delete temp;
+        if(p2->getHealth() > 0)
+            scene->addItem(p2);
 
     timer->start(3); // not sure about this one right here
+}
+Game *MainWindow::getGame() const {
+    return game;
 }
 
 std::list<Proyectile *> *MainWindow::getProyectiles() {

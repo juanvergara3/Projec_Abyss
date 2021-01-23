@@ -6,9 +6,6 @@
 
 class Floor {
 private: // variables
-    Room *treasure;
-    Room *r1,*r2, *r3, *r4;
-
     QGraphicsScene *scene;
     std::list<Proyectile *> *proyectiles;
 
@@ -18,8 +15,13 @@ private: // variables
     QMediaPlaylist *floor_playlist;
     QMediaPlaylist *boss_playlist;
 
+    bool clear_state;
+
+    int  const num;
+
 public: // variables
-    Room *safe,*boss;
+    Room *safe,*boss, *treasure;
+    Room *r1,*r2, *r3, *r4;
 
 private: // methods
     void load_floor(short num);
@@ -35,6 +37,10 @@ public: // methods
     void stop_boss_music();
 
     bool is_playing(std::string type);
+
+    bool getClear_state() const;
+    void setClear_state(bool value);
+    int getNum() const;
 };
 
 #endif // FLOOR_H

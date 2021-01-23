@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QKeyEvent>
+#include <QFileDialog>
 
 namespace Ui { class PauseMenu; }
 

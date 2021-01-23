@@ -2,6 +2,7 @@
 #define MAINMENU_H
 
 #include <QMainWindow>
+#include <QFileDialog>
 #include "messagewindow.h"
 
 namespace Ui { class MainMenu; }

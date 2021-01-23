@@ -12,8 +12,9 @@ private: //variables
     int posx, posy;
     int width, height;
 
-    QLabel *name;
+    QLabel *name_label;
 
+    std::string name;
     float max_health;
     float health;
     float damage;
@@ -32,7 +33,7 @@ public: //variables
 private: //methods
 
 public: //methods
-    explicit Item(QObject *parent = nullptr, std::string name = "",
+    explicit Item(QWidget *parent = nullptr, std::string name = "",
                   float m_health = 1,
                   float health_ = 1,
                   float damage_ = 1,
@@ -57,7 +58,7 @@ public: //methods
 
     void updateLabel(int x, int y);
 
-    QLabel *getName() const;
+    std::string getName() const;
     float getMax_health() const;
     float getHealth() const;
     float getDamage() const;
@@ -70,6 +71,7 @@ public: //methods
     float getR_proyectiles() const;
     float getE_player() const;
     std::string getShooting_mode() const;
+    QLabel *getName_label() const;
 };
 
 #endif // ITEM_H

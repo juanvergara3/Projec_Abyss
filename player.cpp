@@ -1,26 +1,12 @@
 #include "player.h"
 
-std::string Player::getName() const
+int Player::getStatPos() const
 {
-    return name;
-}
-
-float Player::getHealth() const
-{
-    return health;
-}
-
-bool Player::getAlive() const
-{
-    return alive;
-}
-
-void Player::die() {
-    alive = false;
+    return statPos;
 }
 
 Player::Player(QObject *parent, QGraphicsScene *s, std::string name, std::list<Proyectile *> *p, int statPos, float x_, float y_, float vx_, float vy_, float mass_, int radio_, float g_, float K_, float e_, float V_) :
-    Entity(parent, x_, y_, vx_, vy_, mass_, radio_, g_, K_, e_, V_)
+    Entity(parent, x_, y_, vx_, vy_, mass_, radio_, g_, K_, e_, V_), statPos(statPos)
 {
     health = 100;
     max_health = 100;
@@ -44,6 +30,38 @@ Player::Player(QObject *parent, QGraphicsScene *s, std::string name, std::list<P
 
     proyectiles = p;
 
+    scene = s;
+
+    init_stats(statPos);
+}
+
+Player::Player(QObject *parent, QGraphicsScene *s, std::list<Proyectile *> *p, int x, int y, int statPos, std::string name, float max_health, float health, float damage, float shot_speed, float movement_speed, float jump_Speed, float g, float g_p, float r, float r_p, float e, std::string shooting_mode)
+    :Entity(parent, x, y, 0, 0, 20, r, g, 1e-5, e, 0), statPos(statPos)
+{
+    this->health = health;
+    this->max_health = max_health;
+    this->damage = damage;
+    this->shot_speed = shot_speed;
+    this->movement_speed = movement_speed;
+    this->jump_Speed = jump_Speed;
+    this->g = g;
+    this->g_p = g_p;
+    this->r = r;
+    this->r_p = r_p;
+    this->e = e;
+    this->shooting_mode = shooting_mode;
+
+    sight = 1;
+    direction = 0;
+
+    this->name = name;
+
+    if(health <= 0)
+        alive = false;
+    else
+        alive = true;
+
+    proyectiles = p;
     scene = s;
 
     init_stats(statPos);
@@ -178,7 +196,7 @@ void Player::init_stats(int x_reference) {
     health_bar = new QProgressBar;
     health_bar->setRange(0, max_health);
     health_bar->setOrientation(Qt::Vertical);
-    health_bar->setValue(max_health);
+    health_bar->setValue(health);
     health_bar->setTextVisible(false);
     health_bar->setGeometry(x_reference, -120, 20, 120);
 
@@ -268,4 +286,52 @@ void Player::setJumping(bool value) {
 }
 void Player::setSight(short value) {
     sight = value;
+}
+std::string Player::getName() const
+{
+    return name;
+}
+
+float Player::getHealth() const
+{
+    return health;
+}
+
+bool Player::getAlive() const
+{
+    return alive;
+}
+
+void Player::die() {
+    alive = false;
+}
+
+float Player::getMax_health() const
+{
+    return max_health;
+}
+
+float Player::getDamage() const
+{
+    return damage;
+}
+
+float Player::getShot_speed() const
+{
+    return shot_speed;
+}
+
+float Player::getG_p() const
+{
+    return g_p;
+}
+
+float Player::getR_p() const
+{
+    return r_p;
+}
+
+std::string Player::getShooting_mode() const
+{
+    return shooting_mode;
 }

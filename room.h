@@ -44,6 +44,8 @@ private: // Variables
 
     const int v_limit, h_limit;
 
+    std::string name;
+
 public: // Methods
     explicit Room(QObject *parent = nullptr, QGraphicsScene* scene = nullptr , std::list<Proyectile *> *p = nullptr, std::string name_ = "");
     ~Room();
@@ -73,6 +75,8 @@ public: // Methods
     Boss *getBoss() const;
 
     Spring *getSpring() const;
+
+    std::string getName() const;
 
 private: // Methods
 

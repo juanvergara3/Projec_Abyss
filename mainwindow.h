@@ -47,7 +47,6 @@ private: // Variables
 
     std::list<Proyectile*> proyectiles;
     std::list<Enemy*> enemies;
-    std::list<Item*> item_bank;
 
      int h_limit, v_limit;
 
@@ -70,7 +69,8 @@ public: // Methods
     void setPause_menu(PauseMenu *value);
     void setMain_menu(MainMenu *value);
 
-    void setGame(Game *value);
+    void setGame(Game *value);    
+    Game *getGame() const;
 
     std::list<Proyectile *> *getProyectiles();
     QGraphicsScene *getScene() const;
@@ -79,15 +79,17 @@ public: // Methods
 
     void setVictory_window(MessageWindow *value);
 
+    std::list<Item *> *getItem_bank();
+
+    Room *getCurrent_room() const;
+
+    Floor *getCurrent_floor() const;
+
 private: // Methods
     void check_collitions(Player *p);
     bool check_collitions(Proyectile *p);
     void check_collitions(Enemy *e);
     void check_collitions(Boss *b);
-
-    Item *get_random_item();
-
-    void load_items(std::string file_name);
 
 public slots:
     void update_bodies();

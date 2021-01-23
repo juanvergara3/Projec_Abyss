@@ -1,6 +1,6 @@
 #include "item.h"
 
-Item::Item(QObject *parent, std::string name, float m_health, float health_, float damage_, float s_speed, float m_speed, float j_speed, float g_player_, float g_proyectiles_, float r_player_, float r_proyectile_, float e, std::string s_mode)
+Item::Item(QWidget *parent, std::string name, float m_health, float health_, float damage_, float s_speed, float m_speed, float j_speed, float g_player_, float g_proyectiles_, float r_player_, float r_proyectile_, float e, std::string s_mode)
 {
     max_health = m_health;
     health = health_;
@@ -15,19 +15,22 @@ Item::Item(QObject *parent, std::string name, float m_health, float health_, flo
     e_player = e;
     Shooting_mode = s_mode;
 
-    this->name = new QLabel;
-    this->name->setText(name.c_str());
-    this->name->setFont(QFont("System"));
-    this->name->setGeometry(0, 0, this->name->text().length()*8, 20);
-    this->name->setStyleSheet("QLabel { background-color : white; color : black; }");
-    this->name->setVisible(false);
+    this->name_label = new QLabel;
+    //if(parent != nullptr)
+        //this->name->setParent(parent);
+    this->name = name;
+    this->name_label ->setText(name.c_str());
+    this->name_label ->setFont(QFont("System"));
+    this->name_label ->setGeometry(0, 0, this->name_label ->text().length()*8, 20);
+    this->name_label ->setStyleSheet("QLabel { background-color : white; color : black; }");
+    this->name_label ->setVisible(false);
 
     width = 16;
     height = 16;
 }
 
 Item::~Item(){
-    delete name;
+    delete name_label ;
 }
 
 QRectF Item::boundingRect() const{
@@ -53,11 +56,15 @@ int Item::getHeight() const {
 }
 
 void Item::updateLabel(int x, int y) {
-    name->setGeometry(x, y - height - 4, name->width(), name->height());
-    name->update();
+    name_label ->setGeometry(x, y - height - 4, name_label ->width(), name_label ->height());
+    name_label ->update();
 }
 
-QLabel *Item::getName() const
+QLabel *Item::getName_label() const
+{
+    return name_label;
+}
+std::string Item::getName() const
 {
     return name;
 }

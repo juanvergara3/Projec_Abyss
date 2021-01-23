@@ -32,6 +32,8 @@ private: // Variables
     float e;
     std::string shooting_mode;
 
+    const int statPos;
+
     QProgressBar * health_bar;
     QLabel *name_label;
     QLabel *max_health_label;
@@ -56,7 +58,16 @@ private: // Variables
     QGraphicsScene *scene;
 
 public: // Methods
-    explicit Player(QObject *parent = nullptr, QGraphicsScene *s = nullptr, std::string name = "", std::list<Proyectile *> *p = nullptr, int statPos = 0, float x_ = 0, float y_ = 0, float vx_ = 0, float vy_ = 0, float mass_ = 0, int radio_ = 0, float g_ = 0, float K_ = 0, float e_ = 0, float V_ = 0);
+    Player(QObject *parent = nullptr, QGraphicsScene *s = nullptr, std::string name = "", std::list<Proyectile *> *p = nullptr,
+                    int statPos = 0, float x_ = 0, float y_ = 0, float vx_ = 0, float vy_ = 0,
+                    float mass_ = 0, int radio_ = 0, float g_ = 0, float K_ = 0, float e_ = 0, float V_ = 0);
+
+    Player (QObject *parent = nullptr, QGraphicsScene *s = nullptr, std::list<Proyectile *> *p = nullptr, int x = 0, int y = 0,
+            int statPos = 0, std::string name = "", float max_health = 100, float health = 100, float damage = 20,
+            float shot_speed = 30,  float movement_speed = 1.5, float jump_Speed = 40,
+            float g = 4, float g_p = 1, float r = 8, float r_p = 4, float e = 0.1,
+            std::string shooting_mode = "single");
+
     ~Player();
 
     void shoot();
@@ -86,6 +97,20 @@ public: // Methods
     bool getAlive() const;
 
     void die();
+
+    float getMax_health() const;
+
+    float getDamage() const;
+
+    float getShot_speed() const;
+
+    float getG_p() const;
+
+    float getR_p() const;
+
+    std::string getShooting_mode() const;
+
+    int getStatPos() const;
 
 private: // Methods
     void init_stats(int x_reference);

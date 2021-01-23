@@ -1,9 +1,11 @@
 #include "floor.h"
 
 Floor::Floor(QGraphicsScene *scene, std::list<Proyectile *> *p, short num)
-    :scene(scene), proyectiles(p)
+    :scene(scene), proyectiles(p), num(num)
 {
     load_floor(num);
+
+    clear_state = false;
 }
 Floor::~Floor() {
     delete safe;
@@ -47,8 +49,23 @@ bool Floor::is_playing(std::string type) {
 }
 
 
-void Floor::load_floor(short num) {
+bool Floor::getClear_state() const
+{
+    return clear_state;
+}
 
+void Floor::setClear_state(bool value)
+{
+    clear_state = value;
+}
+
+int Floor::getNum() const
+{
+    return num;
+}
+
+void Floor::load_floor(short num) {
+    
     if(num == 1){
         safe = new Room(nullptr, scene, proyectiles, "f1-safe");
         treasure = new Room(nullptr, scene, proyectiles, "f1-item");

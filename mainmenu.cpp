@@ -166,7 +166,16 @@ void MainMenu::on_multiplayerButton_clicked() {
     show_multiplayerScreen();
 }
 void MainMenu::on_loadgameButton_clicked() {
+    hide_playScreen();
+    show_mainScreen();
 
+    std::string filename = QFileDialog::getOpenFileName(this, "Open", "", "Text file (*.txt)").toStdString();
+
+    this->close();
+    mainwindow->close_game();
+    //mainwindow->setGame(new Game(QFileDialog::getOpenFileName(this, "Open", "", "Text file (*.txt)").toStdString(), mainwindow->getScene(), mainwindow->getProyectiles()));
+    mainwindow->setGame(new Game(filename, mainwindow->getScene(), mainwindow->getProyectiles()));
+    mainwindow->showMaximized();
 }
 void MainMenu::on_gobackButton_1_clicked() {
     hide_playScreen();

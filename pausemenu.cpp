@@ -74,6 +74,13 @@ void PauseMenu::on_resumeButton_clicked() { // on main screen
 }
 void PauseMenu::on_saveButton_clicked() {
 
+    main_window->getGame()->setCurrent_room(main_window->getCurrent_room());
+    main_window->getGame()->setCurrent_floor(main_window->getCurrent_floor());
+
+    main_window->getGame()->save_game(QFileDialog::getSaveFileName(this, "Save", "", "Text file (*.txt)").toStdString());
+
+    //say it was saved successfully or some shit.
+
 }
 void PauseMenu::on_restartButton_clicked() {
     hide_mainScreen();

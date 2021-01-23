@@ -5,6 +5,11 @@ Spring *Room::getSpring() const
     return spring;
 }
 
+std::string Room::getName() const
+{
+    return name;
+}
+
 Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, std::string name_) : QObject(parent), scene(scene), v_limit(720), h_limit(1280) {
 
     cleared = false;
@@ -35,6 +40,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         boss = nullptr;
 
         type = "safe";
+        name = "safe";
     }
     else if(name_ == "f1-1"){
         walls.push_back(new Wall(this, 0, 720 - 300, 100, 300));
@@ -64,6 +70,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         boss = nullptr;
 
         type = "normal";
+        name = "1";
     }
     else if(name_ == "f1-2"){
         walls.push_back(new Wall(this, 0, 720 - 300, 200, 40));
@@ -93,6 +100,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         boss = nullptr;
 
         type = "normal";
+        name = "2";
     }
     else if(name_ == "f1-item"){
         walls.push_back(new Wall(this, 1280 - 200, 720 - 300, 200, 300));
@@ -120,6 +128,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         boss = nullptr;
 
         type = "treasure";
+        name = "item";
     }
     else if(name_ == "f1-3"){
 
@@ -150,6 +159,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         boss = nullptr;
 
         type = "normal";
+        name = "3";
     }
     else if(name_ == "f1-4"){
 
@@ -187,6 +197,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         boss = nullptr;
 
         type = "normal";
+        name = "4";
     }
     else if(name_ == "lamprey"){
 
@@ -224,6 +235,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         itemY = 720 - 550 -16;
 
         type = "boss";
+        name = "boss";
     }
 
     else if(name_ == "f2-safe"){
@@ -249,6 +261,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         boss = nullptr;
 
         type = "safe";
+        name = "safe";
     }
     else if(name_ == "f2-1"){
         walls.push_back(new Wall(this, 0, 720-200, 300, 200));
@@ -284,6 +297,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         boss = nullptr;
 
         type = "normal";
+        name = "1";
     }
     else if(name_ == "f2-2"){
         walls.push_back(new Wall(this, 0, 720-150, 200, 150));
@@ -321,6 +335,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         boss = nullptr;
 
         type = "normal";
+        name = "2";
     }
     else if(name_ == "f2-item"){
         walls.push_back(new Wall(this, 1280-300, 720-300, 300, 300));
@@ -344,6 +359,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         boss = nullptr;
 
         type = "treasure";
+        name = "item";
     }
     else if(name_ == "f2-3"){
         walls.push_back(new Wall(this, 0, 720-150, 200, 150));
@@ -377,6 +393,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         boss = nullptr;
 
         type = "normal";
+        name = "3";
     }
     else if(name_ == "f2-4"){
         walls.push_back(new Wall(this, 0, 720-150, 200, 150));
@@ -417,6 +434,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         boss = nullptr;
 
         type = "normal";
+        name = "4";
     }
     else if(name_ == "priest"){
 
@@ -463,6 +481,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         itemY = 720 - 150 -16;
 
         type = "boss";
+        name = "boss";
     }
 
     else if(name_ == "f3-item"){
@@ -487,6 +506,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         boss = nullptr;
 
         type = "treasure";
+        name = "item";
     }
     else if(name_ == "f3-1"){
 
@@ -515,6 +535,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         boss = nullptr;
 
         type = "normal";
+        name = "1";
     }
     else if(name_ == "f3-safe"){
         walls.push_back(new Wall(this, 1280 - 300, 720 - 300, 300, 100));
@@ -540,6 +561,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         boss = nullptr;
 
         type = "safe";
+        name = "safe";
     }
     else if(name_ == "f3-2"){
 
@@ -574,6 +596,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         boss = nullptr;
 
         type = "normal";
+        name = "2";
     }
     else if(name_ == "f3-3"){
 
@@ -607,6 +630,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         boss = nullptr;
 
         type = "normal";
+        name = "3";
     }
     else if(name_ == "f3-4"){
         walls.push_back(new Wall(this, 1280 - 200, 720 - 300, 200, 300));
@@ -638,6 +662,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         boss = nullptr;
 
         type = "normal";
+        name = "4";
     }
     else if(name_ == "expelled"){
         walls.push_back(new Wall(this, 0, 720 - 100, 1280, 100));
@@ -663,6 +688,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         itemY = 720 - 16;
 
         type = "final_boss";
+        name = "boss";
     }
 
     else{
@@ -675,6 +701,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         down_door = nullptr;
 
         type = "normal";
+        name = "0";
         boss = nullptr;
     }
 }
@@ -753,6 +780,8 @@ void Room::load_room() {
     if(item != nullptr){
         scene->addItem(item);
         item->setPos(itemX, itemY);
+        //item->getName()->raise();
+        //item->getName()->setHidden(false);
     }
 }
 void Room::deload_room() {
@@ -793,6 +822,7 @@ void Room::deload_room() {
 
     if(item != nullptr){
         scene->removeItem(item);
+        //item->getName()->setHidden(true);
     }
 }
 
@@ -845,12 +875,12 @@ void Room::remove_item() {
 }
 
 void Room::spawn_heart() {
-    item = new Item(this, "Heart", 1, 0.2);
+    item = new Item(nullptr, "Heart", 1, 0.2);
     item->setPos(itemX, itemY);
     scene->addItem(item);
     item->updateLabel(itemX, itemY);
-    scene->addWidget(item->getName());
-    item->getName()->setVisible(true);
+    scene->addWidget(item->getName_label());
+    item->getName_label()->setVisible(true);
 }
 void Room::spawn_item(Item *i) {
 
@@ -859,7 +889,7 @@ void Room::spawn_item(Item *i) {
         item->setPos(itemX, itemY);
         scene->addItem(item);
         item->updateLabel(itemX, itemY);
-        scene->addWidget(item->getName());
-        item->getName()->setVisible(true);
+        scene->addWidget(item->getName_label());
+        item->getName_label()->setVisible(true);
     }
 }
