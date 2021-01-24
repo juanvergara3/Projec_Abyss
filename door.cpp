@@ -14,6 +14,7 @@ Door::Door(QObject *parent, Room *self, int x, int y, int w, int h) {
     setPos(posx, posy);
 
     next = nullptr;
+    sprite = nullptr;
 
     type = "normal";
 }
@@ -34,19 +35,27 @@ Door::Door(QObject *parent, Floor *next, std::string type_, int playerX, int pla
 
     this->next = next;
 
+    sprite = new QPixmap();
+
     type = type_;
 }
 Door::~Door(){
-
+    if(sprite != nullptr)
+        delete sprite;
 }
 
 QRectF Door::boundingRect() const{
     return QRectF(0, 0, width, height);
 }
 void Door::paint(QPainter *painter, const QStyleOptionGraphicsItem *options, QWidget *widget) {
-    //painter->setBrush(Qt::blue);
-    painter->setPen(Qt::NoPen);
-    painter->drawRect(boundingRect());
+
+    if(sprite != nullptr)
+        painter->drawPixmap(0, 0, *sprite, 0 , 0, width, height);
+    else{
+        //painter->setBrush(Qt::blue);
+        painter->setPen(Qt::NoPen);
+        painter->drawRect(boundingRect());
+    }
 }
 
 int Door::getPosx() const {

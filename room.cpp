@@ -1,15 +1,5 @@
 #include "room.h"
 
-Spring *Room::getSpring() const
-{
-    return spring;
-}
-
-std::string Room::getName() const
-{
-    return name;
-}
-
 Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, std::string name_) : QObject(parent), scene(scene), v_limit(720), h_limit(1280) {
 
     cleared = false;
@@ -497,7 +487,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         up_door = nullptr;
         down_door = nullptr;
 
-        bg = new QPixmap("");
+        bg = new QPixmap(":/Assets/Sprites/f3-item.png");
         setPos(0,0);
 
         itemX = 150 - 16;
@@ -526,7 +516,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         up_door = nullptr;
         down_door = nullptr;
 
-        bg = new QPixmap("");
+        bg = new QPixmap(":/Assets/Sprites/f3-2.png");
         setPos(0,0);
 
         itemX = 1280/2 - 16;
@@ -552,7 +542,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         up_door = new Door(this, this, 900, 720-600-40, 20, 40);
         down_door = nullptr;
 
-        bg = new QPixmap("");
+        bg = new QPixmap(":/Assets/Sprites/f3-safe.png");
         setPos(0,0);
 
         itemX = 0;
@@ -587,7 +577,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         up_door = new Door(this, this, 150 -10, 720-600-40, 20, 40);
         down_door = nullptr;
 
-        bg = new QPixmap("");
+        bg = new QPixmap(":/Assets/Sprites/f3-1.png");
         setPos(0,0);
 
         itemX = 450 - 16;
@@ -621,7 +611,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         enemies.push_back(new Enemy(this, this->scene, "double", "", p, 4, 1065, 650+20, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
         enemies.push_back(new Enemy(this, this->scene, "x", "", p, 4, 550, 20, 0, 0, 10, 15, 5, 1e-5, 0.1, 0));
 
-        bg = new QPixmap("");
+        bg = new QPixmap(":/Assets/Sprites/f3-3.png");
         setPos(0,0);
 
         itemX = 450 - 16;
@@ -653,7 +643,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         up_door = nullptr;
         down_door = nullptr;
 
-        bg = new QPixmap("");
+        bg = new QPixmap(":/Assets/Sprites/f3-4.png");
         setPos(0,0);
 
         itemX = 1280-700 - 16;
@@ -677,7 +667,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         up_door = nullptr;
         down_door = nullptr;
 
-        bg = new QPixmap("");
+        bg = new QPixmap(":/Assets/Sprites/f3-boss.png");
         setPos(0,0);
 
         boss_door = new Door(this, nullptr, "final_boss", 0, 0, 1280 - 150 - 20, 720-100-80, 40, 80);
@@ -867,6 +857,13 @@ int Room::getItemX() const {
 int Room::getItemY() const {
     return itemY;
 }
+Spring *Room::getSpring() const {
+    return spring;
+}
+std::string Room::getName() const {
+    return name;
+}
+
 
 void Room::remove_item() {
     scene->removeItem(item);

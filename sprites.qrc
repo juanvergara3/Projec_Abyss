@@ -15,5 +15,12 @@
         <file>Assets/Sprites/f2-safe.png</file>
         <file>Assets/Sprites/title.png</file>
         <file>Assets/Sprites/icon.png</file>
+        <file>Assets/Sprites/f3-1.png</file>
+        <file>Assets/Sprites/f3-2.png</file>
+        <file>Assets/Sprites/f3-3.png</file>
+        <file>Assets/Sprites/f3-4.png</file>
+        <file>Assets/Sprites/f3-boss.png</file>
+        <file>Assets/Sprites/f3-item.png</file>
+        <file>Assets/Sprites/f3-safe.png</file>
     </qresource>
 </RCC>

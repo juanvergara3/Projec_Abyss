@@ -21,6 +21,8 @@ private: //variables
 
     std::string type;
 
+    QPixmap *sprite;
+
 public: //variables
 
 private: //methods
