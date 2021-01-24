@@ -14,8 +14,6 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         walls.push_back(new Wall(this, 1280-400, 720-200, 100, 200));
         walls.push_back(new Wall(this, 1280-500, 720-100, 100, 100));
 
-        spring = new Spring(nullptr, 100, 0, 100, 40, 0.025f, 0.25f);
-
         left_door = nullptr;
         right_door = new Door(this, this, 1280-160, 720-300-40, 20, 40);
         up_door = nullptr;
@@ -53,6 +51,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         bg = new QPixmap(":/Assets/Sprites/f1-1.png");
         setPos(0,0);
+
+        spring = new Spring(nullptr, 1135, 5, 100, 40, 0.025f, 0.25f);
 
         itemX = 840 - 24;
         itemY = 720 - 550 - 32;
@@ -519,6 +519,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         bg = new QPixmap(":/Assets/Sprites/f3-2.png");
         setPos(0,0);
 
+        spring = new Spring(nullptr, 180, 5, 100, 40, 0.025f, 0.25f);
+
         itemX = 1280/2 - 16;
         itemY = 720 - 120 - 32;
 
@@ -544,6 +546,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         bg = new QPixmap(":/Assets/Sprites/f3-safe.png");
         setPos(0,0);
+
+        spring = new Spring(nullptr, 20, 5, 100, 40, 0.025f, 0.25f);
 
         itemX = 0;
         itemY = 0;
@@ -580,6 +584,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
         bg = new QPixmap(":/Assets/Sprites/f3-1.png");
         setPos(0,0);
 
+        spring = new Spring(nullptr, 760, 5, 100, 40, 0.025f, 0.25f);
+
         itemX = 450 - 16;
         itemY = 720 - 450 - 32;
 
@@ -613,6 +619,8 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         bg = new QPixmap(":/Assets/Sprites/f3-3.png");
         setPos(0,0);
+
+        spring = new Spring(nullptr, 1280-40, 5, 100, 40, 0.025f, 0.25f);
 
         itemX = 450 - 16;
         itemY = 720 - 350 - 32;
@@ -863,7 +871,6 @@ Spring *Room::getSpring() const {
 std::string Room::getName() const {
     return name;
 }
-
 
 void Room::remove_item() {
     scene->removeItem(item);

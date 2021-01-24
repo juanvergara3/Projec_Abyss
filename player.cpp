@@ -18,7 +18,7 @@ Player::Player(QObject *parent, QGraphicsScene *s, std::string name, std::list<P
     g = 4;
     g_p = 1;
     r_p = 4;
-    e = 1e-5;
+    e = 0.1;
     shooting_mode = "single";
 
     sight = 1;

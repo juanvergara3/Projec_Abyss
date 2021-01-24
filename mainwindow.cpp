@@ -156,6 +156,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
                         current_room->load_room();
                         current_room_type = current_room->getType();
 
+                        spring = current_room->getSpring();
+
                         current_floor->start_floor_music();
 
                         boss = current_room->getBoss();
@@ -234,6 +236,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
                             current_room = d->getLink()->getSelf();
                             current_room->load_room();
                             current_room_type = current_room->getType();
+
+                            spring = current_room->getSpring();
 
                             if(current_room_type == "boss" || current_room_type == "final_boss"){
                                 current_floor->start_boss_music();
@@ -826,12 +830,13 @@ void MainWindow::update_bodies(){
         current_room->spawn_item(game->get_random_item());
 
         scene->removeItem(p1);
-        if(p2 != nullptr)
+        if(p2 != nullptr){
             scene->removeItem(p2);
+        }
 
-            scene->addItem(p1);
-            if(p2 != nullptr)
-                scene->addItem(p2);
+        scene->addItem(p1);
+        if(p2 != nullptr)
+            scene->addItem(p2);
     }
 }
 

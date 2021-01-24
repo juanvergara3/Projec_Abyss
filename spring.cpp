@@ -30,7 +30,10 @@ QRectF Spring::boundingRect() const {
     return QRectF(0, -height, width, height);
 }
 void Spring::paint(QPainter *painter, const QStyleOptionGraphicsItem *options, QWidget *widget) {
-    painter->setBrush(Qt::magenta);
+    QBrush b(QColor(200, 200, 200));
+    b.setStyle(Qt::HorPattern);
+
+    painter->setBrush(b);
     painter->drawRect(boundingRect());
 }
 
