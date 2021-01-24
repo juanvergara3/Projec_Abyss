@@ -530,7 +530,7 @@ void MainWindow::check_collitions(Player *p) {
                 s->setSpeed(p->getVy());
 
                 p->set_velY(s->getHeight() + p->getRadio()*2, -1*p->getE()*p->getVy() * 10);
-                p->setJumping(false);
+                p->setJumping(true);
 
             }
             if(p->getY() < v_limit - (p->collidingItems().at(k)->y() + p->collidingItems().at(k)->boundingRect().height())) { //colicion en y por abajo (saltando)

@@ -15,8 +15,10 @@ Game::Game(QGraphicsScene * scene, std::list<Proyectile *> *p, std::string seed,
     current_floor = floor1;
     current_room = floor1->safe;
 
-    if(!seed.empty())
-        this->seed = std::stoul(seed);
+    if(!seed.empty()) {
+        for(auto k = seed.begin(); k != seed.end(); k++)
+            this->seed+= int(*k);
+    }
     else
         this->seed = rand();
 

@@ -62,14 +62,15 @@ Boss::Boss(QObject *parent, QGraphicsScene *s, std::string boss, std::list<Proye
     health_bar->setTextVisible(false);
     health_bar->setGeometry(20, 770, 300, 20);
     health_bar->update();
+    health_bar->setStyleSheet("QProgressBar { border: rgba(255, 255, 255, 0); border-radius: 0px; background-color: #212121;} QProgressBar::chunk { background-color: #fa3434;}");
 
     name_label->setFont(QFont("System"));
     name_label->setGeometry(20, 730, name_label->text().length()*8, 20);
-    name_label->setStyleSheet("QLabel { background-color : white; color : black; }");
+    name_label->setStyleSheet("QLabel { background-color : rgba(255, 255, 255, 0); color : white; }");
 
     description_label->setFont(QFont("System"));
     description_label->setGeometry(20, 750, description_label->text().length()*8, 20);
-    description_label->setStyleSheet("QLabel { background-color : white; color : black; }");
+    description_label->setStyleSheet("QLabel { background-color : rgba(255, 255, 255, 0); color : white; }");
 
     name_label->setVisible(false);
     description_label->setVisible(false);

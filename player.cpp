@@ -200,6 +200,7 @@ void Player::init_stats(int x_reference) {
     health_bar->setValue(health);
     health_bar->setTextVisible(false);
     health_bar->setGeometry(x_reference, -120, 20, 120);
+    health_bar->setStyleSheet("QProgressBar { border: rgba(255, 255, 255, 0); border-radius: 0px; background-color: #212121; } QProgressBar::chunk { background-color: #34fa4b; height: 10px; margin: 0.5px;}");
 
     labels.push_back(name_label = new QLabel());
     labels.push_back(max_health_label = new QLabel());
@@ -220,7 +221,7 @@ void Player::init_stats(int x_reference) {
 
         (*k)->setFont(QFont("System"));
         (*k)->setGeometry(20 + x_reference, y, (*k)->text().length()*9, 20);
-        (*k)->setStyleSheet("QLabel { background-color : white; color : black; }");
+        (*k)->setStyleSheet("QLabel { background-color : rgba(255, 255, 255, 0); color : white; }");
         y += 20;
     }
 

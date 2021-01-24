@@ -30,7 +30,7 @@ Item::Item(QWidget *parent, std::string name, float m_health, float health_, flo
     this->name_label ->setText(name.c_str());
     this->name_label ->setFont(QFont("System"));
     this->name_label ->setGeometry(0, 0, this->name_label ->text().length()*8, 20);
-    this->name_label ->setStyleSheet("QLabel { background-color : white; color : black; }");
+    this->name_label ->setStyleSheet("QLabel { background-color : rgba(33, 33, 33, 100); color : white; }");
     this->name_label ->setVisible(false);
 
     width = 32;
