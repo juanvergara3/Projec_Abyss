@@ -466,18 +466,18 @@ void MainWindow::victory() {
 void MainWindow::check_collitions(Player *p) {
 
     /*------EDGES------*/
-    if(p->getX() < p->getRadio()) { //colicion en x por la izquierda
-        p->set_velX(p->getRadio(), -1*p->getE()*p->getVx());
+    if(p->getX() < p->getWidth()/2) { //colicion en x por la izquierda
+        p->set_velX(p->getWidth()/2, -1*p->getE()*p->getVx());
     }
-    if(p->getX() > h_limit - p->getRadio()) { //colicion en x por la derecha
-        p->set_velX(h_limit - p->getRadio(), -1*p->getE()*p->getVx());
+    if(p->getX() > h_limit - p->getWidth()/2) { //colicion en x por la derecha
+        p->set_velX(h_limit - p->getWidth()/2, -1*p->getE()*p->getVx());
     }
-    if(p->getY() < p->getRadio()) { //colicion en y por arriba (callendo)
-        p->set_velY(p->getRadio(), -1*p->getE()*p->getVy());
+    if(p->getY() < p->getHeight()/2) { //colicion en y por arriba (callendo)
+        p->set_velY(p->getHeight()/2, -1*p->getE()*p->getVy());
         p->setJumping(false);
     }
-    if(p->getY() > v_limit - p->getRadio()) { //colicion en y por abajo (saltando)
-        p->set_velY(v_limit - p->getRadio(), -1*p->getE()*p->getVy());
+    if(p->getY() > v_limit - p->getHeight()/2) { //colicion en y por abajo (saltando)
+        p->set_velY(v_limit - p->getHeight()/2, -1*p->getE()*p->getVy());
     }
 
     /*------WALLS------*/
@@ -488,23 +488,23 @@ void MainWindow::check_collitions(Player *p) {
             if(p->getX() < p->collidingItems().at(k)->x()) { //colicion en x por la izquierda
 
                 //p->set_velX(p->collidingItems().at(k)->x() - p->getRadio(), -1*p->getE()*p->getVx());
-                p->set_velX(p->collidingItems().at(k)->x() - p->getRadio() + (p->getDirection() * p->getMovement_speed()), p->getVx()); //fails ******
+                p->set_velX(p->collidingItems().at(k)->x() - p->getWidth()/2 + (p->getDirection() * p->getMovement_speed()), p->getVx()); //fails ******
 
             }
             if(p->getX() > p->collidingItems().at(k)->x() + p->collidingItems().at(k)->boundingRect().width()) { //colicion en x por la derecha
 
                 //p->set_velX(p->collidingItems().at(k)->x() + p->collidingItems().at(k)->boundingRect().width() + p->getRadio(), -1*p->getE()*p->getVx());
-                p->set_velX(p->collidingItems().at(k)->x() + p->collidingItems().at(k)->boundingRect().width() + p->getRadio() + (p->getDirection() * p->getMovement_speed()), p->getVx()); //fails ******
+                p->set_velX(p->collidingItems().at(k)->x() + p->collidingItems().at(k)->boundingRect().width() + p->getWidth()/2 + (p->getDirection() * p->getMovement_speed()), p->getVx()); //fails ******
             }
             if(p->getY() > v_limit - p->collidingItems().at(k)->y()) { //colicion en y por arriba (callendo)
 
-                p->set_velY(v_limit - p->collidingItems().at(k)->y() + p->getRadio(), -1*p->getE()*p->getVy());
+                p->set_velY(v_limit - p->collidingItems().at(k)->y() + p->getHeight()/2, -1*p->getE()*p->getVy());
                 p->setJumping(false);
 
             }
             if(p->getY() < v_limit - (p->collidingItems().at(k)->y() + p->collidingItems().at(k)->boundingRect().height())) { //colicion en y por abajo (saltando)
 
-                p->set_velY(v_limit - (p->collidingItems().at(k)->y() + p->collidingItems().at(k)->boundingRect().height() + p->getRadio()), -1*p->getE()*p->getVy());
+                p->set_velY(v_limit - (p->collidingItems().at(k)->y() + p->collidingItems().at(k)->boundingRect().height() + p->getHeight()/2), -1*p->getE()*p->getVy());
 
             }
         }
@@ -515,13 +515,13 @@ void MainWindow::check_collitions(Player *p) {
             if(p->getX() < p->collidingItems().at(k)->x()) { //colicion en x por la izquierda
 
                 //p->set_velX(p->collidingItems().at(k)->x() - p->getRadio(), -1*p->getE()*p->getVx());
-                p->set_velX(p->collidingItems().at(k)->x() - p->getRadio() + (p->getDirection() * p->getMovement_speed()), p->getVx()); //fails ******
+                p->set_velX(p->collidingItems().at(k)->x() - p->getWidth()/2 + (p->getDirection() * p->getMovement_speed()), p->getVx()); //fails ******
 
             }
             if(p->getX() > p->collidingItems().at(k)->x() + p->collidingItems().at(k)->boundingRect().width()) { //colicion en x por la derecha
 
                 //p->set_velX(p->collidingItems().at(k)->x() + p->collidingItems().at(k)->boundingRect().width() + p->getRadio(), -1*p->getE()*p->getVx());
-                p->set_velX(p->collidingItems().at(k)->x() + p->collidingItems().at(k)->boundingRect().width() + p->getRadio() + (p->getDirection() * p->getMovement_speed()), p->getVx()); //fails ******
+                p->set_velX(p->collidingItems().at(k)->x() + p->collidingItems().at(k)->boundingRect().width() + p->getHeight()/2 + (p->getDirection() * p->getMovement_speed()), p->getVx()); //fails ******
             }
             if(p->getY() > v_limit - p->collidingItems().at(k)->y()) { //colicion en y por arriba (callendo)
 
@@ -529,7 +529,7 @@ void MainWindow::check_collitions(Player *p) {
 
                 s->setSpeed(p->getVy());
 
-                p->set_velY(s->getHeight() + p->getRadio()*2, -1*p->getE()*p->getVy() * 10);
+                p->set_velY(s->getHeight() + p->getHeight(), -1*p->getE()*p->getVy() * 10);
                 p->setJumping(true);
 
             }

@@ -19,7 +19,7 @@ Door::Door(QObject *parent, Room *self, int x, int y, int w, int h) {
     type = "normal";
 }
 
-Door::Door(QObject *parent, Floor *next, std::string type_, int playerX, int playerY, int x, int y, int w, int h) {
+Door::Door(QObject *parent, Floor *next, std::string type_, int playerX, int playerY, int x, int y, int w, int h, std::string sprite) {
     posx = x;
     posy = y;
     width = w;
@@ -35,7 +35,7 @@ Door::Door(QObject *parent, Floor *next, std::string type_, int playerX, int pla
 
     this->next = next;
 
-    sprite = new QPixmap();
+    this->sprite = new QPixmap(sprite.c_str());
 
     type = type_;
 }

@@ -5,6 +5,16 @@ float Entity::getG() const
     return g;
 }
 
+void Entity::setWidth(int value)
+{
+    width = value;
+}
+
+void Entity::setHeight(int value)
+{
+    height = value;
+}
+
 Entity::Entity(QObject *parent, float x_, float y_, float vx_, float vy_, float mass_, int radio_, float g_, float K_, float e_, float V_)
     : QObject(parent), v_limit(720), h_limit(1280), G(6.67384e-11)
 {

@@ -22,5 +22,8 @@
         <file>Assets/Sprites/f3-boss.png</file>
         <file>Assets/Sprites/f3-item.png</file>
         <file>Assets/Sprites/f3-safe.png</file>
+        <file>Assets/Sprites/f1-boss-door.png</file>
+        <file>Assets/Sprites/f2-boss-door.png</file>
+        <file>Assets/Sprites/f3-boss-door.png</file>
     </qresource>
 </RCC>

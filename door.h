@@ -29,7 +29,7 @@ private: //methods
 
 public: //methods
     explicit Door(QObject *parent = nullptr, Room *self = nullptr, int x = 0, int y = 0, int w = 0, int h = 0);
-    explicit Door(QObject *parent =  nullptr, Floor *next = nullptr, std::string type_ = "", int playerX = 0, int playerY = 0,int x = 0, int y = 0, int w = 0, int h = 0);
+    explicit Door(QObject *parent =  nullptr, Floor *next = nullptr, std::string type_ = "", int playerX = 0, int playerY = 0,int x = 0, int y = 0, int w = 0, int h = 0, std::string sprite = "");
     ~Door();
 
     QRectF boundingRect() const;

@@ -28,12 +28,12 @@ Game::Game(QGraphicsScene * scene, std::list<Proyectile *> *p, std::string seed,
     shuffle_items();
 
     if(type == "singleplayer"){
-        p1 = new Player(nullptr, scene, p1_name, proyectiles, 0, 0, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
+        p1 = new Player(nullptr, scene, p1_name, proyectiles, 0, 0, 0, 1);
         p2 = nullptr;
     }
     else if (type == "multiplayer") {
-        p1 = new Player(nullptr, scene, p1_name, proyectiles, 0, 0, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
-        p2 = new Player(nullptr, scene, p2_name, proyectiles, 200, 50, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
+        p1 = new Player(nullptr, scene, p1_name, proyectiles, 0, 0, 0, 1);
+        p2 = new Player(nullptr, scene, p2_name, proyectiles, 200, 50, 0, 2);
     }
 }
 
@@ -55,7 +55,7 @@ Game::Game(std::string file_name, QGraphicsScene * scene, std::list<Proyectile *
     float x, y;
     int statPos;
     std::string name, temp, shooting_mode;
-    float max_health, health, damage, shot_speed, movement_speed, jump_Speed, g, g_p, r, r_p, e;
+    float max_health, health, damage, shot_speed, movement_speed, jump_Speed, g, g_p, w, h, r, r_p, e;
 
     if(file.is_open()){
 
@@ -125,7 +125,10 @@ Game::Game(std::string file_name, QGraphicsScene * scene, std::list<Proyectile *
             g_p = std::stof(temp);
 
             file>>temp;
-            r = std::stof(temp);
+            w = std::stof(temp);
+
+            file>>temp;
+            h = std::stof(temp);
 
             file>>temp;
             r_p = std::stof(temp);
@@ -135,7 +138,7 @@ Game::Game(std::string file_name, QGraphicsScene * scene, std::list<Proyectile *
 
             file>>temp;
 
-            p1 = new Player(nullptr, scene, proyectiles, int(x), int(y), statPos, name, max_health, health, damage, shot_speed, movement_speed, jump_Speed, g, g_p, r, r_p, e, temp);
+            p1 = new Player(nullptr, scene, proyectiles, int(x), int(y), statPos, name, max_health, health, damage, shot_speed, movement_speed, jump_Speed, g, g_p, w, h, r_p, e, temp);
             p2 = nullptr;
         }
         else if(type == "multiplayer"){
@@ -176,7 +179,10 @@ Game::Game(std::string file_name, QGraphicsScene * scene, std::list<Proyectile *
             g_p = std::stof(temp);
 
             file>>temp;
-            r = std::stof(temp);
+            w = std::stof(temp);
+
+            file>>temp;
+            h = std::stof(temp);
 
             file>>temp;
             r_p = std::stof(temp);
@@ -186,7 +192,7 @@ Game::Game(std::string file_name, QGraphicsScene * scene, std::list<Proyectile *
 
             file>>temp;
 
-            p1 = new Player(nullptr, scene, proyectiles, int(x), int(y), statPos, name, max_health, health, damage, shot_speed, movement_speed, jump_Speed, g, g_p, r, r_p, e, temp);
+            p1 = new Player(nullptr, scene, proyectiles, int(x), int(y), statPos, name, max_health, health, damage, shot_speed, movement_speed, jump_Speed, g, g_p, w, h, r_p, e, temp);
 
             file>>temp;
             x = std::stof(temp);
@@ -224,7 +230,10 @@ Game::Game(std::string file_name, QGraphicsScene * scene, std::list<Proyectile *
             g_p = std::stof(temp);
 
             file>>temp;
-            r = std::stof(temp);
+            w = std::stof(temp);
+
+            file>>temp;
+            h = std::stof(temp);
 
             file>>temp;
             r_p = std::stof(temp);
@@ -234,7 +243,7 @@ Game::Game(std::string file_name, QGraphicsScene * scene, std::list<Proyectile *
 
             file>>temp;
 
-            p2 = new Player(nullptr, scene, proyectiles, int(x), int(y), statPos, name, max_health, health, damage, shot_speed, movement_speed, jump_Speed, g, g_p, r, r_p, e, temp);
+            p2 = new Player(nullptr, scene, proyectiles, int(x), int(y), statPos, name, max_health, health, damage, shot_speed, movement_speed, jump_Speed, g, g_p, w, h, r_p, e, temp);
         }
 
         for(int k = 0; k < 8; k++){ // floor 1
@@ -479,7 +488,7 @@ void Game::reset() {
 
         delete p1;
 
-        p1 = new Player(nullptr, scene, p1_name, proyectiles, 0, 0, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
+        p1 = new Player(nullptr, scene, p1_name, proyectiles, 0, 0, 0, 1);
     }
     else if (type == "multiplayer") {
 
@@ -491,8 +500,8 @@ void Game::reset() {
         delete p1;
         delete p2;
 
-        p1 = new Player(nullptr, scene, p1_name, proyectiles, 0, 0, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
-        p2 = new Player(nullptr, scene, p2_name, proyectiles, 200, 50, 0, 0, 0, 20, 8, 4, 1e-5, 0.1, 0);
+        p1 = new Player(nullptr, scene, p1_name, proyectiles, 0, 0, 0, 1);
+        p2 = new Player(nullptr, scene, p2_name, proyectiles, 200, 50, 0, 2);
     }
 }
 
@@ -521,7 +530,8 @@ void Game::save_game(std::string file_name) {
             file<<p1->getJump_Speed()<<'\t';
             file<<p1->getG()<<'\t';
             file<<p1->getG_p()<<'\t';
-            file<<p1->getRadio()<<'\t';
+            file<<p1->getWidth()<<'\t';
+            file<<p1->getHeight()<<'\t';
             file<<p1->getR_p()<<'\t';
             file<<p1->getE()<<'\t';
             file<<p1->getShooting_mode()<<"\r\n";
@@ -542,7 +552,8 @@ void Game::save_game(std::string file_name) {
             file<<p1->getJump_Speed()<<'\t';
             file<<p1->getG()<<'\t';
             file<<p1->getG_p()<<'\t';
-            file<<p1->getRadio()<<'\t';
+            file<<p1->getWidth()<<'\t';
+            file<<p1->getHeight()<<'\t';
             file<<p1->getR_p()<<'\t';
             file<<p1->getE()<<'\t';
             file<<p1->getShooting_mode()<<"\r\n";
@@ -559,7 +570,8 @@ void Game::save_game(std::string file_name) {
             file<<p2->getJump_Speed()<<'\t';
             file<<p2->getG()<<'\t';
             file<<p2->getG_p()<<'\t';
-            file<<p2->getRadio()<<'\t';
+            file<<p1->getWidth()<<'\t';
+            file<<p1->getHeight()<<'\t';
             file<<p2->getR_p()<<'\t';
             file<<p2->getE()<<'\t';
             file<<p2->getShooting_mode()<<"\r\n";

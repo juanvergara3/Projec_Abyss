@@ -5,20 +5,20 @@ int Player::getStatPos() const
     return statPos;
 }
 
-Player::Player(QObject *parent, QGraphicsScene *s, std::string name, std::list<Proyectile *> *p, int statPos, float x_, float y_, float vx_, float vy_, float mass_, int radio_, float g_, float K_, float e_, float V_) :
-    Entity(parent, x_, y_, vx_, vy_, mass_, radio_, g_, K_, e_, V_), statPos(statPos)
+Player::Player(QObject *parent, QGraphicsScene *s, std::string name, std::list<Proyectile *> *p, int statPos, float x_, float y_, int player) :
+    Entity(parent, x_, y_, 0, 0, 20, 12, 15, 4, 1e-5, 0.1, 0), statPos(statPos)
 {
+
     health = 100;
     max_health = 100;
     damage = 20;
     shot_speed = 30;
     movement_speed = 1.5;
     jump_Speed = 40;
-    g = g_;
+    g = 4;
     g_p = 1;
-    r = radio_;
     r_p = 4;
-    e = e_;
+    e = 1e-5;
     shooting_mode = "single";
 
     sight = 1;
@@ -32,11 +32,23 @@ Player::Player(QObject *parent, QGraphicsScene *s, std::string name, std::list<P
 
     scene = s;
 
+    i = 0;
+    j = 0;
+
+    if(player == 1)
+        sprite = new QPixmap(":/Assets/Sprites/entities/p1-sprite.png");
+    else if(player == 2)
+        sprite = new QPixmap(":/Assets/Sprites/entities/p2-sprite.png");
+
+    sprite_timer = new QTimer();
+    connect(sprite_timer, SIGNAL(timeout()), this, SLOT(update_sprite()));
+   sprite_timer->start(80);
+
     init_stats(statPos);
 }
 
-Player::Player(QObject *parent, QGraphicsScene *s, std::list<Proyectile *> *p, int x, int y, int statPos, std::string name, float max_health, float health, float damage, float shot_speed, float movement_speed, float jump_Speed, float g, float g_p, float r, float r_p, float e, std::string shooting_mode)
-    :Entity(parent, x, y, 0, 0, 20, r, g, 1e-5, e, 0), statPos(statPos)
+Player::Player(QObject *parent, QGraphicsScene *s, std::list<Proyectile *> *p, int x, int y, int statPos, std::string name, float max_health, float health, float damage, float shot_speed, float movement_speed, float jump_Speed, float g, float g_p, float w, float h, float r_p, float e, std::string shooting_mode)
+    :Entity(parent, x, y, 0, 0, 20, w, h, g, 1e-5, e, 0), statPos(statPos)
 {
     this->health = health;
     this->max_health = max_health;
@@ -46,7 +58,6 @@ Player::Player(QObject *parent, QGraphicsScene *s, std::list<Proyectile *> *p, i
     this->jump_Speed = jump_Speed;
     this->g = g;
     this->g_p = g_p;
-    this->r = r;
     this->r_p = r_p;
     this->e = e;
     this->shooting_mode = shooting_mode;
@@ -64,6 +75,10 @@ Player::Player(QObject *parent, QGraphicsScene *s, std::list<Proyectile *> *p, i
     proyectiles = p;
     scene = s;
 
+    i = 0;
+    j = 0;
+    sprite = new QPixmap(":/Assets/Sprites/entities/p2-sprite.png");
+
     init_stats(statPos);
 }
 Player::~Player() {
@@ -74,6 +89,8 @@ Player::~Player() {
     delete shot_speed_label;
     delete movement_speed_label;
     delete jump_speed_label;
+    delete sprite;
+    delete sprite_timer;
 }
 
 void Player::shoot() {
@@ -173,7 +190,10 @@ void Player::update_stats(Item *i) {
     jump_Speed *= i->getJump_Speed();
     g *= i->getG_player();
     g_p *= i->getG_proyectiles();
-    r *= i->getR_player();
+
+    setWidth(getWidth()*i->getR_player());
+    setHeight(getHeight()*i->getR_player());
+
     r_p *= i->getR_proyectiles();
     e *= i->getE_player();
 
@@ -189,8 +209,7 @@ void Player::update_stats(Item *i) {
 
     setG(g);
     setE(e);
-    setRadio(r);
-    //this->QGraphicsItem::update();
+    this->QGraphicsItem::update();
 }
 void Player::init_stats(int x_reference) {
 
@@ -255,6 +274,19 @@ void Player::update() {
     this->set_velX(newPos, this->getVx());
 }
 
+void Player::update_sprite() {
+
+    if(direction != 0)
+        if(i == 96)
+            i = 12;
+        else
+            i += 12;
+    else
+        i = 0;
+
+    this->QGraphicsItem::update(-this->getWidth()/2, -this->getHeight()/2, this->getWidth(), this->getHeight());
+
+}
 float Player::getMovement_speed() const{
     return movement_speed;
 }
@@ -262,19 +294,27 @@ float Player::getJump_Speed() const{
     return jump_Speed;
 }
 
-void Player::addDirection(int d)
-{
+QRectF Player::boundingRect() const {
+        return QRectF(-this->getWidth()/2, -this->getHeight()/2, this->getWidth(), this->getHeight());
+}
+void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+    painter->drawPixmap(-this->getWidth()/2, -this->getHeight()/2, sprite->scaledToHeight(this->getHeight()), i, j, this->getWidth(), this->getHeight());
+    //painter->drawRect(boundingRect());
+}
+
+void Player::addDirection(int d) {
+
     if (d == direction)
         return;
 
     direction += d;
 
-//    if (0 != direction) {
-//        if (-1 == direction)
-//            setTransform(QTransform(-1, 0, 0, 1, boundingRect().width(), 0));
-//        else
-//            setTransform(QTransform());
-//    }
+    if (0 != direction) {
+        if (-1 == direction)
+            setTransform(QTransform().scale(-1, 1));
+        else
+            setTransform(QTransform());
+    }
 }
 short Player::getDirection() const {
     return direction;

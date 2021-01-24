@@ -69,6 +69,10 @@ public: //methods
 
     int getHeight() const;
 
+    void setWidth(int value);
+
+    void setHeight(int value);
+
 private: //methods
 
 };

@@ -10,6 +10,7 @@
 #include <QProgressBar>
 #include <QLabel>
 #include <list>
+#include <QTimer>
 #include "entity.h"
 #include "proyectile.h"
 #include "item.h"
@@ -27,7 +28,6 @@ private: // Variables
     float jump_Speed;
     float g;
     float g_p;
-    float r;
     float r_p;
     float e;
     std::string shooting_mode;
@@ -43,11 +43,14 @@ private: // Variables
     QLabel *jump_speed_label;
 
     std::list<QLabel *> labels;
-
     std::list<Proyectile *> *proyectiles;
 
     short sight;
     short direction;
+
+    QPixmap *sprite;
+    int i, j;
+    QTimer *sprite_timer;
 
     bool jumping;
 
@@ -59,13 +62,12 @@ private: // Variables
 
 public: // Methods
     Player(QObject *parent = nullptr, QGraphicsScene *s = nullptr, std::string name = "", std::list<Proyectile *> *p = nullptr,
-                    int statPos = 0, float x_ = 0, float y_ = 0, float vx_ = 0, float vy_ = 0,
-                    float mass_ = 0, int radio_ = 0, float g_ = 0, float K_ = 0, float e_ = 0, float V_ = 0);
+                    int statPos = 0, float x_ = 0, float y_ = 0, int player = 1);
 
     Player (QObject *parent = nullptr, QGraphicsScene *s = nullptr, std::list<Proyectile *> *p = nullptr, int x = 0, int y = 0,
             int statPos = 0, std::string name = "", float max_health = 100, float health = 100, float damage = 20,
             float shot_speed = 30,  float movement_speed = 1.5, float jump_Speed = 40,
-            float g = 4, float g_p = 1, float r = 8, float r_p = 4, float e = 0.1,
+            float g = 4, float g_p = 1, float w = 12, float h = 15, float r_p = 4, float e = 0.1,
             std::string shooting_mode = "single");
 
     ~Player();
@@ -79,6 +81,9 @@ public: // Methods
 
     void update();
 
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
+
     float getMovement_speed() const;
     float getJump_Speed() const;
 
@@ -91,21 +96,15 @@ public: // Methods
     short getDirection() const;
 
     std::string getName() const;
-
     float getHealth() const;
-
     bool getAlive() const;
 
     void die();
 
     float getMax_health() const;
-
     float getDamage() const;
-
     float getShot_speed() const;
-
     float getG_p() const;
-
     float getR_p() const;
 
     std::string getShooting_mode() const;
@@ -114,6 +113,9 @@ public: // Methods
 
 private: // Methods
     void init_stats(int x_reference);
+
+private slots:
+    void update_sprite();
 
 };
 
