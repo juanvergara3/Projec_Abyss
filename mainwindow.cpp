@@ -802,26 +802,21 @@ void MainWindow::update_bodies(){
 
             int r = rand() % 101;
 
+            scene->removeItem(p1);
+            if(p2 != nullptr)
+                scene->removeItem(p2);
+
             if(r <= 66 && r >= 0){
-
-                scene->removeItem(p1);
-                if(p2 != nullptr)
-                    scene->removeItem(p2);
-
-                if(r <= 22 && r >= 0){
-
-                    current_room->spawn_item(game->get_random_item());
-                }
-                else if (r > 22){
-
-                    current_room->spawn_heart();
-                }
-
-                scene->addItem(p1);
-                if(p2 != nullptr)
-                    scene->addItem(p2);
-
+                current_room->spawn_heart();
             }
+            else if(r > 66){
+                current_room->spawn_item(game->get_random_item());
+            }
+
+            scene->addItem(p1);
+            if(p2 != nullptr)
+                scene->addItem(p2);
+
         }
     }
 

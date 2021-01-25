@@ -11,6 +11,8 @@ Boss::Boss(QObject *parent, QGraphicsScene *s, std::string boss, std::list<Proye
     name_label = new QLabel;
     description_label = new QLabel;
 
+    sprite = nullptr;
+
     scene = s;
     proyectiles = p;
     sight = 1;
@@ -31,6 +33,8 @@ Boss::Boss(QObject *parent, QGraphicsScene *s, std::string boss, std::list<Proye
     }
     else if (boss == "priest") {
         connect(shooting_timer, SIGNAL(timeout()), this, SLOT(priest_shoot()));
+
+        sprite = new QPixmap(":/Assets/Sprites/entities/priest_sprite.png");
 
         name_label->setText("Tainted High Priest");
         description_label->setText("~Corrupted by Malice~");
@@ -96,6 +100,19 @@ Boss::~Boss() {
     delete name_label;
     delete description_label;
     delete health_bar;
+    delete sprite;
+}
+
+QRectF Boss::boundingRect() const {
+        return QRectF(-this->getWidth()/2, -this->getHeight()/2, this->getWidth(), this->getHeight());
+}
+void Boss::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+    if(sprite != nullptr)
+        painter->drawPixmap(-this->getWidth()/2, -this->getHeight()/2, sprite->scaledToHeight(this->getHeight()), 0, 0, this->getWidth(), this->getHeight());
+    else{
+        painter->setBrush(Qt::white);
+        painter->drawRect(boundingRect());
+    }
 }
 
 int Boss::getDamage() const {

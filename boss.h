@@ -27,6 +27,8 @@ private: // Variables
     short sight;
     bool jumping;
 
+    QPixmap *sprite;
+
     QTimer *shooting_timer;
     QTimer *movement_timer;
 
@@ -45,6 +47,9 @@ public: // Methods
 
     void init();
     void stop();
+
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
 
 private: // Methods
 

@@ -6,7 +6,7 @@ int Player::getStatPos() const
 }
 
 Player::Player(QObject *parent, QGraphicsScene *s, std::string name, std::list<Proyectile *> *p, int statPos, float x_, float y_, int player) :
-    Entity(parent, x_, y_, 0, 0, 20, 12, 15, 4, 1e-5, 0.1, 0), statPos(statPos)
+    Entity(parent, x_, y_, 0, 0, 20, 12, 16, 4, 1e-5, 0.1, 0), statPos(statPos)
 {
 
     health = 100;
@@ -179,23 +179,39 @@ void Player::update_stat(std::string s) {
 void Player::update_stats(Item *i) {
 
     health += max_health * i->getHealth();
-
     if(health > max_health)
         health = max_health;
 
-    max_health *= i->getMax_health();
-    damage *= i->getDamage();
-    shot_speed *= i->getShot_speed();
-    movement_speed *= i->getMovement_speed();
-    jump_Speed *= i->getJump_Speed();
-    g *= i->getG_player();
-    g_p *= i->getG_proyectiles();
+    max_health += max_health*i->getMax_health();
+    damage += damage*i->getDamage();
+    shot_speed += shot_speed*i->getShot_speed();
 
-    setWidth(getWidth()*i->getR_player());
-    setHeight(getHeight()*i->getR_player());
+    if(i->getMovement_speed() == -1)
+        movement_speed *= -1;
+    else
+        movement_speed += movement_speed*i->getMovement_speed();
 
-    r_p *= i->getR_proyectiles();
-    e *= i->getE_player();
+    jump_Speed += jump_Speed*i->getJump_Speed();
+
+    if(i->getG_player() == -1)
+        g *= -1;
+    else if(i->getG_player() == 0)
+        g = 0;
+    else if(i->getG_player() != 1)
+        g += g*i->getG_player();
+
+    if(i->getG_proyectiles() == -1)
+        g_p *= -1;
+    else if(i->getG_proyectiles() == 0)
+        g_p = 0;
+    else if(i->getG_proyectiles() != 1)
+        g_p += g_p*i->getG_proyectiles();
+
+    setWidth(getWidth()+(getWidth()*i->getR_player()));
+    setHeight(getHeight()+(getHeight()*i->getR_player()));
+
+    r_p += r_p*i->getR_proyectiles();
+    e += e*i->getE_player();
 
     if(i->getShooting_mode() != "single")
         shooting_mode = i->getShooting_mode();
@@ -298,7 +314,7 @@ QRectF Player::boundingRect() const {
         return QRectF(-this->getWidth()/2, -this->getHeight()/2, this->getWidth(), this->getHeight());
 }
 void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-    painter->drawPixmap(-this->getWidth()/2, -this->getHeight()/2, sprite->scaledToHeight(this->getHeight()), i, j, this->getWidth(), this->getHeight());
+    painter->drawPixmap(-this->getWidth()/2, -this->getHeight()/2, sprite->scaledToHeight(this->getHeight()), i, j, 12, 15);
     //painter->drawRect(boundingRect());
 }
 

@@ -879,7 +879,7 @@ void Room::remove_item() {
 }
 
 void Room::spawn_heart() {
-    item = new Item(nullptr, "Heart", 1, 0.2, 1, 1, 1, 1, 1, 1 ,1, 1, 1, "single", ":/Assets/Sprites/Items/heart.png");
+    item = new Item(nullptr, "Heart", 0, 0.2, 0, 0, 0, 0, 1, 1, 0, 0, 0, "single", ":/Assets/Sprites/Items/heart.png");
     item->setPos(itemX, itemY);
     scene->addItem(item);
     item->updateLabel(itemX, itemY);
