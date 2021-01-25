@@ -40,7 +40,6 @@ Game::Game(QGraphicsScene * scene, std::list<Proyectile *> *p, std::string seed,
 Game::Game(std::string file_name, QGraphicsScene * scene, std::list<Proyectile *> *p)
     : scene(scene), proyectiles(p)
 {
-
     srand(unsigned(time(NULL)));
 
     floor1 = new Floor(scene, proyectiles, 1);
@@ -449,17 +448,21 @@ Game::Game(std::string file_name, QGraphicsScene * scene, std::list<Proyectile *
     srand(seed);
 }
 Game::~Game() {
+    scene = nullptr;
+    proyectiles = nullptr;
+
+    delete p1;
+    if(p2 != nullptr)
+        delete p2;
+
+    current_floor = nullptr;
+    current_room = nullptr;
+
     delete floor1;
     delete floor2;
     delete floor3;
 
     item_bank.clear();
-
-    scene = nullptr;
-    proyectiles = nullptr;
-
-    delete p1;
-    delete p2;
 }
 
 void Game::reset() {
@@ -516,7 +519,6 @@ void Game::save_game(std::string file_name) {
 
         if(type == "singleplayer"){
 
-            //player data ***make new constructor***
             file<<"singleplayer"<<"\r\n";
             file<<p1->getX()<<'\t';
             file<<p1->getY()<<'\t';

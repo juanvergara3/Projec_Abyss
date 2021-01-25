@@ -18,6 +18,7 @@ private: // Variables
     int damage;
     float shot_speed;
     int fire_rate;
+    int movement_rate;
     float movement_speed;
     float jump_Speed;
 
@@ -33,7 +34,7 @@ private: // Variables
     std::list<Proyectile *> *proyectiles;
 
 public: // Methods
-    explicit Enemy(QObject *parent = nullptr, QGraphicsScene *s = nullptr, std::string shooting_type = "single", std::string movement_type = "", std::list<Proyectile *> *p = nullptr, int dificulty = 1, float x_ = 0, float y_ = 0, float vx_ = 0, float vy_ = 0, float mass_ = 0, int radio_ = 0, float g_ = 0, float K_ = 0, float e_ = 0, float V_ = 0);
+    Enemy(QObject *parent = nullptr, QGraphicsScene *s = nullptr, std::string shooting_type = "single", std::string movement_type = "none", std::list<Proyectile *> *p = nullptr, int fire_rate = 1000, int movement_rate = 1000, float movement_speed = 1, float jump_speed = 20,int dificulty = 3, float x = 0, float y = 0, int w = 30, int h = 30, float g = 4);
     ~Enemy();
 
     int getHealth() const;

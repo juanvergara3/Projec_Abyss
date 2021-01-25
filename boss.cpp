@@ -24,7 +24,7 @@ Boss::Boss(QObject *parent, QGraphicsScene *s, std::string boss, std::list<Proye
         name_label->setText("Insatiable Lamprey");
         description_label->setText("~Lurking Beast~");
 
-        health = 400;
+        health = 800;
         damage = 20;
         shot_speed = 25;
         fire_rate = 500;
@@ -152,17 +152,23 @@ void Boss::stop() {
 void Boss::lamprey_shoot() {
     Proyectile *p;
 
-    p = new Proyectile(nullptr, "boss", damage, this->getX(), this->getY(), -1*shot_speed, shot_speed/5, 1, 4, 0.5, 1e-5, 0.1, 0);
+    int s1, s2, s3;
+
+    s1 = -6 + (rand() % static_cast<int>(6 - (-6) + 1));
+    s2 = -6 + (rand() % static_cast<int>(6 - (-6)  + 1));
+    s3 = -6 + (rand() % static_cast<int>(6 - (-6)  + 1));
+
+    p = new Proyectile(nullptr, "boss", damage, this->getX(), this->getY(), -1*shot_speed, shot_speed/s1, 1, 4, 0.5, 1e-5, 0.1, 0);
     proyectiles->push_back(p);
     p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
 
-    p = new Proyectile(nullptr, "boss", damage, this->getX(), this->getY(), -1*shot_speed, shot_speed/3, 1, 4, 0.5, 1e-5, 0.1, 0);
+    p = new Proyectile(nullptr, "boss", damage, this->getX(), this->getY(), -1*shot_speed, shot_speed/s2, 1, 4, 0.5, 1e-5, 0.1, 0);
     proyectiles->push_back(p);
     p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
 
-    p = new Proyectile(nullptr, "boss", damage, this->getX(), this->getY(), -1*shot_speed, shot_speed/2, 1, 4, 0.5, 1e-5, 0.1, 0);
+    p = new Proyectile(nullptr, "boss", damage, this->getX(), this->getY(), -1*shot_speed, shot_speed/s3, 1, 4, 0.5, 1e-5, 0.1, 0);
     proyectiles->push_back(p);
     p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
@@ -172,21 +178,21 @@ void Boss::priest_shoot() {
     int randX, randY;
 
     randX = rand() % 8;
-    randY = rand() % 8;
+    randY = -8 + (rand() % static_cast<int>(8 - (-8) + 1));
     p = new Proyectile(nullptr, this, damage, this->getX()+sight*80, this->getY(), sight*(shot_speed/randX), shot_speed/randY, 0.5, 6, 1, 1e-6, 0.1, 0);
     proyectiles->push_back(p);
     p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
 
     randX = rand() % 8;
-    randY = rand() % 8;
+    randY = -8 + (rand() % static_cast<int>(8 - (-8) + 1));
     p = new Proyectile(nullptr, this, damage, this->getX()+sight*80, this->getY(), sight*(shot_speed/randX), shot_speed/randY, 0.5, 6, 1, 1e-6, 0.1, 0);
     proyectiles->push_back(p);
     p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
 
     randX = rand() % 8;
-    randY = rand() % 8;
+    randY = -8 + (rand() % static_cast<int>(8 - (-8) + 1));
     p = new Proyectile(nullptr, this, damage, this->getX()+sight*80, this->getY(), sight*(shot_speed/randX), shot_speed/randY, 0.5, 6, 1, 1e-6, 0.1, 0);
     proyectiles->push_back(p);
     p->setPos(p->getX(), getV_limit() - p->getY());
@@ -427,12 +433,18 @@ void Boss::expelled_shoot() {
         //              __//--'/`
         //            ,--'/`  '
         //
-        //see? here's one . . . Doot DOOT!
+        //see? here's one . . . coOT COOT!
     }
 }
 
 void Boss::lamprey_move() {
-    sight *= -1;
+
+    int val = 1 + (rand() % static_cast<int>(2 - 1 + 1));
+    if(val == 1)
+        sight = 1;
+    else if(val == 2)
+        sight = -1;
+
     set_velY(getY(), jump_Speed*sight);
 }
 void Boss::expelled_move() {

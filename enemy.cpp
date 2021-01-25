@@ -1,64 +1,37 @@
 #include "enemy.h"
 
-Enemy::Enemy(QObject *parent, QGraphicsScene *s, std::string shooting_type, std::string movement_type, std::list<Proyectile *> *p, int dificulty, float x_, float y_, float vx_, float vy_, float mass_, int radio_, float g_, float K_, float e_, float V_) :
-    Entity(parent, x_, y_, vx_, vy_, mass_, radio_, g_, K_, e_, V_)
+Enemy::Enemy(QObject *parent, QGraphicsScene *s, std::string shooting_type, std::string movement_type, std::list<Proyectile *> *p, int fire_rate, int movement_rate, float movement_speed, float jump_speed, int dificulty, float x, float y, int w, int h, float g) :
+    Entity(parent, x, y, 0, 0, 10, w, h, g, 1e-4, 0.2, 0), fire_rate(fire_rate), movement_rate(movement_rate), movement_speed(movement_speed), jump_Speed(jump_speed)
 {
+
     shooting_timer = new QTimer;
     movement_timer = new QTimer;
 
     scene = s;
     proyectiles = p;
-    sight = 1;
+    sight = -1;
 
     srand(time(NULL));
 
     if(dificulty == 1){
-        health = 40;
+        health = 60;
         damage = 10;
-        movement_speed = 10; //***
-        jump_Speed = 20; //***
-        shot_speed = 5;
-        fire_rate = 2500;
+        shot_speed = 15;
     }
     else if(dificulty == 2){
-        health = 60;
-        damage = 20;
-        movement_speed = 10; //***
-        jump_Speed = 20; //***
-        shot_speed = 10;
-        fire_rate = 2000;
+        health = 90;
+        damage = 30;
+        shot_speed = 25;
     }
     else if(dificulty == 3){
-        health = 80;
-        damage = 30;
-        movement_speed = 10; //***
-        jump_Speed = 20; //***
-        shot_speed = 15;
-        fire_rate = 1500;
-    }
-    else if(dificulty == 4){
-        health = 100;
-        damage = 40;
-        movement_speed = 10; //***
-        jump_Speed = 30; //***
-        shot_speed = 20;
-        fire_rate = 1000;
-    }
-    else if(dificulty == 5){
         health = 120;
-        damage = 50;
-        movement_speed = 10; //***
-        jump_Speed = 20; //***
-        shot_speed = 25;
-        fire_rate = 500;
+        damage = 40;
+        shot_speed = 30;
     }
     else{
         health = 0;
         damage = 0;
-        movement_speed = 0; //***
-        jump_Speed = 0; //***
         shot_speed = 0;
-        fire_rate = 0;
     }
 
     if(shooting_type == "single"){
@@ -125,7 +98,7 @@ void Enemy::take_damage(int damage) {
 
 void Enemy::init() {
     shooting_timer->start(fire_rate);
-    movement_timer->start(1000);
+    movement_timer->start(movement_rate);
 }
 void Enemy::stop() {
     shooting_timer->stop();

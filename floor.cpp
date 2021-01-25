@@ -11,6 +11,16 @@ Floor::~Floor() {
     delete safe;
     delete treasure;
     delete boss;
+
+    scene = nullptr;
+    proyectiles = nullptr;
+
+    delete floor_music;
+    delete floor_playlist;
+
+    delete boss_music;
+    delete boss_playlist;
+
     delete r1;
     delete r2;
     delete r3;

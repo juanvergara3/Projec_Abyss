@@ -181,6 +181,8 @@ void Player::update_stats(Item *i) {
     health += max_health * i->getHealth();
     if(health > max_health)
         health = max_health;
+    else if(health < 0)
+        health = 0;
 
     max_health += max_health*i->getMax_health();
     damage += damage*i->getDamage();
