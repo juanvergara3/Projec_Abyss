@@ -1,12 +1,7 @@
 #include "player.h"
 
-int Player::getStatPos() const
-{
-    return statPos;
-}
-
 Player::Player(QObject *parent, QGraphicsScene *s, std::string name, std::list<Proyectile *> *p, int statPos, float x_, float y_, int player) :
-    Entity(parent, x_, y_, 0, 0, 20, 12, 16, 4, 1e-5, 0.1, 0), statPos(statPos)
+    Entity(parent, x_, y_, 0, 0, 20, 16, 16, 4, 1e-5, 0.1, 0), statPos(statPos)
 {
 
     health = 100;
@@ -47,7 +42,7 @@ Player::Player(QObject *parent, QGraphicsScene *s, std::string name, std::list<P
     init_stats(statPos);
 }
 
-Player::Player(QObject *parent, QGraphicsScene *s, std::list<Proyectile *> *p, int x, int y, int statPos, std::string name, float max_health, float health, float damage, float shot_speed, float movement_speed, float jump_Speed, float g, float g_p, float w, float h, float r_p, float e, std::string shooting_mode)
+Player::Player(QObject *parent, QGraphicsScene *s, std::list<Proyectile *> *p, int player, int x, int y, int statPos, std::string name, float max_health, float health, float damage, float shot_speed, float movement_speed, float jump_Speed, float g, float g_p, float w, float h, float r_p, float e, std::string shooting_mode)
     :Entity(parent, x, y, 0, 0, 20, w, h, g, 1e-5, e, 0), statPos(statPos)
 {
     this->health = health;
@@ -77,7 +72,14 @@ Player::Player(QObject *parent, QGraphicsScene *s, std::list<Proyectile *> *p, i
 
     i = 0;
     j = 0;
-    sprite = new QPixmap(":/Assets/Sprites/entities/p2-sprite.png");
+    if(player == 1)
+        sprite = new QPixmap(":/Assets/Sprites/entities/p1-sprite.png");
+    else if(player == 2)
+        sprite = new QPixmap(":/Assets/Sprites/entities/p2-sprite.png");
+
+    sprite_timer = new QTimer();
+    connect(sprite_timer, SIGNAL(timeout()), this, SLOT(update_sprite()));
+    sprite_timer->start(80);
 
     init_stats(statPos);
 }
@@ -295,10 +297,10 @@ void Player::update() {
 void Player::update_sprite() {
 
     if(direction != 0)
-        if(i == 96)
-            i = 12;
+        if(i == getWidth()*8)
+            i = getWidth();
         else
-            i += 12;
+            i += getWidth();
     else
         i = 0;
 
@@ -316,7 +318,7 @@ QRectF Player::boundingRect() const {
         return QRectF(-this->getWidth()/2, -this->getHeight()/2, this->getWidth(), this->getHeight());
 }
 void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-    painter->drawPixmap(-this->getWidth()/2, -this->getHeight()/2, sprite->scaledToHeight(this->getHeight()), i, j, 12, 15);
+    painter->drawPixmap(-this->getWidth()/2, -this->getHeight()/2, sprite->scaledToHeight(this->getHeight()), i, j, this->getWidth(), this->getHeight());
     //painter->drawRect(boundingRect());
 }
 
@@ -394,4 +396,9 @@ float Player::getR_p() const
 std::string Player::getShooting_mode() const
 {
     return shooting_mode;
+}
+
+int Player::getStatPos() const
+{
+    return statPos;
 }

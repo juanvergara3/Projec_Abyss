@@ -28,9 +28,11 @@ private: // Variables
     bool jumping;
 
     QPixmap *sprite;
+    int i, j;
 
     QTimer *shooting_timer;
     QTimer *movement_timer;
+    QTimer *sprite_timer;
 
     QGraphicsScene *scene;
 
@@ -60,6 +62,8 @@ public slots:
 
     void lamprey_move();
     void expelled_move();
+
+    void update_sprite_priest();
 };
 
 #endif // BOSS_H

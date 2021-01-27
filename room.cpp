@@ -467,7 +467,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         boss_door = new Door(this, nullptr, "boss", 150, 0, 150 - 20, 720-80, 40, 80, ":/Assets/Sprites/f2-boss-door.png");
 
-        boss = new Boss(this, scene, "priest", p, 1280/2, 250, 0, 0, 25, 100, 200, 5, 1e-5, 0.1, 0);
+        boss = new Boss(this, scene, "priest", p, 1280/2, 250, 0, 0, 25, 100, 120, 5, 1e-5, 0.1, 0);
 
         bg = new QPixmap(":/Assets/Sprites/f2-boss.png");
         setPos(0,0);
@@ -685,7 +685,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         boss_door = new Door(this, nullptr, "final_boss", 0, 0, 1280 - 150 - 20, 720-100-80, 40, 80, ":/Assets/Sprites/f3-boss-door.png");
 
-        boss = new Boss(this, scene, "expelled", p, 1200, 220, 0, 0, 20, 60, 120, 5, 1e-5, 0.1, 0);
+        boss = new Boss(nullptr, scene, "expelled", p, 1200, 220, 0, 0, 20, 60, 120, 5, 1e-5, 0.1, 0);
 
         itemX =  250;
         itemY = 720 - 16;
@@ -847,6 +847,9 @@ void Room::clear_room() {
         enemies.clear();
 
     else  if(type == "boss" || type == "final_boss") {
+
+        boss->stop();
+
         delete boss;
         boss = nullptr;
 

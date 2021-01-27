@@ -85,24 +85,14 @@ void Floor::load_floor(short num) {
         r3 = new Room(nullptr, scene, proyectiles, "f1-3");
         r4 = new Room(nullptr, scene, proyectiles, "f1-4");
 
-        floor_playlist = new QMediaPlaylist();
+        floor_playlist = new QMediaPlaylist;
         floor_playlist->addMedia(QUrl("qrc:/Assets/OST/The Binding of Isaac Antibirth OST Descent (Title).mp3"));
-        floor_playlist->setPlaybackMode(QMediaPlaylist::Loop);
         floor_music = new QMediaPlayer;
         floor_music->setPlaylist(floor_playlist);
         floor_music->setVolume(10);
 
-//        floor_music= new QMediaPlayer();
-//        floor_music->setMedia(QUrl("qrc:/Assets/OST/The Binding of Isaac Antibirth OST Descent (Title).mp3"));
-
-//        connect(floor_music, &QMediaPlayer::stateChanged, [this](QMediaPlayer::State state) {
-//                if (state == QMediaPlayer::State::StoppedState)
-//                    floor_music->play();
-//            });
-
         boss_playlist = new QMediaPlaylist();
         boss_playlist->addMedia(QUrl("qrc:/Assets/OST/Epic Dark Battle Music - Escape [Powerful Fantasy Horror by Ebunny].mp3"));
-        boss_playlist->setPlaybackMode(QMediaPlaylist::Loop);
         boss_music = new QMediaPlayer;
         boss_music->setPlaylist(boss_playlist);
         boss_music->setVolume(10);
@@ -118,14 +108,12 @@ void Floor::load_floor(short num) {
 
         floor_playlist = new QMediaPlaylist();
         floor_playlist->addMedia(QUrl("qrc:/Assets/OST/The Binding of Isaac Antibirth OST Machine in the Walls (Mausoleum).mp3"));
-        floor_playlist->setPlaybackMode(QMediaPlaylist::Loop);
         floor_music = new QMediaPlayer;
         floor_music->setPlaylist(floor_playlist);
         floor_music->setVolume(10);
 
         boss_playlist = new QMediaPlaylist();
         boss_playlist->addMedia(QUrl("qrc:/Assets/OST/The Binding of Isaac Antibirth OST The Hammer of Pompeii (Necropolis).mp3"));
-        boss_playlist->setPlaybackMode(QMediaPlaylist::Loop);
         boss_music = new QMediaPlayer;
         boss_music->setPlaylist(boss_playlist);
         boss_music->setVolume(10);
@@ -141,14 +129,12 @@ void Floor::load_floor(short num) {
 
         floor_playlist = new QMediaPlaylist();
         floor_playlist->addMedia(QUrl("qrc:/Assets/OST/Innocence Glitched (Basement).mp3"));
-        floor_playlist->setPlaybackMode(QMediaPlaylist::Loop);
         floor_music = new QMediaPlayer;
         floor_music->setPlaylist(floor_playlist);
         floor_music->setVolume(10);
 
         boss_playlist = new QMediaPlaylist();
         boss_playlist->addMedia(QUrl("qrc:/Assets/OST/Mittsies - Epitomize.mp3"));
-        boss_playlist->setPlaybackMode(QMediaPlaylist::Loop);
         boss_music = new QMediaPlayer;
         boss_music->setPlaylist(boss_playlist);
         boss_music->setVolume(10);

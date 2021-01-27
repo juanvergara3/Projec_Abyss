@@ -5,6 +5,7 @@ Boss::Boss(QObject *parent, QGraphicsScene *s, std::string boss, std::list<Proye
 {
     shooting_timer = new QTimer;
     movement_timer = new QTimer;
+    sprite_timer = new QTimer;
 
     health_bar = new QProgressBar;
 
@@ -12,6 +13,8 @@ Boss::Boss(QObject *parent, QGraphicsScene *s, std::string boss, std::list<Proye
     description_label = new QLabel;
 
     sprite = nullptr;
+    i = 0;
+    j = 0;
 
     scene = s;
     proyectiles = p;
@@ -33,6 +36,7 @@ Boss::Boss(QObject *parent, QGraphicsScene *s, std::string boss, std::list<Proye
     }
     else if (boss == "priest") {
         connect(shooting_timer, SIGNAL(timeout()), this, SLOT(priest_shoot()));
+        connect(sprite_timer, SIGNAL(timeout()), this, SLOT(update_sprite_priest()));
 
         sprite = new QPixmap(":/Assets/Sprites/entities/priest_sprite.png");
 
@@ -42,7 +46,7 @@ Boss::Boss(QObject *parent, QGraphicsScene *s, std::string boss, std::list<Proye
         health = 800;
         damage = 40;
         shot_speed = 25;
-        fire_rate = 1000; // 300 worked fine before adding the music
+        fire_rate = 800; // 300 worked fine before adding the music
         movement_speed = 0;
         jump_Speed = 0;
     }
@@ -53,7 +57,7 @@ Boss::Boss(QObject *parent, QGraphicsScene *s, std::string boss, std::list<Proye
         name_label->setText("The Expelled One");
         description_label->setText("~Hatred Incarnated~");
 
-        health = 400;
+        health = 800;
         damage = 20;
         shot_speed = 15;
         fire_rate = 1200;
@@ -88,15 +92,18 @@ Boss::Boss(QObject *parent, QGraphicsScene *s, std::string boss, std::list<Proye
 Boss::~Boss() {
     shooting_timer->stop();
     movement_timer->stop();
+    sprite_timer->stop();
 
     disconnect(movement_timer,0,0,0);
     disconnect(shooting_timer,0,0,0);
+    disconnect(sprite_timer,0,0,0);
 
     proyectiles = nullptr;
     scene = nullptr;
 
     delete shooting_timer;
     delete movement_timer;
+    delete sprite_timer;
     delete name_label;
     delete description_label;
     delete health_bar;
@@ -108,7 +115,7 @@ QRectF Boss::boundingRect() const {
 }
 void Boss::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     if(sprite != nullptr)
-        painter->drawPixmap(-this->getWidth()/2, -this->getHeight()/2, sprite->scaledToHeight(this->getHeight()), 0, 0, this->getWidth(), this->getHeight());
+        painter->drawPixmap(-this->getWidth()/2, -this->getHeight()/2, *sprite, i, j, this->getWidth(), this->getHeight());
     else{
         painter->setBrush(Qt::white);
         painter->drawRect(boundingRect());
@@ -135,6 +142,7 @@ void Boss::take_damage(int damage) {
 void Boss::init() {
     shooting_timer->start(fire_rate);
     movement_timer->start(1500);
+    sprite_timer->start(100);
 
     name_label->setVisible(true);
     description_label->setVisible(true);
@@ -143,6 +151,7 @@ void Boss::init() {
 void Boss::stop() {
     shooting_timer->stop();
     movement_timer->stop(); 
+    sprite_timer->stop();
 
     name_label->setVisible(false);
     description_label->setVisible(false);
@@ -484,4 +493,14 @@ void Boss::expelled_move() {
         setG(getG()*-1);
 
     setE(0.1 + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(1.0-0.1))));
+}
+
+void Boss::update_sprite_priest() {
+    if(i == 700)
+        i = 0;
+    else
+        i += 100;
+
+
+    this->QGraphicsItem::update(-this->getWidth()/2, -this->getHeight()/2, this->getWidth(), this->getHeight());
 }

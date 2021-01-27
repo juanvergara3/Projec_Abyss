@@ -11,6 +11,7 @@ Game::Game(QGraphicsScene * scene, std::list<Proyectile *> *p, std::string seed,
 
     floor1->boss->boss_door->setNext(floor2);
     floor2->boss->boss_door->setNext(floor3);
+    floor3->boss->boss_door->setNext(nullptr);
 
     current_floor = floor1;
     current_room = floor1->safe;
@@ -48,6 +49,7 @@ Game::Game(std::string file_name, QGraphicsScene * scene, std::list<Proyectile *
 
     floor1->boss->boss_door->setNext(floor2); // might fail if the floor is alredy cleared
     floor2->boss->boss_door->setNext(floor3);
+    floor3->boss->boss_door->setNext(nullptr);
 
     std::fstream file (file_name, std:: fstream::in | std::fstream::binary);
 
@@ -137,7 +139,7 @@ Game::Game(std::string file_name, QGraphicsScene * scene, std::list<Proyectile *
 
             file>>temp;
 
-            p1 = new Player(nullptr, scene, proyectiles, int(x), int(y), statPos, name, max_health, health, damage, shot_speed, movement_speed, jump_Speed, g, g_p, w, h, r_p, e, temp);
+            p1 = new Player(nullptr, scene, proyectiles, 1, int(x), int(y), statPos, name, max_health, health, damage, shot_speed, movement_speed, jump_Speed, g, g_p, w, h, r_p, e, temp);
             p2 = nullptr;
         }
         else if(type == "multiplayer"){
@@ -191,7 +193,7 @@ Game::Game(std::string file_name, QGraphicsScene * scene, std::list<Proyectile *
 
             file>>temp;
 
-            p1 = new Player(nullptr, scene, proyectiles, int(x), int(y), statPos, name, max_health, health, damage, shot_speed, movement_speed, jump_Speed, g, g_p, w, h, r_p, e, temp);
+            p1 = new Player(nullptr, scene, proyectiles, 1, int(x), int(y), statPos, name, max_health, health, damage, shot_speed, movement_speed, jump_Speed, g, g_p, w, h, r_p, e, temp);
 
             file>>temp;
             x = std::stof(temp);
@@ -242,7 +244,7 @@ Game::Game(std::string file_name, QGraphicsScene * scene, std::list<Proyectile *
 
             file>>temp;
 
-            p2 = new Player(nullptr, scene, proyectiles, int(x), int(y), statPos, name, max_health, health, damage, shot_speed, movement_speed, jump_Speed, g, g_p, w, h, r_p, e, temp);
+            p2 = new Player(nullptr, scene, proyectiles, 2, int(x), int(y), statPos, name, max_health, health, damage, shot_speed, movement_speed, jump_Speed, g, g_p, w, h, r_p, e, temp);
         }
 
         for(int k = 0; k < 8; k++){ // floor 1

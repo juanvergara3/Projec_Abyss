@@ -27,13 +27,13 @@ MessageWindow::~MessageWindow() {
 }
 
 void MessageWindow::keyPressEvent(QKeyEvent *event) {
-
+    if(event->key() == Qt::Key_Enter)
+        on_continueButton_clicked();
 }
 
 void MessageWindow::on_continueButton_clicked() {
     this->close();
     main_window->close_game();
-    main_window->close();
 
     main_menu->showMaximized();
 }
