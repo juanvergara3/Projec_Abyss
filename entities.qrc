@@ -4,5 +4,6 @@
         <file>Assets/Sprites/entities/p2-sprite.png</file>
         <file>Assets/Sprites/entities/priest_sprite.png</file>
         <file>Assets/Sprites/entities/expelled.png</file>
+        <file>Assets/Sprites/entities/lamprey.png</file>
     </qresource>
 </RCC>

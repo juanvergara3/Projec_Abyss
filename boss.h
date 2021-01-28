@@ -63,6 +63,7 @@ public slots:
     void lamprey_move();
     void expelled_move();
 
+    void update_sprite_lamprey();
     void update_sprite_priest();
     void update_sprite_expelled();
 };

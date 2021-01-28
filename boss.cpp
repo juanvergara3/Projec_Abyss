@@ -23,6 +23,9 @@ Boss::Boss(QObject *parent, QGraphicsScene *s, std::string boss, std::list<Proye
     if(boss == "lamprey"){
         connect(shooting_timer, SIGNAL(timeout()), this, SLOT(lamprey_shoot()));
         connect(movement_timer, SIGNAL(timeout()), this, SLOT(lamprey_move()));
+        connect(sprite_timer, SIGNAL(timeout()), this, SLOT(update_sprite_lamprey()));
+
+        sprite = new QPixmap(":/Assets/Sprites/entities/lamprey.png");
 
         name_label->setText("Insatiable Lamprey");
         description_label->setText("~Lurking Beast~");
@@ -501,26 +504,29 @@ void Boss::expelled_move() {
         setTransform(QTransform().scale(1, -1));
     else
         setTransform(QTransform().scale(1, 1));
-
-
 }
 
+void Boss::update_sprite_lamprey() {
+    if(i == 600)
+        i = 0;
+    else
+        i += 300;
+
+    this->QGraphicsItem::update(-this->getWidth()/2, -this->getHeight()/2, this->getWidth(), this->getHeight());
+}
 void Boss::update_sprite_priest() {
     if(i == 700)
         i = 0;
     else
         i += 100;
 
-
     this->QGraphicsItem::update(-this->getWidth()/2, -this->getHeight()/2, this->getWidth(), this->getHeight());
 }
-
 void Boss::update_sprite_expelled() {
     if(i == 180)
         i = 0;
     else
         i += 60;
-
 
     this->QGraphicsItem::update(-this->getWidth()/2, -this->getHeight()/2, this->getWidth(), this->getHeight());
 }
