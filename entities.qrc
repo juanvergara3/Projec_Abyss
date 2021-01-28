@@ -3,5 +3,6 @@
         <file>Assets/Sprites/entities/p1-sprite.png</file>
         <file>Assets/Sprites/entities/p2-sprite.png</file>
         <file>Assets/Sprites/entities/priest_sprite.png</file>
+        <file>Assets/Sprites/entities/expelled.png</file>
     </qresource>
 </RCC>

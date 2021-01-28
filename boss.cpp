@@ -53,6 +53,9 @@ Boss::Boss(QObject *parent, QGraphicsScene *s, std::string boss, std::list<Proye
     else if (boss == "expelled") {
         connect(shooting_timer, SIGNAL(timeout()), this, SLOT(expelled_shoot()));
         connect(movement_timer, SIGNAL(timeout()), this, SLOT(expelled_move()));
+        connect(sprite_timer, SIGNAL(timeout()), this, SLOT(update_sprite_expelled()));
+
+        sprite = new QPixmap(":/Assets/Sprites/entities/expelled.png");
 
         name_label->setText("The Expelled One");
         description_label->setText("~Hatred Incarnated~");
@@ -142,7 +145,7 @@ void Boss::take_damage(int damage) {
 void Boss::init() {
     shooting_timer->start(fire_rate);
     movement_timer->start(1500);
-    sprite_timer->start(100);
+    sprite_timer->start(150);
 
     name_label->setVisible(true);
     description_label->setVisible(true);
@@ -493,6 +496,13 @@ void Boss::expelled_move() {
         setG(getG()*-1);
 
     setE(0.1 + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(1.0-0.1))));
+
+    if (getG() < 0)
+        setTransform(QTransform().scale(1, -1));
+    else
+        setTransform(QTransform().scale(1, 1));
+
+
 }
 
 void Boss::update_sprite_priest() {
@@ -500,6 +510,16 @@ void Boss::update_sprite_priest() {
         i = 0;
     else
         i += 100;
+
+
+    this->QGraphicsItem::update(-this->getWidth()/2, -this->getHeight()/2, this->getWidth(), this->getHeight());
+}
+
+void Boss::update_sprite_expelled() {
+    if(i == 180)
+        i = 0;
+    else
+        i += 60;
 
 
     this->QGraphicsItem::update(-this->getWidth()/2, -this->getHeight()/2, this->getWidth(), this->getHeight());

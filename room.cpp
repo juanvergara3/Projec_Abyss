@@ -685,7 +685,7 @@ Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, s
 
         boss_door = new Door(this, nullptr, "final_boss", 0, 0, 1280 - 150 - 20, 720-100-80, 40, 80, ":/Assets/Sprites/f3-boss-door.png");
 
-        boss = new Boss(nullptr, scene, "expelled", p, 1200, 220, 0, 0, 20, 60, 120, 5, 1e-5, 0.1, 0);
+        boss = new Boss(nullptr, scene, "expelled", p, 1200, 220, 0, 0, 20, 60, 140, 5, 1e-5, 0.1, 0);
 
         itemX =  250;
         itemY = 720 - 16;

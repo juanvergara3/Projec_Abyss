@@ -64,6 +64,7 @@ public slots:
     void expelled_move();
 
     void update_sprite_priest();
+    void update_sprite_expelled();
 };
 
 #endif // BOSS_H
