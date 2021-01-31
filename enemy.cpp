@@ -1,11 +1,13 @@
 #include "enemy.h"
 
-Enemy::Enemy(QObject *parent, QGraphicsScene *s, std::string shooting_type, std::string movement_type, std::list<Proyectile *> *p, int fire_rate, int movement_rate, float movement_speed, float jump_speed, int dificulty, float x, float y, int w, int h, float g) :
+Enemy::Enemy(QObject *parent, QGraphicsScene *s, std::string shooting_type, std::string movement_type, std::list<Proyectile *> *p, int fire_rate, int movement_rate, float movement_speed, float jump_speed, int dificulty, float x, float y, int w, int h, float g, std::string sprite) :
     Entity(parent, x, y, 0, 0, 10, w, h, g, 1e-4, 0.2, 0), fire_rate(fire_rate), movement_rate(movement_rate), movement_speed(movement_speed), jump_Speed(jump_speed)
 {
 
     shooting_timer = new QTimer;
     movement_timer = new QTimer;
+
+    this->sprite = new QPixmap(sprite.c_str());
 
     scene = s;
     proyectiles = p;
@@ -83,6 +85,15 @@ Enemy::~Enemy() {
 
     delete shooting_timer;
     delete movement_timer;
+    delete sprite;
+}
+
+QRectF Enemy::boundingRect() const {
+        return QRectF(-this->getWidth()/2, -this->getHeight()/2, this->getWidth(), this->getHeight());
+}
+void Enemy::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+    painter->drawPixmap(-this->getWidth()/2, -this->getHeight()/2, sprite->scaledToHeight(this->getHeight()), 0, 0, this->getWidth(), this->getHeight());
+    //painter->drawRect(boundingRect());
 }
 
 int Enemy::getDamage() const {

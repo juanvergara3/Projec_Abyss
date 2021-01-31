@@ -29,13 +29,18 @@ private: // Variables
     QTimer *shooting_timer;
     QTimer *movement_timer;
 
+    QPixmap *sprite;
+
     QGraphicsScene *scene;
 
     std::list<Proyectile *> *proyectiles;
 
 public: // Methods
-    Enemy(QObject *parent = nullptr, QGraphicsScene *s = nullptr, std::string shooting_type = "single", std::string movement_type = "none", std::list<Proyectile *> *p = nullptr, int fire_rate = 1000, int movement_rate = 1000, float movement_speed = 1, float jump_speed = 20,int dificulty = 3, float x = 0, float y = 0, int w = 30, int h = 30, float g = 4);
+    Enemy(QObject *parent = nullptr, QGraphicsScene *s = nullptr, std::string shooting_type = "single", std::string movement_type = "none", std::list<Proyectile *> *p = nullptr, int fire_rate = 1000, int movement_rate = 1000, float movement_speed = 1, float jump_speed = 20,int dificulty = 3, float x = 0, float y = 0, int w = 30, int h = 30, float g = 4, std::string sprite = "");
     ~Enemy();
+
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
 
     int getHealth() const;
     int getDamage() const;

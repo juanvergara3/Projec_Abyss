@@ -2743,10 +2743,10 @@ color: rgb(255, 255, 255);</string>
     </property>
     <property name="geometry">
      <rect>
-      <x>1090</x>
-      <y>500</y>
-      <width>87</width>
-      <height>52</height>
+      <x>1080</x>
+      <y>490</y>
+      <width>332</width>
+      <height>178</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="howtoplayScreen">
@@ -2764,7 +2764,14 @@ color: rgb(255, 255, 255);</string>
         </font>
        </property>
        <property name="text">
-        <string>git gud</string>
+        <string>Movement Player 1: W, A, S, D
+Movement Player 2: I, J, K, L
+Attack Player 1: Space Bar
+Attack Player 2: Left Click
+Interact Player 1: E
+Interact Player 2: O
+
+Also, get good lmao</string>
        </property>
       </widget>
      </item>
@@ -4031,10 +4038,10 @@ color: rgb(255, 255, 255);</string>
     </property>
     <property name="geometry">
      <rect>
-      <x>750</x>
-      <y>500</y>
-      <width>90</width>
-      <height>52</height>
+      <x>460</x>
+      <y>560</y>
+      <width>376</width>
+      <height>106</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="creditsScreen">
@@ -4052,7 +4059,10 @@ color: rgb(255, 255, 255);</string>
         </font>
        </property>
        <property name="text">
-        <string>All: Me.</string>
+        <string>Everything: Me.
+
+Special thanks to 
+absolutely no one :)</string>
        </property>
       </widget>
      </item>

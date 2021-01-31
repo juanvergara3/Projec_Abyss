@@ -5,5 +5,8 @@
         <file>Assets/Sprites/entities/priest_sprite.png</file>
         <file>Assets/Sprites/entities/expelled.png</file>
         <file>Assets/Sprites/entities/lamprey.png</file>
+        <file>Assets/Sprites/entities/priest.png</file>
+        <file>Assets/Sprites/entities/skull.png</file>
+        <file>Assets/Sprites/entities/slime.png</file>
     </qresource>
 </RCC>
