@@ -2,7 +2,7 @@
 #include "room.h"
 #include "floor.h"
 
-Door::Door(QObject *parent, Room *self, int x, int y, int w, int h) {
+Door::Door(QObject *parent, Room *self, int x, int y, int w, int h) { // constructor for normal room to room doors
     posx = x;
     posy = y;
     width = w;
@@ -19,7 +19,7 @@ Door::Door(QObject *parent, Room *self, int x, int y, int w, int h) {
     type = "normal";
 }
 
-Door::Door(QObject *parent, Floor *next, std::string type_, int playerX, int playerY, int x, int y, int w, int h, std::string sprite) {
+Door::Door(QObject *parent, Floor *next, std::string type_, int playerX, int playerY, int x, int y, int w, int h, std::string sprite) { // constructor for floor to floor doors
     posx = x;
     posy = y;
     width = w;
@@ -47,7 +47,7 @@ Door::~Door(){
 QRectF Door::boundingRect() const{
     return QRectF(0, 0, width, height);
 }
-void Door::paint(QPainter *painter, const QStyleOptionGraphicsItem *options, QWidget *widget) {
+void Door::paint(QPainter *painter, const QStyleOptionGraphicsItem *options, QWidget *widget) { // if the door object has a sprite it gets used if not it'll be transparent
 
     if(sprite != nullptr)
         painter->drawPixmap(0, 0, *sprite, 0 , 0, width, height);
@@ -71,7 +71,7 @@ int Door::getHeight() const {
     return height;
 }
 
-void Door::setLink(Door *value) {
+void Door::setLink(Door *value) { // sets the door to which this is linked
     link = value;
 }
 Door *Door::getLink() const {
@@ -81,7 +81,7 @@ Room *Door::getSelf() const {
     return self;
 }
 
-void Door::setNext(Floor *value) {
+void Door::setNext(Floor *value) { // sets the floor to which this is linked
     next = value;
 }
 Floor *Door::getNext() const {
@@ -98,6 +98,3 @@ int Door::getPlayerY() const {
 std::string Door::getType() const {
     return type;
 }
-
-
-

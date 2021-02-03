@@ -35,7 +35,7 @@ public: //variables
 private: //methods
 
 public: //methods
-    explicit Item(QWidget *parent = nullptr, std::string name = "",
+    Item(QWidget *parent = nullptr, std::string name = "",
                   float m_health = 1,
                   float health_ = 1,
                   float damage_ = 1,

@@ -1,23 +1,10 @@
 #include "entity.h"
 
-float Entity::getG() const
-{
-    return g;
-}
-
-void Entity::setWidth(int value)
-{
-    width = value;
-}
-
-void Entity::setHeight(int value)
-{
-    height = value;
-}
-
 Entity::Entity(QObject *parent, float x_, float y_, float vx_, float vy_, float mass_, int radio_, float g_, float K_, float e_, float V_)
     : QObject(parent), v_limit(720), h_limit(1280), G(6.67384e-11)
 {
+    // for square entities with width == height
+
     x = x_;
     y = y_;
     Vx = vx_;
@@ -41,6 +28,8 @@ Entity::Entity(QObject *parent, float x_, float y_, float vx_, float vy_, float 
 Entity::Entity(QObject *parent, float x_, float y_, float vx_, float vy_, float mass_, int width_, int height_, float g_, float K_, float e_, float V_)
     : QObject(parent), v_limit(720), h_limit(1280), G(6.67384e-11)
 {
+    // for rectangular entities with width != height
+
     x = x_;
     y = y_;
     Vx = vx_;
@@ -67,12 +56,12 @@ Entity::~Entity() {
 QRectF Entity::boundingRect() const {
         return QRectF(-width/2, -height/2, width, height);
 }
-void Entity::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+void Entity::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) { // any entity without an overloaded paint method will be white
     painter->setBrush(Qt::white);
     painter->drawRect(boundingRect());
 }
 
-void Entity::update() {
+void Entity::update() { // updates parabolic entities
 
     V = sqrt( pow(Vx ,2) + pow(Vy ,2) );
 
@@ -89,7 +78,7 @@ void Entity::update() {
 
     setPos(x, v_limit - y);
 }
-void Entity::orbital_update(Entity *k) {
+void Entity::orbital_update(Entity *k) { // updates orbital entities
     float aux = 0;
     float dis;
 
@@ -114,17 +103,17 @@ void Entity::orbital_update(Entity *k) {
     setPos(x, v_limit - y);
 }
 
-void Entity::set_vel(float px, float py, float vx, float vy) {
+void Entity::set_vel(float px, float py, float vx, float vy) { // changes x and y speed on entities
     x = px;
     y = py;
     Vx = vx;
     Vy = vy;
 }
-void Entity::set_velX(float px, float vx) {
+void Entity::set_velX(float px, float vx) { // changes x speed on entities
     x = px;
     Vx = vx;
 }
-void Entity::set_velY(float py, float vy) {
+void Entity::set_velY(float py, float vy) { // changes y speed on entities
     y = py;
     Vy = vy;
 }
@@ -177,4 +166,16 @@ int Entity::getWidth() const {
 }
 int Entity::getHeight() const {
     return height;
+}
+
+float Entity::getG() const
+{
+    return g;
+}
+
+void Entity::setWidth(int value) {
+    width = value;
+}
+void Entity::setHeight(int value) {
+    height = value;
 }

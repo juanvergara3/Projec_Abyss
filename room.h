@@ -47,7 +47,7 @@ private: // Variables
     std::string name;
 
 public: // Methods
-    explicit Room(QObject *parent = nullptr, QGraphicsScene* scene = nullptr , std::list<Proyectile *> *p = nullptr, std::string name_ = "");
+    Room(QObject *parent = nullptr, QGraphicsScene* scene = nullptr , std::list<Proyectile *> *p = nullptr, std::string name_ = "");
     ~Room();
 
     void load_room();

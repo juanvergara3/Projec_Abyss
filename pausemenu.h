@@ -28,7 +28,7 @@ private: // variables
     std::string current_screen;
 
 public: // methods
-    explicit PauseMenu(QWidget *parent = nullptr, MainWindow *m = nullptr);
+    PauseMenu(QWidget *parent = nullptr, MainWindow *m = nullptr);
     ~PauseMenu();
 
     void setMain_window(MainWindow *value);

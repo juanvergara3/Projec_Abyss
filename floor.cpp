@@ -40,7 +40,7 @@ void Floor::stop_boss_music() {
     boss_music->stop();
 }
 
-bool Floor::is_playing(std::string type) {
+bool Floor::is_playing(std::string type) { // returns true if the song is playing or false if it's not
 
     if(type == "boss"){
         if(boss_music->state() == QMediaPlayer::PlayingState)
@@ -58,23 +58,17 @@ bool Floor::is_playing(std::string type) {
     return false;
 }
 
-
-bool Floor::getClear_state() const
-{
+bool Floor::getClear_state() const {
     return clear_state;
 }
-
-void Floor::setClear_state(bool value)
-{
+void Floor::setClear_state(bool value) {
     clear_state = value;
 }
-
-int Floor::getNum() const
-{
+int Floor::getNum() const {
     return num;
 }
 
-void Floor::load_floor(short num) {
+void Floor::load_floor(short num) { // actually loads every room on the floor, also sets the music
     
     if(num == 1){
         safe = new Room(nullptr, scene, proyectiles, "f1-safe");
@@ -152,8 +146,7 @@ void Floor::load_floor(short num) {
     load_links(num);
 }
 
-void Floor::load_links(short num)
-{
+void Floor::load_links(short num) { // creates all links between rooms and floors
     if(num == 1){
         safe->right_door->setLink(r1->left_door);
         r1->left_door->setLink(safe->right_door);

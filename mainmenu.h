@@ -31,7 +31,7 @@ private: // variables
     MessageWindow *victory_window;
 
 public: // methods
-    explicit MainMenu(QWidget *parent = nullptr, MainWindow *w = nullptr);
+    MainMenu(QWidget *parent = nullptr, MainWindow *w = nullptr);
     ~MainMenu();
 
     void setMainwindow(MainWindow *value);

@@ -4,6 +4,8 @@ Player::Player(QObject *parent, QGraphicsScene *s, std::string name, std::list<P
     Entity(parent, x_, y_, 0, 0, 20, 16, 16, 4, 1e-5, 0.1, 0), statPos(statPos)
 {
 
+    // default player constructor for new games
+
     health = 100;
     max_health = 100;
     damage = 20;
@@ -37,7 +39,7 @@ Player::Player(QObject *parent, QGraphicsScene *s, std::string name, std::list<P
 
     sprite_timer = new QTimer();
     connect(sprite_timer, SIGNAL(timeout()), this, SLOT(update_sprite()));
-   sprite_timer->start(80);
+    sprite_timer->start(80);
 
     init_stats(statPos);
 }
@@ -45,6 +47,8 @@ Player::Player(QObject *parent, QGraphicsScene *s, std::string name, std::list<P
 Player::Player(QObject *parent, QGraphicsScene *s, std::list<Proyectile *> *p, int player, int x, int y, int statPos, std::string name, float max_health, float health, float damage, float shot_speed, float movement_speed, float jump_Speed, float g, float g_p, float w, float h, float r_p, float e, std::string shooting_mode)
     :Entity(parent, x, y, 0, 0, 20, w, h, g, 1e-5, e, 0), statPos(statPos)
 {
+    // player constructor for loaded games
+
     this->health = health;
     this->max_health = max_health;
     this->damage = damage;
@@ -95,7 +99,7 @@ Player::~Player() {
     delete sprite_timer;
 }
 
-void Player::shoot() {
+void Player::shoot() { // the player shoots on different ways deppending on the items picked
     Proyectile *p;
 
     if(shooting_mode == "single"){
@@ -132,14 +136,14 @@ void Player::shoot() {
         scene->addItem(p);
     }
     else if(shooting_mode == "orbiting"){
-        p = new Proyectile(this, this, damage, this->getX() + sight*30, this->getY()+10, sight*(shot_speed/3), shot_speed/5, 1, r_p, g_p, 1e-5, 0.1, 0);
+        p = new Proyectile(this, "player", this, damage, this->getX() + sight*30, this->getY()+10, sight*(shot_speed/3), shot_speed/5, 1, r_p, g_p, 1e-5, 0.1, 0);
         proyectiles->push_back(p);
         p->setPos(p->getX(), getV_limit() - p->getY());
         scene->addItem(p);
     }
 }
 
-void Player::update_stat(std::string s) {
+void Player::update_stat(std::string s) { // updates a specific stat
 
     std::string temp;
 
@@ -178,25 +182,28 @@ void Player::update_stat(std::string s) {
         jump_speed_label->setText(temp.c_str());
     }
 }
-void Player::update_stats(Item *i) {
+void Player::update_stats(Item *i) { // updates all stats with an item and it's internal stat modifiers
 
-    health += max_health * i->getHealth();
+    health += max_health * i->getHealth(); // healing items heal a percentage of the maximum player health
     if(health > max_health)
         health = max_health;
     else if(health < 0)
         health = 0;
 
+    // ** most stats increase or decrease by a percentage of their current value **
+
     max_health += max_health*i->getMax_health();
     damage += damage*i->getDamage();
     shot_speed += shot_speed*i->getShot_speed();
 
-    if(i->getMovement_speed() == -1)
+    if(i->getMovement_speed() == -1) // confusion item inverts controls
         movement_speed *= -1;
     else
         movement_speed += movement_speed*i->getMovement_speed();
 
     jump_Speed += jump_Speed*i->getJump_Speed();
 
+    // gravity can be increased, decreased, inverted or set to 0 deppending on the item
     if(i->getG_player() == -1)
         g *= -1;
     else if(i->getG_player() == 0)
@@ -204,6 +211,7 @@ void Player::update_stats(Item *i) {
     else if(i->getG_player() != 1)
         g += g*i->getG_player();
 
+    // projectile gravity can be increased, decreased, inverted or set to 0 deppending on the item
     if(i->getG_proyectiles() == -1)
         g_p *= -1;
     else if(i->getG_proyectiles() == 0)
@@ -217,7 +225,7 @@ void Player::update_stats(Item *i) {
     r_p += r_p*i->getR_proyectiles();
     e += e*i->getE_player();
 
-    if(i->getShooting_mode() != "single")
+    if(i->getShooting_mode() != "single") // makes sure that if you pick a double or triple shot item you cannot go back to single shot
         shooting_mode = i->getShooting_mode();
 
     update_stat("max_health");
@@ -231,7 +239,7 @@ void Player::update_stats(Item *i) {
     setE(e);
     this->QGraphicsItem::update();
 }
-void Player::init_stats(int x_reference) {
+void Player::init_stats(int x_reference) { // configures all stat labels to make them look goood
 
     health_bar = new QProgressBar;
     health_bar->setRange(0, max_health);
@@ -273,8 +281,7 @@ void Player::init_stats(int x_reference) {
     scene->addWidget(jump_speed_label);
 }
 
-void Player::take_damage(int damage)
-{
+void Player::take_damage(int damage) { //  ouchie
     health -= damage;
 
     if( health < 0)
@@ -283,7 +290,7 @@ void Player::take_damage(int damage)
     update_stat("health");
 }
 
-void Player::update() {
+void Player::update() { // overloaded method, uses the default entity update plus some additional stuff
     this->Entity::update();
 
     int direction = this->direction;
@@ -314,15 +321,15 @@ float Player::getJump_Speed() const{
     return jump_Speed;
 }
 
-QRectF Player::boundingRect() const {
+QRectF Player::boundingRect() const { // overloaded method
         return QRectF(-this->getWidth()/2, -this->getHeight()/2, this->getWidth(), this->getHeight());
 }
-void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) { // overloaded method
     painter->drawPixmap(-this->getWidth()/2, -this->getHeight()/2, sprite->scaledToHeight(this->getHeight()), i, j, this->getWidth(), this->getHeight());
     //painter->drawRect(boundingRect());
 }
 
-void Player::addDirection(int d) {
+void Player::addDirection(int d) { // responsible for the player's movement, also for mirroring the sprite when moving left or right
 
     if (d == direction)
         return;
@@ -358,46 +365,37 @@ float Player::getHealth() const
 {
     return health;
 }
-
 bool Player::getAlive() const
 {
     return alive;
 }
-
 void Player::die() {
     alive = false;
 }
-
 float Player::getMax_health() const
 {
     return max_health;
 }
-
 float Player::getDamage() const
 {
     return damage;
 }
-
 float Player::getShot_speed() const
 {
     return shot_speed;
 }
-
 float Player::getG_p() const
 {
     return g_p;
 }
-
 float Player::getR_p() const
 {
     return r_p;
 }
-
 std::string Player::getShooting_mode() const
 {
     return shooting_mode;
 }
-
 int Player::getStatPos() const
 {
     return statPos;

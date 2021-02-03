@@ -39,7 +39,7 @@ private: // Variables
     std::list<Proyectile *> *proyectiles;
 
 public: // Methods
-    explicit Boss(QObject *parent = nullptr, QGraphicsScene *s = nullptr, std::string boss = "", std::list<Proyectile *> *p = nullptr, float x_ = 0, float y_ = 0, float vx_ = 0, float vy_ = 0, float mass_ = 0, int width_ = 0, int height_ = 0, float g_ = 0, float K_ = 0, float e_ = 0, float V_ = 0);
+    Boss(QObject *parent = nullptr, QGraphicsScene *s = nullptr, std::string boss = "", std::list<Proyectile *> *p = nullptr, float x_ = 0, float y_ = 0, float vx_ = 0, float vy_ = 0, float mass_ = 0, int width_ = 0, int height_ = 0, float g_ = 0, float K_ = 0, float e_ = 0, float V_ = 0);
     ~Boss();
 
     int getHealth() const;

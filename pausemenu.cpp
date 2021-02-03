@@ -25,6 +25,9 @@ PauseMenu::~PauseMenu() {
 }
 
 void PauseMenu::init_lists() {
+
+    // the pause window is divided on 3 "screens" that are represented by QLists
+
     mainScreen.push_back(ui->pausedLabel);
     mainScreen.push_back(ui->resumeButton);
     mainScreen.push_back(ui->saveButton);
@@ -67,28 +70,38 @@ void PauseMenu::show_menuScreen() {
 }
 
 void PauseMenu::on_resumeButton_clicked() { // on main screen
-    //this->hide();
+    //takes you back to the game
+
     this->close();
     main_window->showMaximized();
     main_window->resume();
 }
 void PauseMenu::on_saveButton_clicked() {
 
+    //saves your game
+
     main_window->getGame()->setCurrent_room(main_window->getCurrent_room());
     main_window->getGame()->setCurrent_floor(main_window->getCurrent_floor());
 
-    main_window->getGame()->save_game(QFileDialog::getSaveFileName(this, "Save", "", "Text file (*.txt)").toStdString());
+    std::string filename = QFileDialog::getSaveFileName(this, "Save", "", "Text file (*.txt)").toStdString();
 
-    //say it was saved successfully or some shit.
+    if(!filename.empty())
+        main_window->getGame()->save_game(filename);
 
 }
 void PauseMenu::on_restartButton_clicked() {
+
+    // takes you to the "reset screen"
+
     hide_mainScreen();
     show_resetScreen();
 
     current_screen = "restart";
 }
 void PauseMenu::on_exitButton_clicked() {
+
+    // takes you to the "menu screen"
+
     hide_mainScreen();
     show_menuScreen();
 
@@ -96,16 +109,21 @@ void PauseMenu::on_exitButton_clicked() {
 }
 
 void PauseMenu::on_noButton_res_clicked() { // on reset screen
+
+    // takes you back to the "main screen"
+
     hide_resetScreen();
     show_mainScreen();
 
     current_screen = "main";
 }
 void PauseMenu::on_yesButton_res_clicked() {
+
+    // resets your game and resumes it
+
     hide_resetScreen();
     show_mainScreen();
 
-    //this->hide();
     this->close();
 
     main_window->showMaximized();
@@ -113,12 +131,18 @@ void PauseMenu::on_yesButton_res_clicked() {
 }
 
 void PauseMenu::on_noButton_men_clicked() { // on menu screen
+
+    // takes you back to the "main screen"
+
     hide_menuScreen();
     show_mainScreen();
 
     current_screen = "main";
 }
 void PauseMenu::on_yesButton_men_clicked() {
+
+    // closes your game and takes you to the main menu
+
     hide_menuScreen();
     show_mainScreen();
 
@@ -136,6 +160,9 @@ void PauseMenu::setMain_menu(MainMenu *value) {
     main_menu = value;
 }
 void PauseMenu::keyPressEvent(QKeyEvent *event) {
+
+    // pressing esc or back space makes you go back. pressing enter while on the reset or menu screens counts as if you clicked yes
+
     if(event->key() == Qt::Key_Escape){
         if(current_screen == "main"){
             //this->hide();

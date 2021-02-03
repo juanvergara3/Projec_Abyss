@@ -22,7 +22,7 @@ public: // variables
 private: // methods
 
 public: // methods
-    explicit MessageWindow(QWidget *parent = nullptr, std::string type = "gameover");
+    MessageWindow(QWidget *parent = nullptr, std::string type = "gameover");
     ~MessageWindow();
 
     void keyPressEvent(QKeyEvent *event);

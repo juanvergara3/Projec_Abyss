@@ -20,7 +20,7 @@ Boss::Boss(QObject *parent, QGraphicsScene *s, std::string boss, std::list<Proye
     proyectiles = p;
     sight = 1;
 
-    if(boss == "lamprey"){
+    if(boss == "lamprey"){ // first boss
         connect(shooting_timer, SIGNAL(timeout()), this, SLOT(lamprey_shoot()));
         connect(movement_timer, SIGNAL(timeout()), this, SLOT(lamprey_move()));
         connect(sprite_timer, SIGNAL(timeout()), this, SLOT(update_sprite_lamprey()));
@@ -37,7 +37,7 @@ Boss::Boss(QObject *parent, QGraphicsScene *s, std::string boss, std::list<Proye
         movement_speed = 20;
         jump_Speed = 30;
     }
-    else if (boss == "priest") {
+    else if (boss == "priest") { // second boss
         connect(shooting_timer, SIGNAL(timeout()), this, SLOT(priest_shoot()));
         connect(sprite_timer, SIGNAL(timeout()), this, SLOT(update_sprite_priest()));
 
@@ -53,7 +53,7 @@ Boss::Boss(QObject *parent, QGraphicsScene *s, std::string boss, std::list<Proye
         movement_speed = 0;
         jump_Speed = 0;
     }
-    else if (boss == "expelled") {
+    else if (boss == "expelled") { // final boss
         connect(shooting_timer, SIGNAL(timeout()), this, SLOT(expelled_shoot()));
         connect(movement_timer, SIGNAL(timeout()), this, SLOT(expelled_move()));
         connect(sprite_timer, SIGNAL(timeout()), this, SLOT(update_sprite_expelled()));
@@ -116,10 +116,10 @@ Boss::~Boss() {
     delete sprite;
 }
 
-QRectF Boss::boundingRect() const {
+QRectF Boss::boundingRect() const { // overloaded method
         return QRectF(-this->getWidth()/2, -this->getHeight()/2, this->getWidth(), this->getHeight());
 }
-void Boss::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+void Boss::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) { // overloaded method. If the boss object has a sprite it gets used if not it'll be a white rectangle
     if(sprite != nullptr)
         painter->drawPixmap(-this->getWidth()/2, -this->getHeight()/2, *sprite, i, j, this->getWidth(), this->getHeight());
     else{
@@ -135,7 +135,7 @@ int Boss::getHealth() const {
     return health;
 }
 
-void Boss::take_damage(int damage) {
+void Boss::take_damage(int damage) { // makes the boss take damage
     health -= damage;
 
     if(health < 0)
@@ -145,7 +145,7 @@ void Boss::take_damage(int damage) {
     health_bar->update();
 }
 
-void Boss::init() {
+void Boss::init() { // starts all the boss's functions (moving, shooting, sprite movement)
     shooting_timer->start(fire_rate);
     movement_timer->start(1500);
     sprite_timer->start(150);
@@ -154,7 +154,7 @@ void Boss::init() {
     description_label->setVisible(true);
     health_bar->setVisible(true);
 }
-void Boss::stop() {
+void Boss::stop() { // stops all the boss's functions (moving, shooting, sprite movement)
     shooting_timer->stop();
     movement_timer->stop(); 
     sprite_timer->stop();
@@ -164,7 +164,7 @@ void Boss::stop() {
     health_bar->setVisible(false);
 }
 
-void Boss::lamprey_shoot() {
+void Boss::lamprey_shoot() { // shooting patterns for the lamprey boss (random parabolic projectiles [3 per timeout])
     Proyectile *p;
 
     int s1, s2, s3;
@@ -188,45 +188,49 @@ void Boss::lamprey_shoot() {
     p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
 }
-void Boss::priest_shoot() {
+void Boss::priest_shoot() { // shooting patterns for the priest boss (random orbital proyectiles [3 per timeout])
     Proyectile *p;
     int randX, randY;
 
     randX = rand() % 8;
     randY = -8 + (rand() % static_cast<int>(8 - (-8) + 1));
-    p = new Proyectile(nullptr, this, damage, this->getX()+sight*80, this->getY(), sight*(shot_speed/randX), shot_speed/randY, 0.5, 6, 1, 1e-6, 0.1, 0);
+    p = new Proyectile(nullptr, "boss", this, damage, this->getX()+sight*80, this->getY(), sight*(shot_speed/randX), shot_speed/randY, 0.5, 6, 1, 1e-6, 0.1, 0);
     proyectiles->push_back(p);
     p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
 
     randX = rand() % 8;
     randY = -8 + (rand() % static_cast<int>(8 - (-8) + 1));
-    p = new Proyectile(nullptr, this, damage, this->getX()+sight*80, this->getY(), sight*(shot_speed/randX), shot_speed/randY, 0.5, 6, 1, 1e-6, 0.1, 0);
+    p = new Proyectile(nullptr, "boss", this, damage, this->getX()+sight*80, this->getY(), sight*(shot_speed/randX), shot_speed/randY, 0.5, 6, 1, 1e-6, 0.1, 0);
     proyectiles->push_back(p);
     p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
 
     randX = rand() % 8;
     randY = -8 + (rand() % static_cast<int>(8 - (-8) + 1));
-    p = new Proyectile(nullptr, this, damage, this->getX()+sight*80, this->getY(), sight*(shot_speed/randX), shot_speed/randY, 0.5, 6, 1, 1e-6, 0.1, 0);
+    p = new Proyectile(nullptr, "boss", this, damage, this->getX()+sight*80, this->getY(), sight*(shot_speed/randX), shot_speed/randY, 0.5, 6, 1, 1e-6, 0.1, 0);
     proyectiles->push_back(p);
     p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
 
     sight *= -1;
 }
-void Boss::expelled_shoot() {
+void Boss::expelled_shoot() { // shooting patterns for the expelled boss
 
     int g, r;
 
+    //projectile gravity and radius change each timeout
     g = -4 + (rand() % static_cast<int>(4 - (-4) + 1));
     r = 3 + (rand() % static_cast<int>(6 - 3 + 1));
 
+    //damage and speed change aswell
     damage = 5 + (rand() % static_cast<int>(50 - 5 + 1));
     shot_speed = 10 + (rand() % static_cast<int>(20 - 10 + 1));
 
     int mode = 1 + (rand() % static_cast<int>(9 - 1 + 1)); //min + (rand() % static_cast<int>(max - min + 1))
     Proyectile *p;
+
+    // one of these gets chosen each timeout
 
     if(mode == 1){ // x
         p = new Proyectile(nullptr, "boss", damage, this->getX(), this->getY(), shot_speed, shot_speed, 1, 4, 1, 1e-5, 0.1, 0);
@@ -250,48 +254,48 @@ void Boss::expelled_shoot() {
         scene->addItem(p);
     }
     else if (mode == 2) { // triple orbital
-        p = new Proyectile(nullptr, this, damage, this->getX(), this->getY(), sight*shot_speed/3, shot_speed/15, 1, r, g, 1e-5, 0.1, 0);
+        p = new Proyectile(nullptr, "boss", this, damage, this->getX(), this->getY(), sight*shot_speed/3, shot_speed/15, 1, r, g, 1e-5, 0.1, 0);
         proyectiles->push_back(p);
         p->setPos(p->getX(), getV_limit() - p->getY());
         scene->addItem(p);
 
-        p = new Proyectile(nullptr, this, damage, this->getX(), this->getY(), -sight*shot_speed/3, shot_speed/9, 1, r, g, 1e-5, 0.1, 0);
+        p = new Proyectile(nullptr, "boss", this, damage, this->getX(), this->getY(), -sight*shot_speed/3, shot_speed/9, 1, r, g, 1e-5, 0.1, 0);
         proyectiles->push_back(p);
         p->setPos(p->getX(), getV_limit() - p->getY());
         scene->addItem(p);
 
-        p = new Proyectile(nullptr, this, damage, this->getX(), this->getY(), sight*shot_speed/3, shot_speed/6, 1, r, g, 1e-5, 0.1, 0);
+        p = new Proyectile(nullptr, "boss", this, damage, this->getX(), this->getY(), sight*shot_speed/3, shot_speed/6, 1, r, g, 1e-5, 0.1, 0);
         proyectiles->push_back(p);
         p->setPos(p->getX(), getV_limit() - p->getY());
         scene->addItem(p);
     }
     else if (mode == 3) { // triple double orbital
-        p = new Proyectile(nullptr, this, damage, this->getX()+80, this->getY(), shot_speed/3, shot_speed/15, 1, r, g, 1e-5, 0.1, 0);
+        p = new Proyectile(nullptr, "boss", this, damage, this->getX()+80, this->getY(), shot_speed/3, shot_speed/15, 1, r, g, 1e-5, 0.1, 0);
         proyectiles->push_back(p);
         p->setPos(p->getX(), getV_limit() - p->getY());
         scene->addItem(p);
 
-        p = new Proyectile(nullptr, this, damage, this->getX()+80, this->getY(), shot_speed/3, shot_speed/9, 1, r, g, 1e-5, 0.1, 0);
+        p = new Proyectile(nullptr, "boss", this, damage, this->getX()+80, this->getY(), shot_speed/3, shot_speed/9, 1, r, g, 1e-5, 0.1, 0);
         proyectiles->push_back(p);
         p->setPos(p->getX(), getV_limit() - p->getY());
         scene->addItem(p);
 
-        p = new Proyectile(nullptr, this, damage, this->getX()+80, this->getY(), shot_speed/3, shot_speed/6, 1, r, g, 1e-5, 0.1, 0);
+        p = new Proyectile(nullptr, "boss", this, damage, this->getX()+80, this->getY(), shot_speed/3, shot_speed/6, 1, r, g, 1e-5, 0.1, 0);
         proyectiles->push_back(p);
         p->setPos(p->getX(), getV_limit() - p->getY());
 
         scene->addItem(p);
-        p = new Proyectile(nullptr, this, damage, this->getX()-80, this->getY(), -1*shot_speed/3, shot_speed/15, 1, r, g, 1e-5, 0.1, 0);
+        p = new Proyectile(nullptr, "boss", this, damage, this->getX()-80, this->getY(), -1*shot_speed/3, shot_speed/15, 1, r, g, 1e-5, 0.1, 0);
         proyectiles->push_back(p);
         p->setPos(p->getX(), getV_limit() - p->getY());
         scene->addItem(p);
 
-        p = new Proyectile(nullptr, this, damage, this->getX()-80, this->getY(), -1*shot_speed/3, shot_speed/9, 1, r, g, 1e-5, 0.1, 0);
+        p = new Proyectile(nullptr, "boss", this, damage, this->getX()-80, this->getY(), -1*shot_speed/3, shot_speed/9, 1, r, g, 1e-5, 0.1, 0);
         proyectiles->push_back(p);
         p->setPos(p->getX(), getV_limit() - p->getY());
         scene->addItem(p);
 
-        p = new Proyectile(nullptr, this, damage, this->getX()-80, this->getY(), -1*shot_speed/3, shot_speed/6, 1, r, g, 1e-5, 0.1, 0);
+        p = new Proyectile(nullptr, "boss", this, damage, this->getX()-80, this->getY(), -1*shot_speed/3, shot_speed/6, 1, r, g, 1e-5, 0.1, 0);
         proyectiles->push_back(p);
         p->setPos(p->getX(), getV_limit() - p->getY());
         scene->addItem(p);
@@ -333,7 +337,7 @@ void Boss::expelled_shoot() {
         p->setPos(p->getX(), getV_limit() - p->getY());
         scene->addItem(p);
 
-        p = new Proyectile(this, "enemy", damage, this->getX(), this->getY(), shot_speed, -1*shot_speed, 1, 4, 1, 1e-5, 0.1, 0);
+        p = new Proyectile(this, "boss", damage, this->getX(), this->getY(), shot_speed, -1*shot_speed, 1, 4, 1, 1e-5, 0.1, 0);
         proyectiles->push_back(p);
         p->setPos(p->getX(), getV_limit() - p->getY());
         scene->addItem(p);
@@ -369,54 +373,53 @@ void Boss::expelled_shoot() {
         scene->addItem(p);
     }
     else if (mode == 6) { // orbital bomb
-        //int randX, randY;
 
-        p = new Proyectile(nullptr, this, damage, this->getX()+80, this->getY(), shot_speed/3, shot_speed/3, 1, 4, 1, 1e-5, 0.1, 0);
+        p = new Proyectile(nullptr, "boss", this, damage, this->getX()+80, this->getY(), shot_speed/3, shot_speed/3, 1, 4, 1, 1e-5, 0.1, 0);
         proyectiles->push_back(p);
         p->setPos(p->getX(), getV_limit() - p->getY());
         scene->addItem(p);
 
-        p = new Proyectile(nullptr, this, damage, this->getX()-80, this->getY(), -1*(shot_speed)/3, -1*(shot_speed)/3, 1, 4, 1, 1e-5, 0.1, 0);
+        p = new Proyectile(nullptr, "boss", this, damage, this->getX()-80, this->getY(), -1*(shot_speed)/3, -1*(shot_speed)/3, 1, 4, 1, 1e-5, 0.1, 0);
         proyectiles->push_back(p);
         p->setPos(p->getX(), getV_limit() - p->getY());
         scene->addItem(p);
 
-        p = new Proyectile(nullptr, this, damage, this->getX()-80, this->getY(), -1*shot_speed/3, 1*shot_speed/3, 1, 4, 1, 1e-5, 0.1, 0);
+        p = new Proyectile(nullptr, "boss", this, damage, this->getX()-80, this->getY(), -1*shot_speed/3, 1*shot_speed/3, 1, 4, 1, 1e-5, 0.1, 0);
         proyectiles->push_back(p);
         p->setPos(p->getX(), getV_limit() - p->getY());
         scene->addItem(p);
 
-        p = new Proyectile(this, this, damage, this->getX()+80, this->getY(), 1*shot_speed/3, -1*shot_speed/3, 1, 4, 1, 1e-5, 0.1, 0);
+        p = new Proyectile(this, "boss", this, damage, this->getX()+80, this->getY(), 1*shot_speed/3, -1*shot_speed/3, 1, 4, 1, 1e-5, 0.1, 0);
         proyectiles->push_back(p);
         p->setPos(p->getX(), getV_limit() - p->getY());
         scene->addItem(p);
 
-        p = new Proyectile(nullptr, this, damage, this->getX()+80, this->getY(), shot_speed/3, shot_speed/15, 1, r, g, 1e-5, 0.1, 0);
+        p = new Proyectile(nullptr, "boss", this, damage, this->getX()+80, this->getY(), shot_speed/3, shot_speed/15, 1, r, g, 1e-5, 0.1, 0);
         proyectiles->push_back(p);
         p->setPos(p->getX(), getV_limit() - p->getY());
         scene->addItem(p);
 
-        p = new Proyectile(nullptr, this, damage, this->getX()+80, this->getY(), shot_speed/3, shot_speed/9, 1, r, g, 1e-5, 0.1, 0);
+        p = new Proyectile(nullptr, "boss", this, damage, this->getX()+80, this->getY(), shot_speed/3, shot_speed/9, 1, r, g, 1e-5, 0.1, 0);
         proyectiles->push_back(p);
         p->setPos(p->getX(), getV_limit() - p->getY());
         scene->addItem(p);
 
-        p = new Proyectile(nullptr, this, damage, this->getX()+80, this->getY(), shot_speed/3, shot_speed/6, 1, r, g, 1e-5, 0.1, 0);
+        p = new Proyectile(nullptr, "boss", this, damage, this->getX()+80, this->getY(), shot_speed/3, shot_speed/6, 1, r, g, 1e-5, 0.1, 0);
         proyectiles->push_back(p);
         p->setPos(p->getX(), getV_limit() - p->getY());
 
         scene->addItem(p);
-        p = new Proyectile(nullptr, this, damage, this->getX()-80, this->getY(), -1*shot_speed/3, shot_speed/15, 1, r, g, 1e-5, 0.1, 0);
+        p = new Proyectile(nullptr, "boss", this, damage, this->getX()-80, this->getY(), -1*shot_speed/3, shot_speed/15, 1, r, g, 1e-5, 0.1, 0);
         proyectiles->push_back(p);
         p->setPos(p->getX(), getV_limit() - p->getY());
         scene->addItem(p);
 
-        p = new Proyectile(nullptr, this, damage, this->getX()-80, this->getY(), -1*shot_speed/3, shot_speed/9, 1, r, g, 1e-5, 0.1, 0);
+        p = new Proyectile(nullptr, "boss", this, damage, this->getX()-80, this->getY(), -1*shot_speed/3, shot_speed/9, 1, r, g, 1e-5, 0.1, 0);
         proyectiles->push_back(p);
         p->setPos(p->getX(), getV_limit() - p->getY());
         scene->addItem(p);
 
-        p = new Proyectile(nullptr, this, damage, this->getX()-80, this->getY(), -1*shot_speed/3, shot_speed/6, 1, r, g, 1e-5, 0.1, 0);
+        p = new Proyectile(nullptr, "boss", this, damage, this->getX()-80, this->getY(), -1*shot_speed/3, shot_speed/6, 1, r, g, 1e-5, 0.1, 0);
         proyectiles->push_back(p);
         p->setPos(p->getX(), getV_limit() - p->getY());
         scene->addItem(p);
@@ -452,9 +455,9 @@ void Boss::expelled_shoot() {
     }
 }
 
-void Boss::lamprey_move() {
+void Boss::lamprey_move() { // movement patterns for the lamprey boss
 
-    int val = 1 + (rand() % static_cast<int>(2 - 1 + 1));
+    int val = 1 + (rand() % static_cast<int>(2 - 1 + 1)); // sometimes moves up sometimes moves down
     if(val == 1)
         sight = 1;
     else if(val == 2)
@@ -462,8 +465,10 @@ void Boss::lamprey_move() {
 
     set_velY(getY(), jump_Speed*sight);
 }
-void Boss::expelled_move() {
+void Boss::expelled_move() { // movement patterns for the expelled boss
     //------MOVEMENT------//
+
+    // a random movement patterns gets chosen each timeout
 
     int move = 1 + (rand() % static_cast<int>(6 - 1 + 1)); //min + (rand() % static_cast<int>(max - min + 1))
 
@@ -487,26 +492,37 @@ void Boss::expelled_move() {
     }
 
     //------STATS------//
+
+    // stats change on each timeout aswell
+
     movement_speed = 20 + (rand() % static_cast<int>(60 - 20 + 1));
     jump_Speed = 60 + (rand() % static_cast<int>(100 - 60 + 1));
 
-    sight = -1 + (rand() % static_cast<int>(1 - (-1) + 1));
+    //---sight---//
+    sight = -1 + (rand() % static_cast<int>(1 - (-1) + 1)); // changes the way he's looking
     if(sight == 0)
         sight = 1;
 
+    if (sight == -1) // flips the sprite depending on where he's looking
+        setTransform(QTransform().scale(-1, 1));
+    else if(sight == 1)
+        setTransform(QTransform());
+
+    //---gravity---//
     setG(static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/5)));
     if(1 + (rand() % static_cast<int>(4 - (1) + 1)) == 1)
         setG(getG()*-1);
 
-    setE(0.1 + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(1.0-0.1))));
-
-    if (getG() < 0)
+    if (getG() < 0) // if the expelled's gravity is negative his sprite gets flipped
         setTransform(QTransform().scale(1, -1));
     else
         setTransform(QTransform().scale(1, 1));
+
+    //---e (coefficient of restitution)---//
+    setE(0.1 + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(1.0-0.1))));
 }
 
-void Boss::update_sprite_lamprey() {
+void Boss::update_sprite_lamprey() { // updates the lamprey sprite
     if(i == 600)
         i = 0;
     else
@@ -514,7 +530,7 @@ void Boss::update_sprite_lamprey() {
 
     this->QGraphicsItem::update(-this->getWidth()/2, -this->getHeight()/2, this->getWidth(), this->getHeight());
 }
-void Boss::update_sprite_priest() {
+void Boss::update_sprite_priest() { // updates the priest sprite
     if(i == 700)
         i = 0;
     else
@@ -522,7 +538,7 @@ void Boss::update_sprite_priest() {
 
     this->QGraphicsItem::update(-this->getWidth()/2, -this->getHeight()/2, this->getWidth(), this->getHeight());
 }
-void Boss::update_sprite_expelled() {
+void Boss::update_sprite_expelled() { // updates the expelled sprite
     if(i == 180)
         i = 0;
     else

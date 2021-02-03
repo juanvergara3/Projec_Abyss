@@ -36,48 +36,29 @@ Enemy::Enemy(QObject *parent, QGraphicsScene *s, std::string shooting_type, std:
         shot_speed = 0;
     }
 
-    if(shooting_type == "single"){
-
+    if(shooting_type == "single")
         connect(shooting_timer, SIGNAL(timeout()), this, SLOT(shoot_single()));
 
-    }
-    else if(shooting_type == "double"){
-
+    else if(shooting_type == "double")
         connect(shooting_timer, SIGNAL(timeout()), this, SLOT(shoot_double()));
 
-    }
-    else if(shooting_type == "cross"){
-
+    else if(shooting_type == "cross")
         connect(shooting_timer, SIGNAL(timeout()), this, SLOT(shoot_cross()));
 
-    }
-    else if(shooting_type == "x"){
-
+    else if(shooting_type == "x")
         connect(shooting_timer, SIGNAL(timeout()), this, SLOT(shoot_x()));
 
-    }
-    else if(shooting_type == "orbit"){
+    else if(shooting_type == "orbit")
         connect(shooting_timer, SIGNAL(timeout()), this, SLOT(shoot_orbit()));
-    }
-    else if(shooting_type == "circular"){ // might be?
 
-    }
-
-    if(movement_type == "jump"){
-
+    if(movement_type == "jump")
         connect(movement_timer, SIGNAL(timeout()), this, SLOT(jump()));
 
-    }
-    else if(movement_type == "left_right"){
-
+    else if(movement_type == "left_right")
         connect(movement_timer, SIGNAL(timeout()), this, SLOT(left_right()));
 
-    }
-    else if(movement_type == "left_right_jump"){
-
+    else if(movement_type == "left_right_jump")
         connect(movement_timer, SIGNAL(timeout()), this, SLOT(left_right_jump()));
-
-    }
 }
 Enemy::~Enemy() {
     shooting_timer->stop();
@@ -88,10 +69,10 @@ Enemy::~Enemy() {
     delete sprite;
 }
 
-QRectF Enemy::boundingRect() const {
+QRectF Enemy::boundingRect() const { // overloaded method
         return QRectF(-this->getWidth()/2, -this->getHeight()/2, this->getWidth(), this->getHeight());
 }
-void Enemy::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+void Enemy::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) { // overloaded method
     painter->drawPixmap(-this->getWidth()/2, -this->getHeight()/2, sprite->scaledToHeight(this->getHeight()), 0, 0, this->getWidth(), this->getHeight());
     //painter->drawRect(boundingRect());
 }
@@ -107,23 +88,23 @@ void Enemy::take_damage(int damage) {
     health -= damage;
 }
 
-void Enemy::init() {
+void Enemy::init() { // starts the enemy's fuctions (shooting and moving)
     shooting_timer->start(fire_rate);
     movement_timer->start(movement_rate);
 }
-void Enemy::stop() {
+void Enemy::stop() { // stops the enemy's fuctions (shooting and moving)
     shooting_timer->stop();
     movement_timer->stop();
 }
 
-void Enemy::shoot_single() {
+void Enemy::shoot_single() { // shoots a single projectile on sight
     Proyectile *p = new Proyectile(this, "enemy", damage, this->getX(), this->getY(), sight*shot_speed, 0, 1, 4, 1, 1e-5, 0.1, 0);
 
     proyectiles->push_back(p);
     p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
 }
-void Enemy::shoot_double() {
+void Enemy::shoot_double() { // shoots two projectiles (left and right)
     Proyectile *p;
 
     p = new Proyectile(this, "enemy", damage, this->getX(), this->getY(), sight*shot_speed, 0, 1, 4, 1, 1e-5, 0.1, 0);
@@ -136,7 +117,7 @@ void Enemy::shoot_double() {
     p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
 }
-void Enemy::shoot_cross() {
+void Enemy::shoot_cross() { // shoots 4 projectiles on a cross pattern
     Proyectile *p;
 
     p = new Proyectile(this, "enemy", damage, this->getX(), this->getY(), sight*shot_speed, 0, 1, 4, 1, 1e-5, 0.1, 0);
@@ -159,7 +140,7 @@ void Enemy::shoot_cross() {
     p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
 }
-void Enemy::shoot_x() {
+void Enemy::shoot_x() { // shoots 4 projectiles on an X pattern
     Proyectile *p;
 
     p = new Proyectile(this, "enemy", damage, this->getX(), this->getY(), sight*(shot_speed), sight*(shot_speed), 1, 4, 1, 1e-5, 0.1, 0);
@@ -182,14 +163,14 @@ void Enemy::shoot_x() {
     p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
 }
-void Enemy::shoot_orbit() {
+void Enemy::shoot_orbit() { // shoots a projectile that orbits this
     Proyectile *p;
     int randX, randY;
 
     randX = rand() % 11;
     randY = rand() % 11;
 
-    p = new Proyectile(this, this, damage, this->getX() + sight*30, this->getY()+10, sight*(shot_speed/randX), shot_speed/randY, 1, 4, 1, 1e-5, 0.1, 0);
+    p = new Proyectile(this, "enemy",this, damage, this->getX() + sight*30, this->getY()+10, sight*(shot_speed/randX), shot_speed/randY, 1, 4, 1, 1e-5, 0.1, 0);
     proyectiles->push_back(p);
     p->setPos(p->getX(), getV_limit() - p->getY());
     scene->addItem(p);
@@ -197,18 +178,16 @@ void Enemy::shoot_orbit() {
     sight *= -1;
 }
 
-void Enemy::jump() {
+void Enemy::jump() { // a simple jump
     set_velY(getY(), jump_Speed);
 }
-void Enemy::left_right()
-{
+void Enemy::left_right() { //moves left to right
     movement_speed *= -1;
 
     set_velX(getX(), movement_speed);
 
 }
-void Enemy::left_right_jump()
-{
+void Enemy::left_right_jump() { //moves left to right but also jumps
     set_velY(getY(), jump_Speed);
 
     movement_speed *= -1;

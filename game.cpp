@@ -3,6 +3,9 @@
 Game::Game(QGraphicsScene * scene, std::list<Proyectile *> *p, std::string seed, std::string type, std::string p1_name, std::string p2_name)
     : scene(scene), proyectiles(p), type(type)
 {
+
+    // creates a new game (everything on default values, except the seed off course)
+
     srand(unsigned(time(NULL)));
 
     floor1 = new Floor(scene, proyectiles, 1);
@@ -41,13 +44,16 @@ Game::Game(QGraphicsScene * scene, std::list<Proyectile *> *p, std::string seed,
 Game::Game(std::string file_name, QGraphicsScene * scene, std::list<Proyectile *> *p)
     : scene(scene), proyectiles(p)
 {
+
+    // creates a game based on the data saved on a text file
+
     srand(unsigned(time(NULL)));
 
     floor1 = new Floor(scene, proyectiles, 1);
     floor2 = new Floor(scene, proyectiles, 2);
     floor3 = new Floor(scene, proyectiles, 3);
 
-    floor1->boss->boss_door->setNext(floor2); // might fail if the floor is alredy cleared
+    floor1->boss->boss_door->setNext(floor2);
     floor2->boss->boss_door->setNext(floor3);
     floor3->boss->boss_door->setNext(nullptr);
 
@@ -467,7 +473,7 @@ Game::~Game() {
     item_bank.clear();
 }
 
-void Game::reset() {
+void Game::reset() { // resets a game to it's initial state, keeping the the same seed off course (so same drops)
     delete floor1;
     delete floor2;
     delete floor3;
@@ -509,8 +515,7 @@ void Game::reset() {
         p2 = new Player(nullptr, scene, p2_name, proyectiles, 200, 50, 0, 2);
     }
 }
-
-void Game::save_game(std::string file_name) {
+void Game::save_game(std::string file_name) { // saves all necessary data to reconstruct the game on a texfile
 
     std::fstream file (file_name, std:: fstream::out | std::fstream::binary);
     if(file.is_open()){
@@ -636,7 +641,7 @@ void Game::save_game(std::string file_name) {
     }
 }
 
-Item *Game::get_random_item() {
+Item *Game::get_random_item() { // returns the last item on item bank (it's called random becase the item bank was randomized way before calling this method)
     Item * i = item_bank.back();
     if(i != nullptr) {
         item_bank.pop_back();
@@ -659,15 +664,15 @@ void Game::setCurrent_floor(Floor *value){
     current_floor = value;
 }
 
-void Game::shuffle_items() {
-    std::vector<Item*> *temp = new std::vector<Item*>(item_bank.begin(), item_bank.end());
-    std::random_shuffle(temp->begin(), temp->end());
-    std::copy(temp->begin(), temp->end(), item_bank.begin());
-    temp->clear();
-    delete temp;
+void Game::shuffle_items() { // randomizes items (this method is always called after doing "srand(seed)" so it is randomized based on such seed)
+    std::vector<Item*> *temp = new std::vector<Item*>(item_bank.begin(), item_bank.end()); // a vector of the same size and content as item bank is created
+    std::random_shuffle(temp->begin(), temp->end()); // the vector gets randomly shuffled
+    std::copy(temp->begin(), temp->end(), item_bank.begin()); // the content of the vector gets copied to item bank
+    temp->clear(); //the vector gets cleared
+    delete temp; // the vector gets deleted
 }
 
-void Game::load_items(std::string file_name) {
+void Game::load_items(std::string file_name) { // loads items from a texfile (items.txt)
     std::fstream file (file_name, std:: fstream::in | std::fstream::binary);
 
     if(file.is_open()){

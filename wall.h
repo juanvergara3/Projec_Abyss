@@ -16,7 +16,7 @@ public: //variables
 private: //methods
 
 public: //methods
-    explicit Wall(QObject *parent = nullptr, int x = 0, int y = 0, int w = 0, int h = 0);
+    Wall(QObject *parent = nullptr, int x = 0, int y = 0, int w = 0, int h = 0);
     ~Wall();
 
     QRectF boundingRect() const;

@@ -6,6 +6,8 @@
 MainMenu::MainMenu(QWidget *parent, MainWindow *w) :
     QMainWindow(parent), ui(new Ui::MainMenu), mainwindow(w), pausemenu(nullptr)
 {
+    // creates all of the other windows and sets pointers to one another
+
     mainwindow = new MainWindow(nullptr, nullptr);
     pausemenu = new PauseMenu(nullptr, nullptr);
 
@@ -36,15 +38,12 @@ MainMenu::MainMenu(QWidget *parent, MainWindow *w) :
     hide_multiplayerScreen();
 }
 MainMenu::~MainMenu() {
-    //mainwindow->close();
-    //pausemenu->close();
-
-    //delete mainwindow;
-    //delete pausemenu;
     delete ui;
 }
 
 void MainMenu::init_lists() {
+
+    // the main menu is divided on 6 screens (each represented by a QList)
 
     mainScreen.push_back(ui->creditsButton);
     mainScreen.push_back(ui->exitButton);
@@ -131,42 +130,67 @@ void MainMenu::show_multiplayerScreen() {
 }
 
 void MainMenu::on_playButton_clicked() { // on main screen
+
+    // takes to the play screen
+
     hide_mainScreen();
     show_playScreen();
 }
 void MainMenu::on_howtoplayButton_clicked() {
+
+    // takes to the how to play screen
+
     hide_mainScreen();
     show_howtoplayScreen();
 }
 void MainMenu::on_creditsButton_clicked() {
+
+    // takes to the credits screen
+
     hide_mainScreen();
     show_creditsScreen();
 }
 void MainMenu::on_exitButton_clicked() {
+
+    // exits the game
+
     this->close();
-    //mainwindow->close();
-    //pausemenu->close();
 }
 
 void MainMenu::on_gobackButton_3_clicked() { // on credits screen
+
+    // takes you back to the main screen
+
     hide_creditsScreen();
     show_mainScreen();
 }
 
 void MainMenu::on_gobackButton_2_clicked() { // on how to play screen
+
+    // takes you back to the main screen
+
     hide_howtoplayScreen();
     show_mainScreen();
 }
 
 void MainMenu::on_singleplayerButton_clicked() { // on play screen
+
+    // takes to the singleplayer screen
+
     hide_playScreen();
     show_singleplayerScreen();
 }
 void MainMenu::on_multiplayerButton_clicked() {
+
+    // takes to the singleplayer screen
+
     hide_playScreen();
     show_multiplayerScreen();
 }
 void MainMenu::on_loadgameButton_clicked() {
+
+    // lets you choose a file and loads a game based on it. (a file with the wrong format will crash the game)
+
     std::string filename = QFileDialog::getOpenFileName(this, "Open", "", "Text file (*.txt)").toStdString();
 
     if(!filename.empty()){
@@ -182,14 +206,19 @@ void MainMenu::on_loadgameButton_clicked() {
     }
 }
 void MainMenu::on_gobackButton_1_clicked() {
+
+    // takes you back to the main screen
+
     hide_playScreen();
     show_mainScreen();
 }
 
 void MainMenu::on_playButton_single_clicked() { // on single player screen
+
+    // stars a new singleplayer game
+
     hide_singleplayerScreen();
     show_mainScreen();
-    //this->hide();
     this->close();
 
     mainwindow->close_game();
@@ -197,14 +226,19 @@ void MainMenu::on_playButton_single_clicked() { // on single player screen
     mainwindow->showMaximized();
 }
 void MainMenu::on_gobackButton_4_clicked() {
+
+    // takes you back to the play screen
+
     hide_singleplayerScreen();
     show_playScreen();
 }
 
 void MainMenu::on_playButton_2_clicked() { // on multiplayer screen
+
+    // stars a new multiplayer game
+
     hide_multiplayerScreen();
     show_mainScreen();
-    //this->hide();
     this->close();
 
     mainwindow->close_game();
@@ -212,6 +246,9 @@ void MainMenu::on_playButton_2_clicked() { // on multiplayer screen
     mainwindow->showMaximized();
 }
 void MainMenu::on_gobackButton_5_clicked() {
+
+    // takes you back to the play screen
+
     hide_multiplayerScreen();
     show_playScreen();
 }

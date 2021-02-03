@@ -2,6 +2,8 @@
 
 Room::Room(QObject *parent, QGraphicsScene *scene, std::list<Proyectile *> *p, std::string name_) : QObject(parent), scene(scene), v_limit(720), h_limit(1280) {
 
+    // creates a specific room (walls, enemies, doors, background, etc.)
+
     cleared = false;
     item = nullptr;
     spring = nullptr;
@@ -733,7 +735,7 @@ Room::~Room() {
         delete spring;
 }
 
-void Room::load_room() {
+void Room::load_room() { // loads all the elements of the room into the qgraphicsscene
 
     if(bg != nullptr)
         scene->addItem(this);
@@ -787,7 +789,7 @@ void Room::load_room() {
         //item->getName()->setHidden(false);
     }
 }
-void Room::deload_room() {
+void Room::deload_room() {  // deloads all the elements of the room into the qgraphicsscene
 
     if(bg != nullptr)
         scene->removeItem(this);
@@ -840,7 +842,7 @@ void Room::paint(QPainter *painter, const QStyleOptionGraphicsItem *options, QWi
     painter->drawPixmap(0, 0, *bg, 0, 0, 1280, 720);
 }
 
-void Room::clear_room() {
+void Room::clear_room() { // sets the room to the cleared state (when no enemies or bosses remain)
     cleared = true;
 
     if(type == "normal")
@@ -880,13 +882,13 @@ std::string Room::getName() const {
     return name;
 }
 
-void Room::remove_item() {
+void Room::remove_item() { // removes the item from screen
     scene->removeItem(item);
     delete item;
     item = nullptr;
 }
 
-void Room::spawn_heart() {
+void Room::spawn_heart() { // spawns a heart (heals the player by 30% of it's max life and does nothing else)
     item = new Item(nullptr, "Heart", 0, 0.3, 0, 0, 0, 0, 1, 1, 0, 0, 0, "single", ":/Assets/Sprites/Items/heart.png");
     item->setPos(itemX, itemY);
     scene->addItem(item);
@@ -894,7 +896,7 @@ void Room::spawn_heart() {
     scene->addWidget(item->getName_label());
     item->getName_label()->setVisible(true);
 }
-void Room::spawn_item(Item *i) {
+void Room::spawn_item(Item *i) { // spawns a given item
 
     if(i != nullptr) {
         item = i;

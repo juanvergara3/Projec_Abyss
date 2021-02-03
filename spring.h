@@ -24,7 +24,7 @@ public: // variables
 private: //methods
 
 public: // methods
-    explicit Spring(QObject *parent = nullptr, int x = 0, int y = 0, int target_height = 0, int width = 0, float tension = 0, float dampening = 0);
+    Spring(QObject *parent = nullptr, int x = 0, int y = 0, int target_height = 0, int width = 0, float tension = 0, float dampening = 0);
     ~Spring();
 
     QRectF boundingRect() const;
